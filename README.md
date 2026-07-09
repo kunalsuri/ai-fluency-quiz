@@ -1,21 +1,25 @@
 <!-- Copyright (c) 2026 Kunal Suri (CEA LIST). Apache-2.0. -->
 
-# 🧠 AI Fluency
-
 <div align="center">
 
-[![Vitest Tests](https://img.shields.io/badge/Vitest-203%20passed-4ab730?style=for-the-badge&logo=vitest&logoColor=white)](https://vitest.dev/)
-[![Astro](https://img.shields.io/badge/Astro%207-static-BC52EE?style=for-the-badge&logo=astro&logoColor=white)](https://astro.build/)
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge)](LICENSE)
+# 🧠 AI Fluency Quiz
 
-**How AI-fluent are you?** Ten minutes. Honest questions, real explanations, cited sources —
+**How AI-fluent are you?** 
+
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge)](LICENSE)
+[![Astro](https://img.shields.io/badge/Astro%207-static-BC52EE?style=for-the-badge&logo=astro&logoColor=white)](https://astro.build/)
+[![Vitest Tests](https://img.shields.io/badge/Vitest-203%20passed-4ab730?style=for-the-badge&logo=vitest&logoColor=white)](https://vitest.dev/)
+
+Ten minutes. Honest questions, real explanations, cited sources —
 and a cheat sheet generated for *your* gaps.
 
 </div>
 
+<br>
+
 ---
 
-## What it is
+## What it is?
 
 Three sections, one design, two languages (EN/FR):
 
@@ -23,12 +27,18 @@ Three sections, one design, two languages (EN/FR):
 2. **Guide / Cheat Sheets** — every topic's terminology, typeset for reading and downloadable as plain-text cheat sheets (`/guide/<topic>.txt`). After a quiz, download a **personalized cheat sheet** containing exactly what you missed — plain text, so you can paste it into any AI assistant and ask to be tutored.
 3. **The Frontier** — a hand-curated reading room of the landmark papers behind every concept in the quiz.
 
+<br>
+
 ### Privacy by architecture
 
 - **Zero storage** — no accounts, no cookies, no `localStorage`. Quiz state lives in memory and dies with the tab.
 - **Zero tracking** — no analytics of any kind.
 - **Zero external requests** — fonts are self-hosted; question data is embedded at build time. After page load the site talks to no one.
 - Dark mode follows `prefers-color-scheme` — pure CSS, nothing persisted.
+
+<br>
+
+---
 
 ## Quick start
 
@@ -43,6 +53,8 @@ npm install
 npm run dev        # → http://localhost:4321/
 ```
 
+<br>
+
 Other commands:
 
 | Command | What it does |
@@ -52,6 +64,8 @@ Other commands:
 | `npm run validate-data` | Validate `data/` structure, IDs, answers, citations |
 | `npm run audit` | Start the **local-only** audit workbench (human data verification) |
 | `npm run generate-provenance` | Regenerate `data/data-provenance.md` |
+
+<br>
 
 ## Architecture: showroom and factory
 
@@ -80,6 +94,10 @@ Other commands:
 - The quiz is the **only island**: a ~300-line vanilla-TypeScript state machine. Its question payload is embedded in the page at build time, so the quiz makes no fetches.
 - The audit workbench (`npm run audit`) needs to **write to disk** (`data/data-provenance.md`), which is exactly why it lives outside the Astro build and can never be deployed.
 
+<br>
+
+---
+
 ## Question database
 
 **136 questions · 15 topic banks · 4 difficulty tiers** (beginner 5 pts → expert 20 pts), with per-question explanations and HTTPS citations. 11 banks are fully translated to French (`*.fr.json`); new banks land in English first.
@@ -92,10 +110,23 @@ Scoring tiers (managerial): **AI Explorer → AI-Assisted Manager → AI Strateg
 
 The validator (`npm run validate-data`) enforces: manifest/bank consistency, globally unique IDs, in-bounds answers, valid difficulties, strictly increasing tiers, and HTTPS-only citations. The test suite additionally enforces EN↔FR structural parity.
 
+<br>
+
+---
+
 ## Deployment
 
 Static output — deploy `dist/` anywhere. For **Vercel**: framework preset *Astro*, build command `npm run build`, output `dist/`. No adapter, no serverless functions, no environment variables.
 
-## License
+<br>
 
-Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
+---
+
+## 📄 Acknowledgments & License
+
+The **AI Fluency Quiz** project is open-source and licensed under the [Apache License 2.0](LICENSE)
+
+**Warranty & Liability Notice**: This software is provided under the Apache License 2.0 on an "AS IS" basis, without warranties or conditions of any kind, either express or implied. To the extent permitted by the license and applicable law, the authors and contributors disclaim warranties and limit liability. Please refer to the LICENSE file for the complete terms, including Sections 7 (Disclaimer of Warranty) and 8 (Limitation of Liability). See the LICENSE file for the full license text.
+
+Copyright © 2026 Kunal Suri ([@kunalsuri](https://github.com/kunalsuri)) (CEA LIST).
+
