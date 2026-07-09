@@ -1,0 +1,141 @@
+{
+  "id": "ai-ethics-governance",
+  "topic": "AI Ethics & Governance",
+  "description": "Bias, fairness metrics, EU AI Act, watermarking, and responsible deployment.",
+  "questions": [
+    {
+      "id": "eth-01",
+      "difficulty": "beginner",
+      "question": "What does 'algorithmic bias' mean in AI systems?",
+      "options": [
+        "A deliberate setting that makes a model prefer shorter, faster responses over longer, detailed ones",
+        "Systematic errors in a model's outputs that unfairly advantage or disadvantage particular groups, often reflecting biases in training data",
+        "The natural tendency of neural networks to memorize training examples rather than generalize",
+        "A configuration flag that skews the model's random sampling toward lower-entropy outputs"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Algorithmic bias arises when a model's predictions reflect historical inequities or data imbalances — for example, a hiring model trained on historical data may discriminate against women or minority groups — even without any intentional design to do so."
+    },
+    {
+      "id": "eth-02",
+      "difficulty": "beginner",
+      "question": "What is the 'EU AI Act' (2024)?",
+      "options": [
+        "A voluntary industry code of conduct for AI companies headquartered in European Union member states",
+        "The EU's binding regulatory framework that classifies AI systems by risk level and mandates requirements for high-risk applications",
+        "A research-funding program that allocates EU budget to universities developing open-source AI models",
+        "A data-privacy law that replaces the GDPR for AI-generated personal data"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "The EU AI Act (entered into force August 2024) is the world's first comprehensive AI law. It imposes obligations scaled to risk: general-purpose AI models, high-risk applications (medical devices, CV screening, critical infrastructure), and prohibited practices (social scoring, real-time biometric surveillance) each face different rules.",
+      "source": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689"
+    },
+    {
+      "id": "eth-03",
+      "difficulty": "intermediate",
+      "question": "Which of the following is an example of 'disparate impact' in a machine-learning model?",
+      "options": [
+        "A model produces different-length answers depending on whether the user asks a short or long question",
+        "A loan-approval model is equally accurate on average but has a significantly higher error rate for minority applicants",
+        "A model that has been fine-tuned on domain-specific data performs worse on general-knowledge questions",
+        "A text classifier that is more confident when the input language matches its primary training language"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Disparate impact occurs when an apparently neutral model produces outcomes that disproportionately disadvantage a protected group. Aggregate accuracy can mask systematic under-performance on sub-groups — a core concern in fairness audits."
+    },
+    {
+      "id": "eth-04",
+      "difficulty": "intermediate",
+      "question": "What does 'explainability' (or 'interpretability') mean for an AI model?",
+      "options": [
+        "Documenting the hardware infrastructure and cloud costs needed to host and run the model at scale",
+        "The ability to understand and communicate why a model produced a particular output or decision",
+        "Translating model outputs into multiple languages so that diverse stakeholders can read the results",
+        "Converting a model's weights into human-readable source code that mirrors its exact decision logic"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Explainability covers techniques — feature attribution, saliency maps, chain-of-thought traces, counterfactual examples — that reveal which inputs or reasoning steps drove an output. Regulators increasingly require it for high-stakes applications like credit and healthcare."
+    },
+    {
+      "id": "eth-05",
+      "difficulty": "intermediate",
+      "question": "What is 'demographic parity' as a fairness metric?",
+      "options": [
+        "A requirement that training datasets contain exactly equal numbers of examples from every demographic group",
+        "A fairness criterion that the model's positive-outcome rate should be equal across demographic groups",
+        "A metric that checks whether model latency is consistent across users in different geographic regions",
+        "A legal requirement that AI vendors disclose the demographic composition of their engineering teams"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Demographic parity (also called statistical parity) requires that P(Ŷ=1 | A=0) ≈ P(Ŷ=1 | A=1), where A is a protected attribute. It is one of several competing fairness criteria; satisfying one often mathematically precludes satisfying others (the impossibility results)."
+    },
+    {
+      "id": "eth-06",
+      "difficulty": "intermediate",
+      "question": "What is AI 'watermarking'?",
+      "options": [
+        "Adding visible copyright text overlaid on AI-generated images for display in published media",
+        "Embedding imperceptible statistical patterns into AI-generated content so it can be later detected as machine-generated",
+        "Training a model on content that has been degraded with noise to make it more robust to adversarial attacks",
+        "A legal trademark registration process that gives AI companies exclusive rights over generated content"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Watermarking steers a model's generation (e.g., biasing token sampling with a secret key) or embeds imperceptible signals in images so that downstream detectors can verify AI provenance. The EU AI Act requires watermarking of synthetic media, and OpenAI and Google have published watermarking techniques."
+    },
+    {
+      "id": "eth-07",
+      "difficulty": "advanced",
+      "question": "Why is it mathematically impossible to simultaneously satisfy demographic parity, equalized odds, and calibration in a model whose base rates differ across groups?",
+      "options": [
+        "It requires exponentially more training data per group than is typically available in commercial datasets",
+        "Choquet and Hardt et al. showed that when base rates differ, satisfying any two of these criteria forces a violation of the third, except in degenerate cases",
+        "Neural network optimizers can only minimize one loss function objective at a time, making multi-objective fairness computationally intractable",
+        "Privacy laws prohibit accessing the protected-attribute labels needed to compute more than one fairness metric simultaneously"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Choquet (2005) and Hardt et al. (2016) proved that when base rates differ across groups, the three common fairness criteria are mutually incompatible. This 'impossibility result' means practitioners must make an explicit, value-laden choice about which criterion to optimize — it cannot be deferred to the algorithm.",
+      "source": "https://arxiv.org/abs/1610.02413"
+    },
+    {
+      "id": "eth-08",
+      "difficulty": "advanced",
+      "question": "Under the EU AI Act, which application category is 'prohibited' rather than merely 'high-risk'?",
+      "options": [
+        "Using AI to recommend products in an e-commerce platform",
+        "Deploying a real-time remote biometric identification system in public spaces for law enforcement (with narrow exceptions)",
+        "Generating synthetic images for marketing campaigns without disclosing they are AI-created",
+        "Using AI-assisted screening of CVs for job vacancies in large enterprises"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "The EU AI Act outright bans certain practices deemed incompatible with fundamental rights, including real-time remote biometric identification in public spaces for law enforcement except in narrowly defined serious-crime scenarios. High-risk applications (like CV screening) are regulated but not prohibited.",
+      "source": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689"
+    },
+    {
+      "id": "eth-09",
+      "difficulty": "advanced",
+      "question": "What is 'differential privacy' in the context of AI training?",
+      "options": [
+        "A licensing framework that grants differential access rights to model weights based on the user's subscription tier",
+        "A mathematical guarantee that adding or removing any single training record changes the model's outputs by at most a controlled, quantifiable amount — protecting individual data privacy",
+        "An encryption protocol that scrambles model weights so they can only be decrypted by authorized clients",
+        "A data-splitting strategy that reserves a private test set that the model has never seen during development"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Differential privacy (Dwork et al., 2006) adds calibrated noise during training so that the probability of any output is almost the same whether or not a specific individual's data was included. The privacy budget ε controls the trade-off: smaller ε means stronger privacy but typically lower accuracy.",
+      "source": "https://link.springer.com/chapter/10.1007/11681878_14"
+    },
+    {
+      "id": "eth-10",
+      "difficulty": "expert",
+      "question": "What is the 'alignment tax' and how does it relate to commercial deployment decisions for frontier AI labs?",
+      "options": [
+        "A government levy charged per API call for models that have not completed a third-party safety audit",
+        "The observed performance degradation on capability benchmarks that can occur when safety fine-tuning — RLHF, Constitutional AI, or refusals — reduces the model's raw task performance",
+        "The extra engineering cost incurred when teams must rewrite prompts after a safety update changes model behavior",
+        "A royalty fee paid to the original dataset creators when a model is deployed commercially after safety fine-tuning"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "The 'alignment tax' refers to the empirical finding that aligning a model (adding helpfulness and harmlessness training) can reduce its scores on raw capability evals. Labs must balance this trade-off: over-refusing reduces utility; under-aligning increases harm risk. Recent work (e.g., DPO, CAI) aims to shrink the tax while maintaining safety."
+    }
+  ]
+}

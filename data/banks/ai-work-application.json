@@ -1,0 +1,111 @@
+{
+  "id": "ai-work-application",
+  "topic": "AI in the Workspace",
+  "description": "Operational efficiency, human-in-the-loop, privacy, risk management, and adoption.",
+  "questions": [
+    {
+      "id": "mapp-01",
+      "difficulty": "beginner",
+      "question": "What is the primary operational benefit of a 'Human-in-the-Loop' (HITL) workflow in enterprise AI applications?",
+      "options": [
+        "It accelerates the end-to-end user experience by streamlining inference response times down to sub-millisecond cycles",
+        "It acts as a safety and quality gate, ensuring critical AI outputs are reviewed by a human expert before reaching clients",
+        "It completely eliminates the operational dependency on external cloud computing systems and local virtualization hosts",
+        "It guarantees that the active language model will execute instructions locally and never consume commercial API tokens"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "HITL combines AI speed/scale with human judgment, minimizing risk in high-stakes fields like legal drafting, clinical guidance, and customer communication."
+    },
+    {
+      "id": "mapp-02",
+      "difficulty": "intermediate",
+      "question": "Why should managers care about 'system prompt leakage' or 'prompt injection' in customer-facing chat applications?",
+      "options": [
+        "They cause critical backend server processors to physically overheat by forcing continuous, recursive processing cycles",
+        "They allow users to bypass safety guardrails, access hidden system instructions, or trick the chatbot into performing unauthorized actions",
+        "They introduce extreme packet loss, causing the end user's internet routing paths and network bandwidth connections to slow down noticeably",
+        "They represent minor layout rendering issues that have absolutely zero impact on enterprise security configurations, customer databases, or public brand reputation"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Prompt injection can damage reputation, reveal sensitive system prompts containing internal details, or be used to hijack the system's actions (e.g., getting a customer service bot to agree to sell a car for $1)."
+    },
+    {
+      "id": "mapp-03",
+      "difficulty": "advanced",
+      "question": "When should a manager select a RAG (Retrieval-Augmented Generation) pattern over Fine-Tuning for a business knowledge application?",
+      "options": [
+        "When the application needs to learn a highly specialized, non-textual drawing style or generate creative graphic design templates",
+        "When the core business objective is to minimize training costs for deep neural networks performing high-speed image classification",
+        "When the source documents change frequently, require strict access control, and answers must cite specific sources",
+        "When the deployed client-side application is operating in an isolated local sandbox environment that lacks external routing and has no active internet connections"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "RAG allows dynamic access to updated documents, respects document-level access permissions, and permits source attribution. Fine-tuning is better for adjusting a model's tone, style, format, or learning domain-specific jargon."
+    },
+    {
+      "id": "mapp-04",
+      "difficulty": "intermediate",
+      "question": "When integrating external LLM APIs, what is a best practice for managing customer data privacy?",
+      "options": [
+        "Uploading complete, unencrypted customer database tables directly to the third-party model provider's training queue",
+        "Anonymizing or redacting Personally Identifiable Information (PII) locally before sending payloads, and signing data processing agreements (DPAs)",
+        "Configuring the API middleware to restrict requests to textless queries that do not require any input data payloads to be transmitted",
+        "Relying on the external language model's built-in neural filters to automatically recognize and delete PII without custom configurations"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "To comply with GDPR, HIPAA, and CCPA, organizations must sanitize inputs locally (e.g., using PII scrubbers) and establish DPAs ensuring the vendor doesn't use the data for model training."
+    },
+    {
+      "id": "mapp-05",
+      "difficulty": "advanced",
+      "question": "What is the significance of 'Golden Datasets' (or reference evaluation sets) in managing AI product quality?",
+      "options": [
+        "They represent external proprietary databases purchased at high licensing costs from market research firms to serve as validation data",
+        "They represent static, read-only historical test records that are strictly locked and must never be updated or edited throughout the entire product lifecycle",
+        "They are curated, representative test suites of inputs and expected outputs used to benchmark model accuracy and catch regressions during prompt or model updates",
+        "They are secure backup databases containing system encryption keys that must be stored exclusively on specialized physical gold-plated magnetic media disks"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Evaluating generative AI is notoriously difficult. A high-quality, curated 'Golden Dataset' allows automated and human evaluation of output quality when prompts are updated, models are swapped, or new logic is deployed."
+    },
+    {
+      "id": "mapp-06",
+      "difficulty": "expert",
+      "question": "When deploying AI agents with direct tool access (e.g., executing SQL queries or database writes), what is the safest design pattern to prevent data loss or security breaches?",
+      "options": [
+        "Granting the autonomous agent full root administrator credentials to production databases to maximize execution speed",
+        "Running all agent tool queries with read-only database connections and requiring explicit human approval for write or delete actions",
+        "Restricting database engine ports to only parse and compile raw natural language strings instead of standard structured SQL syntax",
+        "Temporarily disabling system firewalls and security middleware layers to prevent connection dropouts during tool execution steps"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Giving autonomous agents write access to critical databases is a massive security and reliability hazard. Restricting database access to read-only views and inserting human validation gates for mutating actions (writes, deletions, transaction triggers) prevents catastrophic failures."
+    },
+    {
+      "id": "mapp-07",
+      "difficulty": "beginner",
+      "question": "What is the fundamental difference between an AI 'Copilot' and an AI 'Agent' in workplace automation?",
+      "options": [
+        "A copilot runs exclusively within active web browsers to autocomplete user inputs, whereas an agent runs as a background service on local workstation operating systems",
+        "A copilot assists a human who remains in control of the loop, while an agent operates semi-autonomously to achieve a goal with minimal human intervention",
+        "Copilots are free consumer software tools, whereas agents are classified as highly regulated, restricted government-level technologies",
+        "There are no technical differences between the two terms, as they are simply marketing buzzwords used to describe standard chat features"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Copilots act as sidekicks (e.g. suggesting code or text in real-time), whereas agents can plan, call external APIs, self-correct, and execute multi-step workflows autonomously."
+    },
+    {
+      "id": "mapp-08",
+      "difficulty": "intermediate",
+      "question": "What is a primary licensing consideration when a business uses open-weights models like Llama 3 for commercial products?",
+      "options": [
+        "Llama 3 is released under a permissive Apache 2.0 open-weights license and is completely free for all corporate entities with no active usage restrictions",
+        "Meta's Llama 3 license is free for commercial use up to 700 million monthly active users, above which a license must be requested from Meta",
+        "Llama 3 is strictly restricted to academic research purposes and its deployment in commercial business operations is illegal worldwide",
+        "Enterprise compliance policies dictate that open-weights model families are prohibited from being deployed on public or hybrid cloud server platforms"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "While open-weights models are highly accessible, many have custom commercial agreements or usage limitations (such as Llama's 700M monthly active user threshold) that enterprises must review."
+    }
+  ]
+}

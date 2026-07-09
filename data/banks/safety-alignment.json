@@ -1,0 +1,113 @@
+{
+  "id": "safety-alignment",
+  "topic": "Safety & Alignment",
+  "description": "RLHF, Constitutional AI, jailbreaks, prompt injection, red teaming.",
+  "questions": [
+    {
+      "id": "saf-01",
+      "difficulty": "intermediate",
+      "question": "What does 'alignment' mean in AI development?",
+      "options": [
+        "Formatting and aligning model generated text outputs into neat tables and columns",
+        "Ensuring that the model behaves in accordance with human intentions, ethical standards, and user values",
+        "Synchronizing different model parameter checkpoints across distributed cloud server clusters",
+        "Matching the model's processing speeds and token throughput to local network bandwidth limits"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Alignment is the effort to ensure AI systems reliably do what their operators and society intend — being helpful, honest, and harmless rather than merely optimizing a proxy objective."
+    },
+    {
+      "id": "saf-02",
+      "difficulty": "advanced",
+      "question": "What is RLHF?",
+      "options": [
+        "Reinforcement Learning from Human Feedback — training a model against a reward signal derived from human preference judgments",
+        "Recursive Language Heuristic Filtering — a set of rule-based post-processing steps designed to search for and filter out toxic words",
+        "Real-time Learning from Historical Facts — updating frozen model weights dynamically during user interaction sessions",
+        "Randomized Layer-wise Hyperparameter Fitting — optimizing transformer weights during initial pre-training iterations"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "In RLHF, humans rank model outputs; a reward model learns those preferences, and the LLM is then optimized against it. OpenAI's InstructGPT (2022) demonstrated the approach that made models like ChatGPT follow instructions helpfully.",
+      "source": "https://arxiv.org/abs/2203.02155"
+    },
+    {
+      "id": "saf-03",
+      "difficulty": "advanced",
+      "question": "What is Anthropic's 'Constitutional AI' method?",
+      "options": [
+        "Training a language model exclusively on legal briefs, federal court filings, international government laws, and historical constitutional documents from around the world",
+        "A government-led security certification, licensing, and compliance auditing process designed to approve advanced frontier AI models before their public deployment",
+        "Training a model to critique and revise its own outputs against a written set of principles, plus preference learning from AI feedback (RLAIF)",
+        "Establishing a decentralized blockchain-based voting system allowing users to collectively vote on the model's safety rules, guidelines, and guardrails"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Constitutional AI (Bai et al., 2022) uses an explicit list of principles — a 'constitution' — to guide self-critique and revision, and uses AI-generated preference labels instead of relying purely on human labels for harmlessness training.",
+      "source": "https://arxiv.org/abs/2212.08073"
+    },
+    {
+      "id": "saf-04",
+      "difficulty": "intermediate",
+      "question": "What is a 'jailbreak' in the context of LLMs?",
+      "options": [
+        "Running or hosting a commercial model's parameter files on unauthorized, non-compliant local server hardware",
+        "A prompt crafted to trick a model into bypassing its safety training and producing restricted content",
+        "Extracting the hidden model parameter weights back out of a model's public inference API endpoint",
+        "Exploiting an operating system kernel vulnerability to escape a secure Docker container environment during the model inference phase"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Jailbreaks — role-play framings, obfuscated encodings, many-shot patterns, and similar tricks — attempt to get a model to ignore its safety guidelines. Providers continually patch against them; attackers continually adapt."
+    },
+    {
+      "id": "saf-05",
+      "difficulty": "advanced",
+      "question": "What is the key difference between a jailbreak and a prompt injection attack?",
+      "options": [
+        "They are two interchangeable names used by security analysts for exactly the same attack technique, with identical mechanisms and goals in practice",
+        "Jailbreak techniques exclusively target image generation models, whereas prompt injection attacks exclusively target text-based language models",
+        "Jailbreak attacks can only be executed successfully against open-weights model families hosted inside private hardware clouds, whereas prompt injections target commercial APIs",
+        "A jailbreak is a user trying to bypass the model's own safety rules; prompt injection hides attacker instructions in third-party content to hijack an application acting on a user's behalf"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "In a jailbreak, the attacker is the user, and the target is the model's safety training. In prompt injection, the victim is often an unwitting user whose AI application consumes attacker-controlled content (a webpage, email, or document) carrying hidden instructions."
+    },
+    {
+      "id": "saf-06",
+      "difficulty": "intermediate",
+      "question": "What is 'red teaming' an AI system?",
+      "options": [
+        "Deliberately probing the system with adversarial inputs to find failures and vulnerabilities before real adversaries do",
+        "Customizing the front-end application styling sheets to paint all critical system error alerts and boundary warnings red in the user interface",
+        "Assigning a marketing or public relations team to promote and defend the model's safety metrics on social media",
+        "Fine-tuning the underlying model weights using exclusively adversarial datasets and edge-case instructions"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Red teams systematically attack a system — jailbreaks, injections, harmful-content elicitation, capability probes — so weaknesses are found and fixed pre-deployment. It's standard practice in frontier-model release processes."
+    },
+    {
+      "id": "saf-07",
+      "difficulty": "advanced",
+      "question": "What is 'data poisoning'?",
+      "options": [
+        "A model producing toxic, biased, or dangerous text responses due to missing safety validation layers",
+        "An attacker planting malicious or manipulated examples in training data to corrupt the resulting model's behavior",
+        "Training data representation profiles becoming stale and obsolete over time as new information surfaces",
+        "Illegally accessing and deleting a competitor's proprietary training databases or web scraping pipelines"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Because large models train on vast scraped corpora, attackers can seed the web (or a fine-tuning set) with crafted examples that implant backdoors or biased behavior — research has shown even small numbers of poisoned documents can have outsized effects."
+    },
+    {
+      "id": "saf-08",
+      "difficulty": "intermediate",
+      "question": "What is a 'model card' or 'system card'?",
+      "options": [
+        "The specialized high-performance GPU hardware processor board and graphics cards used to compile and execute model parameter files in private clusters",
+        "A structured pricing sheet detailing token cost options, rate limits, and API access tiers for developers",
+        "A published document describing a model's capabilities, limitations, evaluation results, and safety characteristics",
+        "A printable, collectible trading card featuring custom artwork of famous AI models and training statistics"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Model/system cards document what a model can and can't do, how it was evaluated, and known risks. Frontier labs publish them at release (e.g., the system cards accompanying GPT and Claude model launches) to support transparency and informed deployment."
+    }
+  ]
+}

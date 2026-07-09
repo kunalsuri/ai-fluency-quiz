@@ -1,0 +1,36 @@
+---
+// Copyright (c) 2026 Kunal Suri (CEA LIST). Apache-2.0.
+import { getGuideTopics } from '../lib/data';
+import { localePrefix, tr } from '../lib/i18n';
+import type { Lang } from '../lib/types';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const p = localePrefix(lang);
+const topics = getGuideTopics(lang);
+---
+
+<div class="page">
+  <section class="measure">
+    <p class="kicker">{tr(lang, 'navGuide')}</p>
+    <h1 style="font-size: clamp(2.4rem, 5.5vw, 4rem);">{tr(lang, 'guideTitle')}</h1>
+    <p class="lede" style="margin-top: 1.3rem;">{tr(lang, 'guideLede')}</p>
+  </section>
+
+  <hr class="rule" />
+
+  <nav class="toc" aria-label={tr(lang, 'guideAllTopics')}>
+    {topics.map((t) => (
+      <a class="toc-row" href={`${p}/guide/${t.slug}/`}>
+        <span>
+          <span class="t-title">{t.topic}</span>
+          <span class="t-desc" style="display:block;">{t.description}</span>
+        </span>
+        <span class="t-count">{tr(lang, 'guideTermCount', { n: t.terms.length })}</span>
+      </a>
+    ))}
+  </nav>
+</div>

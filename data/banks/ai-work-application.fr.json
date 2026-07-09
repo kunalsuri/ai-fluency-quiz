@@ -1,0 +1,111 @@
+{
+  "id": "ai-work-application",
+  "topic": "L'IA au travail",
+  "description": "Efficacité opérationnelle, supervision humaine (human-in-the-loop), confidentialité, gestion des risques et adoption.",
+  "questions": [
+    {
+      "id": "mapp-01",
+      "difficulty": "beginner",
+      "question": "Quel est le principal avantage opérationnel d'un flux de travail « Human-in-the-Loop » (HITL) dans les applications d'IA en entreprise ?",
+      "options": [
+        "Il accélère l'expérience utilisateur de bout en bout en réduisant les temps de réponse d'inférence à des cycles inférieurs à la milliseconde",
+        "Il agit comme un filtre de sécurité et de qualité, garantissant que les résultats critiques de l'IA sont examinés par un expert humain avant d'atteindre les clients",
+        "Il élimine complètement la dépendance opérationnelle vis-à-vis des systèmes de cloud computing externes et des hôtes de virtualisation locaux",
+        "Il garantit que le modèle de langage actif exécutera les instructions localement et ne consommera jamais de tokens d'API commerciaux"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Le HITL combine la rapidité et l'échelle de l'IA avec le jugement humain, minimisant les risques dans des domaines à fort enjeu comme la rédaction juridique, les recommandations cliniques et la communication client."
+    },
+    {
+      "id": "mapp-02",
+      "difficulty": "intermediate",
+      "question": "Pourquoi les managers devraient-ils se préoccuper de la « fuite de prompt système » ou de l'« injection de prompt » dans les applications de chat destinées aux clients ?",
+      "options": [
+        "Elles provoquent une surchauffe physique des processeurs des serveurs backend en forçant des cycles de traitement récursifs continus",
+        "Elles permettent aux utilisateurs de contourner les garde-fous de sécurité, d'accéder à des instructions système cachées ou de manipuler le chatbot pour qu'il effectue des actions non autorisées",
+        "Elles provoquent une perte de paquets extrême, ralentissant sensiblement les chemins de routage internet et les connexions de bande passante réseau de l'utilisateur final",
+        "Elles représentent des problèmes mineurs de mise en page qui n'ont absolument aucun impact sur la sécurité de l'entreprise, les bases de données clients ou la réputation publique de la marque"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "L'injection de prompt peut nuire à la réputation, révéler des prompts système sensibles contenant des détails internes, ou être utilisée pour détourner les actions du système (par exemple, amener un bot de service client à accepter de vendre une voiture pour 1 $)."
+    },
+    {
+      "id": "mapp-03",
+      "difficulty": "advanced",
+      "question": "Dans quel cas un manager devrait-il choisir un modèle RAG (génération augmentée par récupération) plutôt que le fine-tuning pour une application de connaissance métier ?",
+      "options": [
+        "Lorsque l'application doit apprendre un style de dessin non textuel très spécialisé ou générer des modèles de conception graphique créatifs",
+        "Lorsque l'objectif métier principal est de minimiser les coûts d'entraînement des réseaux neuronaux profonds effectuant de la classification d'images à haute vitesse",
+        "Lorsque les documents sources changent fréquemment, nécessitent un contrôle d'accès strict et que les réponses doivent citer des sources précises",
+        "Lorsque l'application côté client déployée fonctionne dans un environnement bac à sable local isolé, sans routage externe ni connexion internet active"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Le RAG permet un accès dynamique à des documents mis à jour, respecte les autorisations d'accès au niveau des documents et permet l'attribution des sources. Le fine-tuning est plus adapté pour ajuster le ton, le style, le format d'un modèle ou lui apprendre un jargon spécifique à un domaine."
+    },
+    {
+      "id": "mapp-04",
+      "difficulty": "intermediate",
+      "question": "Lors de l'intégration d'API LLM externes, quelle est une bonne pratique pour protéger la confidentialité des données clients ?",
+      "options": [
+        "Téléverser des tables complètes et non chiffrées de la base de données clients directement dans la file d'entraînement du fournisseur de modèle tiers",
+        "Anonymiser ou masquer les informations personnelles identifiables (PII) localement avant l'envoi des charges utiles, et signer des accords de traitement des données (DPA)",
+        "Configurer le middleware de l'API pour restreindre les requêtes à des requêtes sans texte ne nécessitant aucune donnée d'entrée à transmettre",
+        "S'appuyer sur les filtres neuronaux intégrés du modèle de langage externe pour reconnaître et supprimer automatiquement les PII sans configuration personnalisée"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Pour respecter le RGPD, le HIPAA et le CCPA, les organisations doivent assainir les données en entrée localement (par exemple à l'aide d'outils de nettoyage des PII) et établir des DPA garantissant que le fournisseur n'utilise pas les données pour entraîner ses modèles."
+    },
+    {
+      "id": "mapp-05",
+      "difficulty": "advanced",
+      "question": "Quelle est l'importance des « Golden Datasets » (ou jeux d'évaluation de référence) dans la gestion de la qualité d'un produit IA ?",
+      "options": [
+        "Ce sont des bases de données propriétaires externes achetées à un coût élevé auprès de cabinets d'études de marché pour servir de données de validation",
+        "Ce sont des enregistrements de tests historiques statiques et en lecture seule, strictement verrouillés, qui ne doivent jamais être mis à jour ou modifiés durant tout le cycle de vie du produit",
+        "Ce sont des suites de tests conservées et représentatives, composées d'entrées et de résultats attendus, utilisées pour évaluer la précision du modèle et détecter les régressions lors des mises à jour de prompts ou de modèles",
+        "Ce sont des bases de données de sauvegarde sécurisées contenant des clés de chiffrement système qui doivent être stockées exclusivement sur des supports magnétiques physiques plaqués or"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "L'évaluation de l'IA générative est notoirement difficile. Un « Golden Dataset » de haute qualité et bien conservé permet une évaluation automatisée et humaine de la qualité des résultats lorsque les prompts sont mis à jour, que les modèles sont remplacés ou qu'une nouvelle logique est déployée."
+    },
+    {
+      "id": "mapp-06",
+      "difficulty": "expert",
+      "question": "Lors du déploiement d'agents IA disposant d'un accès direct à des outils (par exemple, l'exécution de requêtes SQL ou d'écritures en base de données), quel est le modèle de conception le plus sûr pour éviter la perte de données ou les failles de sécurité ?",
+      "options": [
+        "Accorder à l'agent autonome des identifiants root d'administrateur complets sur les bases de données de production afin de maximiser la vitesse d'exécution",
+        "Exécuter toutes les requêtes d'outils de l'agent avec des connexions en lecture seule et exiger une approbation humaine explicite pour les actions d'écriture ou de suppression",
+        "Restreindre les ports du moteur de base de données pour ne traiter et compiler que des chaînes en langage naturel brut au lieu d'une syntaxe SQL structurée standard",
+        "Désactiver temporairement les pare-feux système et les couches de middleware de sécurité pour éviter les interruptions de connexion pendant les étapes d'exécution des outils"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Accorder à des agents autonomes un accès en écriture à des bases de données critiques constitue un risque majeur en matière de sécurité et de fiabilité. Restreindre l'accès aux bases de données à des vues en lecture seule et insérer des points de validation humaine pour les actions modifiant les données (écritures, suppressions, déclencheurs de transaction) permet d'éviter des échecs catastrophiques."
+    },
+    {
+      "id": "mapp-07",
+      "difficulty": "beginner",
+      "question": "Quelle est la différence fondamentale entre un « Copilot » IA et un « Agent » IA dans l'automatisation du travail ?",
+      "options": [
+        "Un copilot fonctionne exclusivement dans des navigateurs web actifs pour compléter automatiquement les saisies de l'utilisateur, tandis qu'un agent s'exécute comme un service en arrière-plan sur les systèmes d'exploitation des postes de travail locaux",
+        "Un copilot assiste un humain qui reste maître du processus, tandis qu'un agent opère de manière semi-autonome pour atteindre un objectif avec une intervention humaine minimale",
+        "Les copilots sont des outils logiciels grand public gratuits, tandis que les agents sont classés comme des technologies hautement réglementées et restreintes au niveau gouvernemental",
+        "Il n'existe aucune différence technique entre les deux termes, qui ne sont que des mots à la mode marketing pour décrire des fonctionnalités de chat standard"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Les copilotes agissent comme des assistants (par exemple en suggérant du code ou du texte en temps réel), tandis que les agents peuvent planifier, appeler des API externes, s'auto-corriger et exécuter des flux de travail multi-étapes de manière autonome."
+    },
+    {
+      "id": "mapp-08",
+      "difficulty": "intermediate",
+      "question": "Quelle est une considération de licence importante lorsqu'une entreprise utilise des modèles à poids ouverts comme Llama 3 pour des produits commerciaux ?",
+      "options": [
+        "Llama 3 est publié sous une licence à poids ouverts permissive Apache 2.0 et est entièrement gratuit pour toutes les entités commerciales, sans aucune restriction d'utilisation active",
+        "La licence Llama 3 de Meta est gratuite pour un usage commercial jusqu'à 700 millions d'utilisateurs actifs mensuels, au-delà desquels une licence doit être demandée à Meta",
+        "Llama 3 est strictement réservé à des fins de recherche académique et son déploiement dans des opérations commerciales est illégal dans le monde entier",
+        "Les politiques de conformité d'entreprise dictent que les familles de modèles à poids ouverts sont interdites de déploiement sur des plateformes de serveurs cloud publics ou hybrides"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Bien que les modèles à poids ouverts soient très accessibles, beaucoup sont soumis à des accords commerciaux personnalisés ou à des limitations d'utilisation (comme le seuil de 700 millions d'utilisateurs actifs mensuels de Llama) que les entreprises doivent examiner."
+    }
+  ]
+}

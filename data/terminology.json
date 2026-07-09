@@ -1,0 +1,406 @@
+{
+  "metadata": {
+    "title": "AI Terminology Cheat Sheet",
+    "version": "1.0.0",
+    "updated": "2026-07",
+    "description": "Quick-reference glossary of AI/LLM terms, organized using the same topic taxonomy as the quiz."
+  },
+  "terms": [
+    {
+      "term": "Large Language Model (LLM)",
+      "category": "AI Foundations",
+      "definition": "A neural network trained on massive text corpora to predict and generate language, powering chat assistants and copilots.",
+      "example": "GPT-4, Claude, and Llama are all LLMs."
+    },
+    {
+      "term": "Token",
+      "category": "AI Foundations",
+      "definition": "The basic unit of text (a word, subword, or character piece) a model reads and generates. Context limits and API costs are measured in tokens.",
+      "example": "\"unbelievable\" might split into \"un\", \"believ\", \"able\"."
+    },
+    {
+      "term": "Training",
+      "category": "AI Foundations",
+      "definition": "The process of adjusting a model's internal parameters on data so it learns patterns, typically done via pretraining followed by fine-tuning.",
+      "example": "Pretrain on web text, then fine-tune on curated instructions."
+    },
+    {
+      "term": "Inference",
+      "category": "AI Foundations",
+      "definition": "Running an already-trained model to produce output for a given input, as opposed to training it.",
+      "example": "Sending a prompt to an API and getting a completion back."
+    },
+    {
+      "term": "Hallucination",
+      "category": "AI Foundations",
+      "definition": "When a model generates confident-sounding output that is factually wrong or entirely fabricated.",
+      "example": "Citing a research paper that doesn't actually exist."
+    },
+    {
+      "term": "Parameters",
+      "category": "AI Foundations",
+      "definition": "The internal numeric weights a model learns during training; roughly indicates model scale and capacity.",
+      "example": "A \"70B\" model has about 70 billion parameters."
+    },
+    {
+      "term": "Context Window",
+      "category": "LLM Mechanics",
+      "definition": "The maximum number of tokens (input plus output) a model can consider at one time.",
+      "example": "A 200K-token context window can hold roughly a 500-page book."
+    },
+    {
+      "term": "Sampling / Temperature",
+      "category": "LLM Mechanics",
+      "definition": "Controls used to pick the next token from the model's probability distribution; temperature adjusts how random that choice is.",
+      "example": "Temperature 0 gives deterministic, repeatable answers."
+    },
+    {
+      "term": "Embedding",
+      "category": "LLM Mechanics",
+      "definition": "A dense numeric vector representing the meaning of text, used for search and similarity comparisons.",
+      "example": "\"dog\" and \"puppy\" have embeddings that sit close together."
+    },
+    {
+      "term": "KV Cache",
+      "category": "LLM Mechanics",
+      "definition": "Cached attention key/value tensors from prior tokens that let a model avoid recomputing them for every new token, speeding up generation.",
+      "example": "Long conversations reuse the cache instead of reprocessing all prior history."
+    },
+    {
+      "term": "Quantization",
+      "category": "LLM Mechanics",
+      "definition": "Reducing the numeric precision of a model's weights (e.g. 16-bit to 4-bit) to shrink memory use and speed up inference, at some accuracy cost.",
+      "example": "Running a large model on a laptop GPU via 4-bit quantization."
+    },
+    {
+      "term": "Logits",
+      "category": "LLM Mechanics",
+      "definition": "The raw, unnormalized scores a model outputs for each possible next token before they are converted into probabilities.",
+      "example": "A softmax function turns logits into a probability distribution."
+    },
+    {
+      "term": "Attention",
+      "category": "Transformer Architecture",
+      "definition": "A mechanism that lets a model weigh how relevant every other token is when processing a given token.",
+      "example": "In \"The cat sat because it was tired\", attention links \"it\" to \"cat\"."
+    },
+    {
+      "term": "Self-Attention",
+      "category": "Transformer Architecture",
+      "definition": "Attention applied within a single sequence, letting every token attend to every other token in the same input.",
+      "example": "Resolving pronoun references across a paragraph."
+    },
+    {
+      "term": "Positional Encoding",
+      "category": "Transformer Architecture",
+      "definition": "Information added to token representations so the model knows word order, since attention alone is order-agnostic.",
+      "example": "RoPE (rotary positional encoding) is used in many modern LLMs."
+    },
+    {
+      "term": "Mixture of Experts (MoE)",
+      "category": "Transformer Architecture",
+      "definition": "An architecture where only a subset of specialized \"expert\" sub-networks activate per token, increasing capacity without a proportional compute cost.",
+      "example": "A model with 8 experts might route each token through only 2 of them."
+    },
+    {
+      "term": "Feed-Forward Network (FFN)",
+      "category": "Transformer Architecture",
+      "definition": "The per-token fully-connected layer inside each transformer block that follows attention, adding non-linear processing capacity.",
+      "example": "Roughly two-thirds of a transformer's parameters typically live here."
+    },
+    {
+      "term": "Layer Normalization",
+      "category": "Transformer Architecture",
+      "definition": "A technique that rescales activations within a layer to stabilize and speed up training of deep networks.",
+      "example": "Applied before or after each attention/FFN sub-block."
+    },
+    {
+      "term": "Zero-Shot Prompting",
+      "category": "Prompting Techniques",
+      "definition": "Asking a model to perform a task from instructions alone, with no examples provided.",
+      "example": "\"Translate this sentence to French.\""
+    },
+    {
+      "term": "Few-Shot Prompting",
+      "category": "Prompting Techniques",
+      "definition": "Providing a handful of example input/output pairs in the prompt to steer the model's behavior before asking it to do the task.",
+      "example": "Three sample Q&A pairs followed by a new question."
+    },
+    {
+      "term": "Chain-of-Thought (CoT)",
+      "category": "Prompting Techniques",
+      "definition": "Prompting a model to reason step-by-step before giving a final answer, which improves accuracy on multi-step problems.",
+      "example": "\"Let's think step by step...\""
+    },
+    {
+      "term": "ReAct",
+      "category": "Prompting Techniques",
+      "definition": "A prompting pattern that interleaves reasoning (\"Thought\") with actions (\"Act\") like tool calls, then observes results before continuing.",
+      "example": "Thought → search the web → Observation → Answer."
+    },
+    {
+      "term": "System Prompt",
+      "category": "Prompting Techniques",
+      "definition": "A privileged instruction set at the start of a conversation that shapes a model's persona, rules, and constraints for the whole session.",
+      "example": "\"You are a concise, professional support agent.\""
+    },
+    {
+      "term": "Structured Output",
+      "category": "Prompting Techniques",
+      "definition": "Constraining a model's response to a defined schema (like JSON) so downstream code can parse it reliably.",
+      "example": "Forcing a response to match { \"name\": string, \"age\": number }."
+    },
+    {
+      "term": "Retrieval-Augmented Generation (RAG)",
+      "category": "RAG & Retrieval",
+      "definition": "Fetching relevant external documents at query time and feeding them into the model's context so it can answer with up-to-date or private information.",
+      "example": "Searching a company wiki before answering an internal question."
+    },
+    {
+      "term": "Vector Search",
+      "category": "RAG & Retrieval",
+      "definition": "Finding the most relevant documents by comparing embedding similarity rather than exact keyword matches.",
+      "example": "A query about \"car trouble\" also matches a document about \"vehicle breakdown\"."
+    },
+    {
+      "term": "Chunking",
+      "category": "RAG & Retrieval",
+      "definition": "Splitting long documents into smaller passages before embedding and indexing them, since retrieval works on chunk-sized units.",
+      "example": "Splitting a 50-page PDF into 500-token chunks."
+    },
+    {
+      "term": "Reranking",
+      "category": "RAG & Retrieval",
+      "definition": "A second, more precise scoring pass over an initial set of retrieved candidates to reorder them by true relevance before they reach the model.",
+      "example": "A cross-encoder reranker re-scores the top 50 vector-search hits."
+    },
+    {
+      "term": "Vector Database",
+      "category": "RAG & Retrieval",
+      "definition": "A datastore optimized for storing embeddings and running fast nearest-neighbor similarity search at scale.",
+      "example": "Pinecone, Weaviate, and pgvector are all vector databases."
+    },
+    {
+      "term": "Grounding",
+      "category": "RAG & Retrieval",
+      "definition": "Anchoring a model's answer in retrieved or provided source material so it is less likely to hallucinate.",
+      "example": "Requiring the model to quote the exact source passage it used."
+    },
+    {
+      "term": "Agent",
+      "category": "Agents & Tool Use",
+      "definition": "A system where an LLM autonomously plans, calls tools, observes results, and iterates toward a goal rather than producing one-shot output.",
+      "example": "An agent that books a flight by searching, comparing, and confirming."
+    },
+    {
+      "term": "Function Calling / Tool Use",
+      "category": "Agents & Tool Use",
+      "definition": "A model's ability to emit a structured request to invoke an external function or API, then incorporate the result into its response.",
+      "example": "Calling a get_weather(city) function instead of guessing."
+    },
+    {
+      "term": "Agentic Loop",
+      "category": "Agents & Tool Use",
+      "definition": "The repeating cycle of think → act → observe that lets an agent make progress on a task across multiple steps.",
+      "example": "Search, read the result, decide the next search, repeat."
+    },
+    {
+      "term": "Model Context Protocol (MCP)",
+      "category": "Agents & Tool Use",
+      "definition": "An open standard for connecting AI models to external tools, data sources, and systems through a common interface.",
+      "example": "One MCP server exposing both a database and a filesystem to any compatible client."
+    },
+    {
+      "term": "Multi-Agent System",
+      "category": "Agents & Tool Use",
+      "definition": "Multiple specialized agents (or agent instances) coordinating, delegating, or debating to solve a task none could solve as well alone.",
+      "example": "A \"planner\" agent delegating research to a \"researcher\" agent."
+    },
+    {
+      "term": "Eval (Evaluation)",
+      "category": "Agents & Tool Use",
+      "definition": "A structured test suite used to measure how well a model or agent performs a task, often used to catch regressions before shipping changes.",
+      "example": "Running 200 saved tasks against a new prompt to check the pass rate."
+    },
+    {
+      "term": "Context Engineering",
+      "category": "Context Engineering",
+      "definition": "Deliberately curating exactly what information enters a model's limited context window, and in what order, to get better and cheaper results.",
+      "example": "Trimming irrelevant chat history before a new turn."
+    },
+    {
+      "term": "Compaction",
+      "category": "Context Engineering",
+      "definition": "Summarizing or discarding older context to free up space in the context window as a conversation or task grows long.",
+      "example": "Replacing 50 old messages with a 3-sentence summary."
+    },
+    {
+      "term": "Just-in-Time Retrieval",
+      "category": "Context Engineering",
+      "definition": "Fetching information only at the moment it is needed, rather than pre-loading everything upfront, to keep context lean.",
+      "example": "Looking up a file's contents only when a task actually references it."
+    },
+    {
+      "term": "Agentic Memory",
+      "category": "Context Engineering",
+      "definition": "Persistent notes or state an agent writes and reads across steps or sessions so it doesn't have to re-derive the same information.",
+      "example": "A running to-do list the agent updates as it completes steps."
+    },
+    {
+      "term": "Context Rot",
+      "category": "Context Engineering",
+      "definition": "The tendency for model performance to degrade as irrelevant or stale information accumulates in a long context window.",
+      "example": "An agent losing track of the original goal after 100 tool calls."
+    },
+    {
+      "term": "Token Budget",
+      "category": "Context Engineering",
+      "definition": "The portion of the context window deliberately allocated to a given kind of content (instructions, history, retrieved docs) so the most important information isn't crowded out.",
+      "example": "Capping retrieved documents to 2,000 tokens so instructions always fit."
+    },
+    {
+      "term": "Harness Engineering",
+      "category": "Harness Engineering",
+      "definition": "Designing the tools, permissions, and feedback loops around an agent so it can act effectively and safely in its environment.",
+      "example": "Deciding which shell commands an agent is allowed to run."
+    },
+    {
+      "term": "Tool Definition",
+      "category": "Harness Engineering",
+      "definition": "The schema (name, description, parameters) that tells a model what a tool does and how to call it correctly.",
+      "example": "A well-written description prevents a model from misusing a delete_file tool."
+    },
+    {
+      "term": "Permission Model",
+      "category": "Harness Engineering",
+      "definition": "The rules governing which actions an agent may take autonomously versus which require human approval.",
+      "example": "Auto-approving file reads but requiring confirmation before a git push."
+    },
+    {
+      "term": "Feedback Loop",
+      "category": "Harness Engineering",
+      "definition": "The signal a harness gives an agent about the result of its actions (success, error, output) so it can adjust its next step.",
+      "example": "Returning a compiler error so the agent can fix its own code."
+    },
+    {
+      "term": "Sandboxing",
+      "category": "Harness Engineering",
+      "definition": "Running an agent's actions in an isolated environment so mistakes or malicious commands can't affect production systems.",
+      "example": "Executing generated code inside a disposable container."
+    },
+    {
+      "term": "Observability",
+      "category": "Harness Engineering",
+      "definition": "Logging and tracing an agent's decisions, tool calls, and outputs so developers can debug and improve its behavior.",
+      "example": "A trace viewer showing every tool call an agent made during a task."
+    },
+    {
+      "term": "RLHF (Reinforcement Learning from Human Feedback)",
+      "category": "Safety & Alignment",
+      "definition": "A training technique that uses human preference judgments to reward a model for outputs people rate as better, aligning it with human intent.",
+      "example": "Raters rank two model responses; the model is trained to prefer the higher-ranked one."
+    },
+    {
+      "term": "Constitutional AI",
+      "category": "Safety & Alignment",
+      "definition": "An alignment approach where a model critiques and revises its own outputs against a written set of principles, reducing reliance on human labeling for every case.",
+      "example": "A model checking its own answer against a rule like \"avoid harmful instructions.\""
+    },
+    {
+      "term": "Jailbreak",
+      "category": "Safety & Alignment",
+      "definition": "A prompt crafted to bypass a model's safety training and get it to produce disallowed content.",
+      "example": "Disguising a harmful request as a \"fictional story\"."
+    },
+    {
+      "term": "Prompt Injection",
+      "category": "Safety & Alignment",
+      "definition": "An attack where malicious instructions are hidden in content a model processes (a webpage, document, email) to hijack its behavior.",
+      "example": "A webpage containing hidden text telling an AI assistant to leak private data."
+    },
+    {
+      "term": "Red Teaming",
+      "category": "Safety & Alignment",
+      "definition": "Deliberately probing a model or system for weaknesses, harmful outputs, or exploitable behavior before it is deployed.",
+      "example": "A security team trying dozens of jailbreak prompts before launch."
+    },
+    {
+      "term": "Guardrails",
+      "category": "Safety & Alignment",
+      "definition": "Automated checks (filters, classifiers, rules) placed around a model to catch or block unsafe or off-policy outputs.",
+      "example": "A content filter blocking a response before it reaches the user."
+    },
+    {
+      "term": "ROI (Return on Investment)",
+      "category": "AI Business Value & ROI",
+      "definition": "The measurable benefit (cost savings, revenue, time saved) an AI initiative delivers relative to what it cost to build and run.",
+      "example": "A support chatbot that cuts ticket-handling time by 30%."
+    },
+    {
+      "term": "TCO (Total Cost of Ownership)",
+      "category": "AI Business Value & ROI",
+      "definition": "The full cost of an AI system over its lifetime, including compute, licensing, integration, and maintenance, not just the sticker price.",
+      "example": "API costs plus engineering time to integrate and monitor it."
+    },
+    {
+      "term": "Vendor Lock-in",
+      "category": "AI Business Value & ROI",
+      "definition": "The risk of becoming dependent on one AI provider's proprietary APIs or formats, making it costly to switch later.",
+      "example": "Building prompts and tooling that only work with one vendor's specific model quirks."
+    },
+    {
+      "term": "Pilot Program",
+      "category": "AI Business Value & ROI",
+      "definition": "A small-scale, time-boxed trial of an AI use case used to validate value before a full rollout.",
+      "example": "Testing an AI drafting tool with one team for a month before a company-wide rollout."
+    },
+    {
+      "term": "Human-in-the-Loop",
+      "category": "AI Business Value & ROI",
+      "definition": "A workflow design where a person reviews or approves AI output before it takes effect, balancing speed with accuracy and accountability.",
+      "example": "A human approving AI-drafted customer emails before they're sent."
+    },
+    {
+      "term": "Change Management",
+      "category": "AI Business Value & ROI",
+      "definition": "The structured process of helping an organization adopt a new AI tool or workflow, covering training, communication, and incentives.",
+      "example": "Running workshops so staff trust and adopt a new AI assistant."
+    },
+    {
+      "term": "Copilot",
+      "category": "AI in the Workspace",
+      "definition": "An AI assistant embedded in a workflow or tool that suggests or drafts work for a human to review and accept, rather than acting fully autonomously.",
+      "example": "A coding assistant suggesting the next line as you type."
+    },
+    {
+      "term": "Prompt Library",
+      "category": "AI in the Workspace",
+      "definition": "A shared, reusable collection of vetted prompts an organization uses to get consistent results from an AI tool.",
+      "example": "A standard prompt template for summarizing meeting notes."
+    },
+    {
+      "term": "Data Privacy (in AI use)",
+      "category": "AI in the Workspace",
+      "definition": "Practices ensuring sensitive or personal information isn't leaked to, stored by, or memorized by an AI system inappropriately.",
+      "example": "Redacting customer names before sending a support ticket to an AI summarizer."
+    },
+    {
+      "term": "Shadow AI",
+      "category": "AI in the Workspace",
+      "definition": "Employees using AI tools without IT or security's knowledge or approval, creating unmanaged risk.",
+      "example": "Staff pasting confidential documents into a personal chatbot account."
+    },
+    {
+      "term": "Workflow Automation",
+      "category": "AI in the Workspace",
+      "definition": "Using AI to handle repetitive, multi-step tasks end-to-end within a business process, reducing manual work.",
+      "example": "An AI system that triages, drafts, and routes incoming support emails."
+    },
+    {
+      "term": "Upskilling",
+      "category": "AI in the Workspace",
+      "definition": "Training employees to effectively use and oversee AI tools as part of their role, rather than being replaced by them.",
+      "example": "Teaching a marketing team prompt-writing and AI output review skills."
+    }
+  ]
+}

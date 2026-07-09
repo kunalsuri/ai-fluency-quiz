@@ -1,0 +1,140 @@
+{
+  "id": "evals-benchmarking",
+  "topic": "Evals & Benchmarking",
+  "description": "MMLU, HumanEval, LLM-as-judge, regression suites, and production evaluation practices.",
+  "questions": [
+    {
+      "id": "evl-01",
+      "difficulty": "beginner",
+      "question": "What is the purpose of an 'evaluation' (eval) for a language model?",
+      "options": [
+        "To estimate the cost of running the model in production based on token usage metrics",
+        "To measure the model's capabilities, accuracy, or behavior on a defined set of tasks or prompts",
+        "To compress model weights into a format that is smaller and faster for deployment",
+        "To review and approve the model's system prompt for compliance with internal content policies"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Evals quantify what a model can and cannot do. They underpin model selection, development iteration, safety auditing, and regression detection. Without structured evals, changes to a model or prompt cannot be reliably assessed."
+    },
+    {
+      "id": "evl-02",
+      "difficulty": "intermediate",
+      "question": "What does the MMLU benchmark measure?",
+      "options": [
+        "The maximum number of tokens per minute a model can generate under sustained load",
+        "Multitask knowledge across 57 academic subjects including STEM, law, medicine, and the social sciences using multiple-choice questions",
+        "Minimum memory bandwidth utilization during model inference on a standardized GPU cluster",
+        "Multi-modal understanding of language and images in a combined reading-comprehension format"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "MMLU (Massive Multitask Language Understanding, Hendrycks et al., 2020) evaluates a model's breadth of world knowledge across 57 subjects with four-option multiple-choice questions. It became a standard benchmark for comparing general capability across frontier models.",
+      "source": "https://arxiv.org/abs/2009.03300"
+    },
+    {
+      "id": "evl-03",
+      "difficulty": "intermediate",
+      "question": "What does the HumanEval benchmark measure?",
+      "options": [
+        "Human preference for model-generated essays compared with human-written essays, scored by crowdworkers",
+        "The quality of a model's conversational emotional intelligence in simulated customer-service dialogues",
+        "Functional correctness of Python code: a model writes a function from a docstring and automated tests verify it runs correctly",
+        "Whether a model's factual answers are accurate when evaluated against a gold-standard Wikipedia knowledge base"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "HumanEval (Chen et al., 2021, OpenAI) contains 164 Python programming problems. The model fills in a function body given a docstring and signature; a test suite then executes the result. The pass@k metric reports how often at least one of k sampled solutions passes all tests.",
+      "source": "https://arxiv.org/abs/2107.03374"
+    },
+    {
+      "id": "evl-04",
+      "difficulty": "intermediate",
+      "question": "What is 'LLM-as-judge' evaluation?",
+      "options": [
+        "A legal framework in which AI-generated content is automatically reviewed by a separate language model to meet publication standards",
+        "Using a capable LLM to score or compare model outputs on subjective criteria — such as helpfulness, coherence, or safety — where automated metrics are insufficient",
+        "A real-time moderation system that blocks LLM responses that a secondary model classifies as harmful",
+        "Running the same prompt through multiple model versions and selecting the response with the highest cross-entropy score"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "LLM-as-judge (Zheng et al., 2023, MT-Bench) uses a strong model (e.g., GPT-4) to rate or pairwise-rank responses on open-ended tasks. It scales human-quality assessment cheaply, but introduces positional bias, verbosity bias, and self-preference that must be managed.",
+      "source": "https://arxiv.org/abs/2306.05685"
+    },
+    {
+      "id": "evl-05",
+      "difficulty": "intermediate",
+      "question": "What is a 'regression suite' in the context of LLM development?",
+      "options": [
+        "A set of statistical regression models used to predict model performance on unseen benchmarks from training metrics",
+        "A curated collection of test prompts and expected behaviors run automatically after every code or model change to detect performance or safety regressions",
+        "A benchmarking framework that ranks models by how well their outputs regress to the statistical mean of human-written text",
+        "A tool for rolling back model weights to a previous checkpoint whenever a new fine-tuning run reduces benchmark scores"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "A regression suite detects when a change — a prompt update, fine-tuning run, or new model version — breaks previously working behavior. Like software unit tests, regression evals are run in CI/CD pipelines to catch regressions before they reach production."
+    },
+    {
+      "id": "evl-06",
+      "difficulty": "advanced",
+      "question": "What is the 'pass@k' metric used in code generation evaluation?",
+      "options": [
+        "The probability that the model generates exactly k tokens before stopping due to a stop-sequence trigger",
+        "The fraction of benchmark problems for which at least one of k independently sampled completions passes all unit tests",
+        "A curriculum metric that measures what percentage of training examples the model can reproduce verbatim after k gradient steps",
+        "The number of human-written test cases that a model's output passes, averaged across k benchmark problems"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "pass@k estimates 'does the model know how to solve this?' by sampling k solutions and checking whether any pass the test suite. It is estimated efficiently without running k² tests (Chen et al., 2021). pass@1 measures whether the first sample passes; pass@100 measures whether any of 100 samples pass."
+    },
+    {
+      "id": "evl-07",
+      "difficulty": "advanced",
+      "question": "What is 'benchmark contamination' (or 'data contamination')?",
+      "options": [
+        "When adversarial prompts embedded in user traffic corrupt a deployed model's in-context behavior during serving",
+        "When evaluation benchmark examples appear in the model's training data, inflating benchmark scores beyond what true generalization would predict",
+        "When a benchmark suite contains mislabeled answers that unfairly penalize correct model outputs",
+        "When test-set questions are translated or paraphrased by annotators, introducing inconsistencies into the evaluation labels"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "If a model's training corpus contains the questions and answers from a benchmark, its scores reflect memorization rather than generalization. Contamination is a growing concern as models train on internet snapshots that may include MMLU, HumanEval, or GSM8K solutions. Frontier labs report contamination analyses in technical reports."
+    },
+    {
+      "id": "evl-08",
+      "difficulty": "advanced",
+      "question": "What is 'Elo rating' in the context of model evaluation platforms like LMSYS Chatbot Arena?",
+      "options": [
+        "A fixed numeric score assigned by domain experts after reviewing a standardized set of 100 model outputs",
+        "A ranking system borrowed from chess where each pairwise human-preference vote updates the relative scores of the two competing models",
+        "A metric from information theory measuring how closely a model's output distribution matches the reference answer distribution",
+        "A cost-per-token pricing index that normalizes model capability against API pricing across different providers"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Chatbot Arena presents two anonymous model responses to a real user prompt; the user picks the better one. The outcome updates each model's Elo score using the same formula as chess ratings. Over millions of votes, this produces a crowd-sourced capability ranking that is harder to game than static benchmarks."
+    },
+    {
+      "id": "evl-09",
+      "difficulty": "expert",
+      "question": "What is the 'Goodhart's Law' problem in LLM benchmarking?",
+      "options": [
+        "LLMs trained longer tend to converge to a good performance plateau that cannot be improved regardless of further compute",
+        "Once a benchmark becomes the optimization target — through fine-tuning, filtering, or prompting — it ceases to be a reliable measure of the underlying capability it was designed to proxy",
+        "Larger language models always perform better on benchmarks, making it impossible to compare models of different sizes fairly",
+        "Benchmark leaderboards are unreliable because evaluators disagree on what constitutes a correct answer for open-ended tasks"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Goodhart's Law ('when a measure becomes a target, it ceases to be a good measure') is endemic in ML evaluation. Labs that optimize directly for MMLU, HumanEval, or Chatbot Arena Elo inevitably inflate those scores without proportional gains in real-world capability, eroding the diagnostic value of the benchmark."
+    },
+    {
+      "id": "evl-10",
+      "difficulty": "expert",
+      "question": "In production LLM systems, what distinguishes an 'online' eval from an 'offline' eval?",
+      "options": [
+        "Offline evals run in the cloud while online evals run on on-premise hardware closer to the user",
+        "Online evals measure a model's ability to browse the internet; offline evals measure performance on static datasets",
+        "Offline evals run on curated held-out datasets before deployment to gate releases; online evals instrument live production traffic — sampling real user interactions — to detect quality or safety regressions post-deployment",
+        "Online evals use LLM-as-judge scoring while offline evals rely exclusively on exact-match or unit-test metrics"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Offline evals (pre-deployment) catch known failure modes against fixed golden sets. Online evals (post-deployment) catch distribution shift, unexpected user behaviors, and silent regressions that no static dataset predicted. A mature eval strategy uses both: offline to gate releases and online to monitor production continuously."
+    }
+  ]
+}

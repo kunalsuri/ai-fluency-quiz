@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "title": "Frontier — Editor's Picks",
+    "description": "Hand-picked landmark papers behind the concepts this quiz covers. Curated and reviewed, unlike the live arXiv feed."
+  },
+  "entries": [
+    {
+      "id": "attention-is-all-you-need",
+      "title": "Attention Is All You Need",
+      "authors": "Vaswani et al.",
+      "date": "2017-06",
+      "topic": "Transformer Architecture",
+      "why": "Introduced the Transformer — an encoder/decoder built entirely on self-attention, no recurrence — that underlies virtually every modern LLM.",
+      "source": "https://arxiv.org/abs/1706.03762"
+    },
+    {
+      "id": "gpt3-few-shot-learners",
+      "title": "Language Models are Few-Shot Learners",
+      "authors": "Brown et al.",
+      "date": "2020-05",
+      "topic": "AI Foundations",
+      "why": "Showed that scaling a decoder-only transformer to 175B parameters unlocks strong few-shot, in-context learning without task-specific fine-tuning.",
+      "source": "https://arxiv.org/abs/2005.14165"
+    },
+    {
+      "id": "retrieval-augmented-generation",
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "authors": "Lewis et al.",
+      "date": "2020-05",
+      "topic": "RAG & Retrieval",
+      "why": "Paired a pretrained seq2seq model with a learned dense retriever over a vector index — the blueprint modern RAG pipelines still follow.",
+      "source": "https://arxiv.org/abs/2005.11401"
+    },
+    {
+      "id": "instructgpt-rlhf",
+      "title": "Training Language Models to Follow Instructions with Human Feedback",
+      "authors": "Ouyang et al.",
+      "date": "2022-03",
+      "topic": "Safety & Alignment",
+      "why": "Introduced the RLHF fine-tuning recipe used to make base models follow instructions and prefer helpful, honest responses — the technique behind ChatGPT.",
+      "source": "https://arxiv.org/abs/2203.02155"
+    },
+    {
+      "id": "chain-of-thought-prompting",
+      "title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+      "authors": "Wei et al.",
+      "date": "2022-01",
+      "topic": "Prompting Techniques",
+      "why": "Showed that prompting a model to produce intermediate reasoning steps, rather than jumping to an answer, sharply improves multi-step problem solving.",
+      "source": "https://arxiv.org/abs/2201.11903"
+    },
+    {
+      "id": "react-reasoning-acting",
+      "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+      "authors": "Yao et al.",
+      "date": "2022-10",
+      "topic": "Agents & Tool Use",
+      "why": "Interleaves reasoning traces with tool-calling actions and observations — the loop most modern agent frameworks are built on.",
+      "source": "https://arxiv.org/abs/2210.03629"
+    },
+    {
+      "id": "constitutional-ai",
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "date": "2022-12",
+      "topic": "Safety & Alignment",
+      "why": "Replaces much of human feedback with AI-generated critiques judged against a written constitution, reducing reliance on human labelers for safety training.",
+      "source": "https://arxiv.org/abs/2212.08073"
+    },
+    {
+      "id": "self-consistency",
+      "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models",
+      "authors": "Wang et al.",
+      "date": "2022-03",
+      "topic": "Prompting Techniques",
+      "why": "Samples several diverse chain-of-thought paths for the same question and takes the majority final answer, trading extra compute for higher accuracy.",
+      "source": "https://arxiv.org/abs/2203.11171"
+    }
+  ]
+}

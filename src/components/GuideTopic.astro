@@ -1,0 +1,37 @@
+---
+// Copyright (c) 2026 Kunal Suri (CEA LIST). Apache-2.0.
+import type { GuideTopic } from '../lib/data';
+import { localePrefix, tr } from '../lib/i18n';
+import type { Lang } from '../lib/types';
+
+interface Props {
+  lang: Lang;
+  topic: GuideTopic;
+}
+
+const { lang, topic } = Astro.props;
+const p = localePrefix(lang);
+---
+
+<div class="page">
+  <section class="measure">
+    <p class="kicker"><a href={`${p}/guide/`} style="text-decoration:none;color:inherit;">{tr(lang, 'guideTitle')}</a></p>
+    <h1 style="font-size: clamp(2.2rem, 5vw, 3.6rem);">{topic.topic}</h1>
+    <p class="lede" style="margin-top: 1.2rem;">{topic.description}</p>
+    <p style="margin-top: 1.6rem;">
+      <a class="btn btn-quiet" href={`${p}/guide/${topic.slug}.txt`} download={`ai-fluency-${topic.slug}.txt`}>
+        ↓ {tr(lang, 'guideDownload')}
+      </a>
+    </p>
+  </section>
+
+  <div class="term-list measure">
+    {topic.terms.map((t) => (
+      <article class="term">
+        <h3>{t.term}</h3>
+        <p class="definition">{t.definition}</p>
+        {t.example && <span class="example">{tr(lang, 'guideExampleLabel')} {t.example}</span>}
+      </article>
+    ))}
+  </div>
+</div>

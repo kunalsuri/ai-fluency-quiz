@@ -1,0 +1,137 @@
+{
+  "id": "llm-mechanics",
+  "topic": "LLM Mechanics",
+  "description": "How LLMs run: sampling, context windows, embeddings, KV cache, quantization.",
+  "questions": [
+    {
+      "id": "mech-01",
+      "difficulty": "intermediate",
+      "question": "What does 'temperature' control in LLM sampling?",
+      "options": [
+        "The physical operating temperature constraints of the GPU hardware during execution",
+        "The absolute inference latency speed of the model generation pipelines",
+        "The randomness of token selection — lower is more deterministic, higher is more varied",
+        "The computational thinking budget duration allocated to the model before it responds"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Temperature rescales the probability distribution over next tokens. Near 0 the model almost always picks the most likely token; higher values flatten the distribution and increase variety."
+    },
+    {
+      "id": "mech-02",
+      "difficulty": "intermediate",
+      "question": "What is 'top-p' (nucleus) sampling?",
+      "options": [
+        "Configuring the sampler to pick only from the single highest-probability next token",
+        "Sampling from the smallest set of tokens whose cumulative probability reaches p",
+        "Selecting the exact p-th rank value index next-token prediction on every step",
+        "Executing token generation processes on p parallel threads and averaging the weights"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Nucleus sampling keeps the smallest set of most-probable tokens whose probabilities sum to at least p (e.g., 0.9) and samples only from that 'nucleus', cutting off the unlikely tail."
+    },
+    {
+      "id": "mech-03",
+      "difficulty": "intermediate",
+      "question": "What is a model's 'context window'?",
+      "options": [
+        "The historical date range and chronological timeline of text datasets that the model was trained on",
+        "The client-side browser window or layout frame where users chat with the model",
+        "The concurrent user request capacity that a single hosted model serves at once",
+        "The maximum sequence length of input and output tokens that the model can process at once"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "The context window is the maximum sequence length — prompt plus generated output — that a model can process at once. Content beyond it is simply not visible to the model."
+    },
+    {
+      "id": "mech-04",
+      "difficulty": "intermediate",
+      "question": "What is an 'embedding' in machine learning?",
+      "options": [
+        "A high-dimensional vector representation capturing the semantic meaning of text, images, or audio",
+        "A system design pattern for nesting a model directly inside another local application",
+        "A highly compressed backup copy of the training data stored on localized disk volumes",
+        "The specific HTML and Javascript code templates used to embed and style an interactive chatbot interface on an enterprise webpage"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Embeddings map text (or images, audio, etc.) into high-dimensional numeric vectors where semantically similar items end up close together — the foundation of semantic search."
+    },
+    {
+      "id": "mech-05",
+      "difficulty": "intermediate",
+      "question": "How does byte-pair encoding (BPE), a common tokenization method, build its vocabulary?",
+      "options": [
+        "It indexes natural language words and assigns a single unique integer token per dictionary word",
+        "It iteratively merges the most frequent pairs of symbols in the training corpus into new tokens",
+        "It tokenizes raw text payloads by splitting inputs at every whitespace or punctuation character only",
+        "It relies on crowdsourced human annotators to define and validate semantic boundary tags for tokens"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "BPE starts from small units (bytes or characters) and repeatedly merges the most frequent adjacent pairs, producing a vocabulary of subword units that balances coverage and efficiency."
+    },
+    {
+      "id": "mech-06",
+      "difficulty": "intermediate",
+      "question": "What is a model's 'knowledge cutoff'?",
+      "options": [
+        "The threshold capacity limiting the total number of facts the model can store",
+        "The specific condition or end token where the model ceases to generate text",
+        "The specific date limit after which events are not represented in the model's training datasets",
+        "A safety filter configuration designed to redact copyrighted text snippets"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "The knowledge cutoff is the approximate end date of the training data. Without external tools like web search, the model has no reliable knowledge of events after that date."
+    },
+    {
+      "id": "mech-07",
+      "difficulty": "intermediate",
+      "question": "What does it mean that most LLMs generate text 'autoregressively'?",
+      "options": [
+        "They process inputs and produce the complete output response string in a single, parallel step",
+        "They generate output one token at a time, with each new token prediction conditioned on all previously generated tokens",
+        "They calculate their target response arrays in reverse token order and then flip them before returning the final text to the UI",
+        "They mathematically regress their output token probability distributions toward the absolute statistical average seen in training data"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Autoregressive generation predicts the next token given everything so far, appends it, and repeats — which is why responses stream out token by token."
+    },
+    {
+      "id": "mech-08",
+      "difficulty": "advanced",
+      "question": "What is the KV cache used for during LLM inference?",
+      "options": [
+        "Storing historical conversation databases on local disks for later pipeline validation runs and offline tuning",
+        "Caching complete generated text responses to frequently encountered user prompt queries to bypass model inference passes entirely",
+        "Storing the attention key and value tensors of previous tokens so they aren't recomputed for each new token",
+        "Keeping an active cache copy of the network parameter weights inside RAM memory to prevent disk access latency"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "In autoregressive decoding, each new token attends to all previous tokens. The KV cache stores the already-computed key/value projections so each step only computes attention for the new token, dramatically speeding up generation at the cost of memory."
+    },
+    {
+      "id": "mech-09",
+      "difficulty": "advanced",
+      "question": "What is 'quantization' of a model?",
+      "options": [
+        "Reducing the numeric precision of weights (e.g., 16-bit to 4-bit) to cut memory and compute costs",
+        "Splitting the transformer execution tasks across multiple experimental quantum computers",
+        "Evaluating and counting the exact parameters and node layers configured inside the network",
+        "Applying advanced cryptographic encryption keys to model weight parameter files so they cannot be copied or reverse-engineered by developers"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Quantization stores weights (and sometimes activations) at lower numeric precision, such as INT8 or 4-bit formats. It shrinks memory footprint and speeds inference, usually with a small accuracy trade-off."
+    },
+    {
+      "id": "mech-10",
+      "difficulty": "advanced",
+      "question": "What is 'knowledge distillation'?",
+      "options": [
+        "Executing post-training compliance routines to identify and delete false facts from frozen model weights",
+        "Training a smaller, resource-efficient 'student' model to reproduce the logits and behavior of a larger 'teacher' model",
+        "Reconstructively extracting original copyrighted training data files back out of the frozen model parameters",
+        "Merging and averaging parameters from two distinct model layers of the exact same size into a single network"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Distillation transfers capability from a large teacher model to a smaller student by training the student on the teacher's outputs, yielding cheaper models that retain much of the performance."
+    }
+  ]
+}

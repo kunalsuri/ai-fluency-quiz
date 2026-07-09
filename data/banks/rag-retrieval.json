@@ -1,0 +1,112 @@
+{
+  "id": "rag-retrieval",
+  "topic": "RAG & Retrieval",
+  "description": "Retrieval-augmented generation, vector search, chunking, reranking.",
+  "questions": [
+    {
+      "id": "rag-01",
+      "difficulty": "intermediate",
+      "question": "What is retrieval-augmented generation (RAG)?",
+      "options": [
+        "Randomly augmenting and modifying training data batches with synthetically generated text samples",
+        "Retrieving relevant external documents and adding them to the model's context to ground its answer",
+        "Re-training the model parameters every time new knowledge documents arrive in the system",
+        "Removing outdated or toxic training information directly from the model's parameter weights"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "RAG (introduced by Lewis et al., 2020) pairs a retriever with a generator: relevant documents are fetched at query time and placed in the prompt, so answers are grounded in that evidence.",
+      "source": "https://arxiv.org/abs/2005.11401"
+    },
+    {
+      "id": "rag-02",
+      "difficulty": "intermediate",
+      "question": "Which of these is a primary motivation for using RAG instead of relying on the model's weights alone?",
+      "options": [
+        "It significantly accelerates inference speeds and response times by caching and indexing generated answers inside local memory buffers",
+        "It dynamically compresses and reduces the total quantity of input tokens the model is required to process inside the context window",
+        "It gives the model access to fresh or private knowledge without retraining, and reduces hallucination by grounding answers",
+        "It completely removes the architectural need for using a language model by routing all user query inputs directly to a database search"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Model weights are frozen at the knowledge cutoff and can't contain your private data. RAG supplies current, domain-specific evidence at query time and lets answers cite retrievable sources."
+    },
+    {
+      "id": "rag-03",
+      "difficulty": "intermediate",
+      "question": "What is a vector database used for in an AI system?",
+      "options": [
+        "Storing embeddings and finding the most similar ones to a query vector quickly",
+        "Storing and serializing the model's neural network parameter weights and bias tensors inside flat vector files on disk",
+        "Recording and auditing all raw user conversation text logs for regulatory compliance",
+        "Rendering high-performance responsive vector graphics inside the client-side chat UI"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Vector databases (e.g., Pinecone, Milvus, pgvector, Chroma) index embedding vectors and support fast approximate nearest-neighbor search, which powers semantic retrieval in RAG."
+    },
+    {
+      "id": "rag-04",
+      "difficulty": "advanced",
+      "question": "What is 'chunking' in a RAG pipeline?",
+      "options": [
+        "Compressing the core language model parameter files into smaller, quantized segments for high-speed deployment on local hardware devices",
+        "Splitting documents into smaller pieces before embedding, so retrieval returns focused, relevant passages",
+        "Batching and queuing multiple independent user queries into a single parallelized model API request",
+        "Programmatically deleting large files and outdated document directories that exceed database storage limits"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Documents are split into chunks (by size, sentence, or structure) before embedding. Chunk size is a key tuning knob: too large dilutes relevance, too small loses context."
+    },
+    {
+      "id": "rag-05",
+      "difficulty": "advanced",
+      "question": "Which metric is most commonly used to compare two embeddings for semantic similarity?",
+      "options": [
+        "Executing Levenshtein edit distance calculations between raw input text character strings",
+        "Calculating the cosine similarity between the high-dimensional vectors",
+        "The absolute difference in high-dimensional vector lengths",
+        "Jaccard overlap coefficient calculated across all characters"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Cosine similarity measures the angle between two vectors, capturing semantic closeness independent of vector magnitude. (Dot product and Euclidean distance are also used; edit distance compares raw strings, not meanings.)"
+    },
+    {
+      "id": "rag-06",
+      "difficulty": "advanced",
+      "question": "What is 'hybrid search' in retrieval systems?",
+      "options": [
+        "Executing parallel search queries across both the open public internet and an internal private local document database",
+        "Combining keyword/lexical search (like BM25) with vector/semantic search and merging the results",
+        "Routing user query inputs to two completely different language models to compare and merge answers",
+        "Alternating dynamically between high-speed cached search indices and slow exhaustive database scans"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Hybrid search fuses exact-term matching (which excels at names, codes, and rare terms) with embedding-based semantic matching, typically outperforming either approach alone."
+    },
+    {
+      "id": "rag-07",
+      "difficulty": "advanced",
+      "question": "What does a 'reranker' do in a retrieval pipeline?",
+      "options": [
+        "It re-sorts the initial retrieved candidates with a more accurate (but slower) relevance model before they reach the LLM",
+        "It automatically grades and ranks different language models based on the quality of their generated answers",
+        "It randomly shuffles search result cards to eliminate the impact of model position and verbosity biases",
+        "It mathematically calculates and ranks active system users by evaluating how effective their queries are"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "A first-stage retriever cheaply fetches, say, the top 50–100 candidates; a reranker (often a cross-encoder) then scores each query–document pair more precisely so only the best passages enter the context."
+    },
+    {
+      "id": "rag-08",
+      "difficulty": "advanced",
+      "question": "A team must choose between stuffing all reference documents into a long context window versus a RAG pipeline. Which statement best captures the trade-off?",
+      "options": [
+        "Long context window architectures are always superior because the language model natively observes and processes every single token in the corpus in parallel without relying on error-prone document filters",
+        "RAG architectures are always superior because modern document indexing, high-performance vector storage databases, and semantic retrieval algorithms never make mistakes or experience retrieval misses in production",
+        "Long context is simpler and avoids retrieval misses, but costs more per call and can degrade attention quality; RAG is cheaper and scales to huge corpora but adds pipeline complexity and retrieval failure modes",
+        "There are no meaningful technical, operational, or financial difference patterns between the two window configurations, making them completely interchangeable for development in any enterprise cloud environment"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Long-context stuffing avoids building retrieval infrastructure but pays for every token on every call and can suffer degraded recall in very long inputs. RAG scales beyond any window and cuts cost, but introduces chunking, embedding, and retrieval quality as new failure points. Many production systems combine both."
+    }
+  ]
+}

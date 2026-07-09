@@ -1,0 +1,10 @@
+---
+// Copyright (c) 2026 Kunal Suri (CEA LIST). Apache-2.0.
+import Base from '../../layouts/Base.astro';
+import Landing from '../../components/Landing.astro';
+import { tr } from '../../lib/i18n';
+---
+
+<Base lang="fr" title={tr('fr', 'heroTitle')} description={tr('fr', 'heroLede')}>
+  <Landing lang="fr" />
+</Base>

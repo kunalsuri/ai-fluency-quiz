@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<!-- Copyright (c) 2026 Kunal Suri (CEA LIST). Apache-2.0. -->
+<html lang="en" data-theme="modern">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>AI Quiz Database Audit & Verification</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='black'/><rect x='1' y='1' width='14' height='14' fill='none' stroke='%2310B981' stroke-width='2'/></svg>">
+
+  <!-- ================================================================
+       LOCALHOST-ONLY GUARD
+       This tool writes files to the local filesystem via /api/save.
+       It must never be accessible on a public host.
+       This guard runs synchronously before any other script — if the
+       origin is not localhost/127.0.0.1 the page is replaced immediately
+       and execution halts; no further scripts or UI are loaded.
+       ================================================================ -->
+  <script>
+    (function () {
+      var allowed = ['localhost', '127.0.0.1', '[::1]'];
+      if (allowed.indexOf(location.hostname) === -1) {
+        document.documentElement.innerHTML =
+          '<head><meta charset="UTF-8"><title>Not Available</title>' +
+          '<style>body{margin:0;display:flex;align-items:center;justify-content:center;' +
+          'min-height:100vh;background:#0b0f19;font-family:system-ui,sans-serif;color:#94a3b8;}' +
+          '.box{text-align:center;padding:2rem;}h1{color:#f1f5f9;font-size:1.5rem;margin-bottom:.5rem;}' +
+          'code{background:#1e293b;color:#6366f1;padding:.2em .4em;border-radius:4px;font-size:.9em;}</style>' +
+          '</head>' +
+          '<body><div class="box">' +
+          '<h1>Audit Tool — Local Only</h1>' +
+          '<p>This page is only available when running the local dev server.</p>' +
+          '<p>Run <code>npm run dev</code> and open <code>http://localhost:8000/audit.html</code></p>' +
+          '</div></body>';
+        // Freeze JS execution so no further scripts in this page can run
+        throw new Error('Audit tool blocked: non-localhost origin');
+      }
+    })();
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0b0f19;
+      color: #f1f5f9;
+    }
+    .glass-panel {
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glow-indigo {
+      box-shadow: 0 0 25px rgba(99, 102, 241, 0.15);
+    }
+    .glow-emerald {
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.15);
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090d16;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans antialiased text-slate-200">
+
+  <!-- Main Container -->
+  <div class="flex-1 flex flex-col max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
+    
+    <!-- Top Nav / Header -->
+    <header class="glass-panel glow-indigo rounded-2xl p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 relative overflow-hidden">
+      <!-- Glow background decoration -->
+      <div class="absolute -top-24 -left-24 w-48 h-48 bg-indigo-600 rounded-full blur-3xl opacity-20 pointer-events-none"></div>
+      <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-emerald-600 rounded-full blur-3xl opacity-15 pointer-events-none"></div>
+      
+      <div class="relative z-10">
+        <div class="flex items-center gap-3">
+          <span class="px-3 py-1 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-full text-xs font-semibold tracking-wider uppercase">Admin Portal</span>
+          <div id="unsaved-badge" class="hidden px-3 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full text-xs font-semibold tracking-wider uppercase flex items-center gap-1.5 animate-pulse">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Unsaved Changes
+          </div>
+          <div id="session-restored-badge" class="hidden px-3 py-1 bg-sky-500/10 text-sky-400 border border-sky-500/20 rounded-full text-xs font-semibold tracking-wider uppercase flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span> Session Restored
+          </div>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold font-display text-white mt-2 tracking-tight">Database Provenance Audit</h1>
+        <p class="text-slate-400 mt-1 max-w-2xl text-sm sm:text-base">Verify questions and generate the data provenance matrix. Changes are tracked in <code class="bg-slate-900 px-1.5 py-0.5 rounded text-indigo-300 font-mono text-xs">/data/data-provenance.md</code>.</p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center gap-3 relative z-10">
+        <label class="flex items-center gap-2 text-xs font-semibold text-slate-400 cursor-pointer select-none bg-slate-900/60 hover:bg-slate-900 px-3.5 py-3 rounded-xl border border-slate-800 hover:text-white hover:border-slate-700 transition">
+          <input type="checkbox" id="cb-autosave" checked class="w-4 h-4 rounded border-slate-700 bg-slate-950 text-indigo-600 focus:ring-indigo-500 cursor-pointer">
+          Auto-Save on Click
+        </label>
+        <button id="btn-save-fs" onclick="saveToDisk()" class="flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-medium rounded-xl border border-indigo-400/20 shadow-lg shadow-indigo-600/10 transition duration-150 group">
+          <svg class="w-5 h-5 text-indigo-200 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+          </svg>
+          Save to Workspace
+        </button>
+        <button id="btn-download" onclick="downloadFile()" class="flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-medium rounded-xl border border-slate-700 transition duration-150">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+          </svg>
+          Download .md
+        </button>
+        <button id="btn-copy" onclick="copyToClipboard()" class="flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-medium rounded-xl border border-slate-700 transition duration-150">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m-4 8h5m-5 0l2-2m-2 2l2 2"/>
+          </svg>
+          Copy Markdown
+        </button>
+        <button onclick="clearSessionCache()" title="Clear local browser session cache" class="flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-red-900/50 hover:border-red-700/50 text-slate-400 hover:text-red-300 font-medium rounded-xl border border-slate-700 transition duration-150">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
+          Clear Cache
+        </button>
+      </div>
+    </header>
+
+    <!-- Stats & Filters Bar -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      
+      <!-- Stats Sidebar -->
+      <div class="glass-panel rounded-2xl p-6 flex flex-col justify-between space-y-6 lg:col-span-1">
+        <div>
+          <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-400">Database Progress</h2>
+          <div class="mt-4 flex items-baseline gap-2">
+            <span id="stat-percent" class="text-4xl font-extrabold text-white font-display">0%</span>
+            <span class="text-slate-400 text-sm">verified</span>
+          </div>
+          <!-- Progress bar -->
+          <div class="w-full bg-slate-900 rounded-full h-2.5 mt-3 overflow-hidden border border-slate-800">
+            <div id="stat-progress-bar" class="bg-indigo-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+          </div>
+          <div class="mt-4 grid grid-cols-2 gap-4 text-xs">
+            <div class="bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/80">
+              <span class="text-slate-400 block font-medium">Verified</span>
+              <span id="stat-verified" class="text-lg font-bold text-emerald-400 mt-0.5 block">0</span>
+            </div>
+            <div class="bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/80">
+              <span class="text-slate-400 block font-medium">Remaining</span>
+              <span id="stat-remaining" class="text-lg font-bold text-amber-400 mt-0.5 block">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-slate-800/80 text-xs text-slate-400 space-y-2">
+          <div class="flex justify-between">
+            <span>Total Questions:</span>
+            <span id="stat-total" class="font-semibold text-white">0</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Verified Count:</span>
+            <span id="stat-verified-raw" class="font-semibold text-emerald-400">0</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Unverified Count:</span>
+            <span id="stat-unverified-raw" class="font-semibold text-slate-300">0</span>
+          </div>
+          <div class="flex justify-between items-center pt-1">
+            <span>Last Saved:</span>
+            <span id="stat-last-saved" class="font-semibold text-slate-500 text-[10px]">Never</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters Panel -->
+      <div class="glass-panel rounded-2xl p-6 lg:col-span-3 space-y-4 flex flex-col justify-center">
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Filter & Search Database</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Search box -->
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg class="h-5 w-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </div>
+            <input type="text" id="search-input" oninput="applyFilters()" placeholder="Search text, explanations or IDs... (Press '/' to focus)" class="block w-full pl-10 pr-3 py-2.5 bg-slate-900/80 border border-slate-800 rounded-xl text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm">
+          </div>
+
+          <!-- Topic Filter -->
+          <div>
+            <select id="filter-topic" onchange="applyFilters()" class="block w-full px-3 py-2.5 bg-slate-900/80 border border-slate-800 rounded-xl text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm">
+              <option value="all">All Topics</option>
+            </select>
+          </div>
+
+          <!-- Difficulty Filter -->
+          <div>
+            <select id="filter-difficulty" onchange="applyFilters()" class="block w-full px-3 py-2.5 bg-slate-900/80 border border-slate-800 rounded-xl text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm">
+              <option value="all">All Difficulties</option>
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+              <option value="expert">Expert</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-4 pt-2">
+          <!-- Status buttons -->
+          <div class="flex items-center gap-1.5 bg-slate-900/60 p-1.5 rounded-xl border border-slate-800/80">
+            <button onclick="setStatusFilter('all')" id="btn-status-all" class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white transition">All Statuses</button>
+            <button onclick="setStatusFilter('verified')" id="btn-status-verified" class="px-4 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition">Verified Only</button>
+            <button onclick="setStatusFilter('unverified')" id="btn-status-unverified" class="px-4 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition">Unverified Only</button>
+          </div>
+
+          <button onclick="resetFilters()" class="text-xs font-medium text-indigo-400 hover:text-indigo-300 transition flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+            </svg>
+            Clear All Filters
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions Area -->
+    <main class="flex-1 flex flex-col min-h-[400px]">
+      <!-- Summary header for list -->
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+          Questions List
+          <span id="filtered-count-badge" class="px-2.5 py-0.5 bg-slate-800 text-slate-400 text-xs rounded-full border border-slate-700">0 of 0 matches</span>
+        </h2>
+        <span class="text-xs text-slate-500 hidden sm:inline">Use checkboxes next to question cards to mark verification status</span>
+      </div>
+
+      <!-- Question Cards Grid -->
+      <div id="questions-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Spinner placeholder -->
+        <div class="col-span-full flex flex-col items-center justify-center py-20 space-y-3">
+          <svg class="animate-spin h-10 w-10 text-indigo-500" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <span class="text-slate-400 text-sm">Loading quiz database banks...</span>
+        </div>
+      </div>
+      
+      <!-- Empty state -->
+      <div id="empty-state" class="hidden py-16 flex flex-col items-center justify-center text-center space-y-4">
+        <div class="p-4 bg-slate-900 rounded-full border border-slate-800 text-slate-600">
+          <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"/>
+          </svg>
+        </div>
+        <div class="space-y-1">
+          <h3 class="text-lg font-semibold text-white">No Questions Match Filters</h3>
+          <p class="text-slate-500 text-sm max-w-md">Try clearing your search query or altering filters to find target questions.</p>
+        </div>
+        <button onclick="resetFilters()" class="px-4 py-2 bg-slate-850 hover:bg-slate-800 border border-slate-700 text-indigo-400 text-xs font-semibold rounded-xl transition">Reset Filters</button>
+      </div>
+    </main>
+
+    <!-- Toast Notification System -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3"></div>
+
+    <!-- Footer -->
+    <footer class="py-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+      <p>© 2026 AI Fluency Quiz Engine. &nbsp;·&nbsp; Progress auto-saved to browser cache.</p>
+      <div class="flex gap-4">
+        <span>Press <kbd class="px-1.5 py-0.5 bg-slate-900 rounded border border-slate-800 text-slate-400">Ctrl + S</kbd> to save to workspace</span>
+        <a href="../index.html" class="hover:text-white transition flex items-center gap-1">
+          Back to Quiz
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // ─── Constants ────────────────────────────────────────────────────────────
+    const LS_KEY = 'audit_verified_ids';      // localStorage key for verified IDs
+    const LS_TS_KEY = 'audit_last_saved_ts';  // localStorage key for last-saved timestamp
+
+    // ─── System Data State ────────────────────────────────────────────────────
+    let manifestData = null;
+    let questions = [];
+    let verifiedIds = new Set();
+    let hasUnsavedChanges = false;
+    let fileHandle = null; // Stored if User registers workspace file via File System Access API
+    
+    // ─── Filter State ─────────────────────────────────────────────────────────
+    let filterState = {
+      search: "",
+      topic: "all",
+      difficulty: "all",
+      status: "all" // all, verified, unverified
+    };
+
+    // ─── localStorage helpers ─────────────────────────────────────────────────
+
+    /** Persist current verifiedIds to localStorage immediately. */
+    function saveToLocalStorage() {
+      try {
+        const arr = Array.from(verifiedIds);
+        localStorage.setItem(LS_KEY, JSON.stringify(arr));
+        const ts = new Date().toLocaleTimeString();
+        localStorage.setItem(LS_TS_KEY, ts);
+        document.getElementById('stat-last-saved').textContent = ts;
+      } catch (e) {
+        console.warn('localStorage write failed', e);
+      }
+    }
+
+    /**
+     * Load verifiedIds from localStorage.
+     * Returns the number of IDs restored (0 if nothing was stored).
+     */
+    function loadFromLocalStorage() {
+      try {
+        const raw = localStorage.getItem(LS_KEY);
+        if (!raw) return 0;
+        const arr = JSON.parse(raw);
+        if (!Array.isArray(arr) || arr.length === 0) return 0;
+        arr.forEach(id => verifiedIds.add(id));
+
+        // Restore last-saved timestamp display
+        const ts = localStorage.getItem(LS_TS_KEY);
+        if (ts) document.getElementById('stat-last-saved').textContent = ts;
+        return arr.length;
+      } catch (e) {
+        console.warn('localStorage read failed', e);
+        return 0;
+      }
+    }
+
+    /** Clear localStorage cache and reload the page from the provenance file. */
+    async function clearSessionCache() {
+      if (!confirm('This will clear the browser session cache and reload verified status from the saved data-provenance.md file. Continue?')) return;
+      try {
+        localStorage.removeItem(LS_KEY);
+        localStorage.removeItem(LS_TS_KEY);
+      } catch (e) { /* ignore */ }
+      verifiedIds.clear();
+      await parseProvenanceFile();
+      updateStats();
+      applyFilters();
+      showToast('Session cache cleared. Status reloaded from data-provenance.md.', 'info');
+    }
+
+    // ─── Initialize application ───────────────────────────────────────────────
+    window.addEventListener('DOMContentLoaded', async () => {
+      // Hotkey listeners
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '/' && document.activeElement !== document.getElementById('search-input')) {
+          e.preventDefault();
+          document.getElementById('search-input').focus();
+        }
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+          e.preventDefault();
+          saveToDisk();
+        }
+      });
+
+      await loadDatabase();
+    });
+
+    // Warn user before closing if there are disk-unsaved changes
+    window.addEventListener('beforeunload', (e) => {
+      if (hasUnsavedChanges) {
+        e.preventDefault();
+        e.returnValue = 'You have changes not yet saved to data-provenance.md. Are you sure you want to leave?';
+      }
+    });
+
+    // Load Database & Parse Provenance File
+    async function loadDatabase() {
+      showLoading(true);
+      try {
+        // 1. Fetch manifest
+        const manifestResponse = await fetch('data/manifest.json');
+        if (!manifestResponse.ok) throw new Error("Failed to load data/manifest.json");
+        manifestData = await manifestResponse.json();
+
+        // Populate Topic selector
+        const topicSelect = document.getElementById('filter-topic');
+        manifestData.banks.forEach(bank => {
+          const opt = document.createElement('option');
+          opt.value = bank.id;
+          opt.textContent = bank.topic;
+          topicSelect.appendChild(opt);
+        });
+
+        // 2. Load all question banks in parallel
+        const fetchPromises = manifestData.banks.map(async (bank) => {
+          try {
+            const resp = await fetch('data/' + bank.file);
+            if (!resp.ok) throw new Error(`Failed to load data/${bank.file}`);
+            const bankData = await resp.json();
+            
+            // Map questions with bank metadata
+            return bankData.questions.map(q => ({
+              ...q,
+              bankId: bank.id,
+              topic: bank.topic
+            }));
+          } catch (err) {
+            console.error(err);
+            showToast(`Error loading bank '${bank.topic}': ${err.message}`, 'error');
+            return [];
+          }
+        });
+
+        const bankQuestionArrays = await Promise.all(fetchPromises);
+        questions = bankQuestionArrays.flat();
+
+        // 3. Load verified state – priority order:
+        //    a) localStorage (survives page refresh / mid-session exit)
+        //    b) data-provenance.md (ground truth written to disk)
+        //
+        // Strategy: first load from the .md file (the canonical source), then
+        // *merge* any additional IDs found in localStorage that aren't already
+        // in the file (i.e. work done since the last disk save).
+        await parseProvenanceFile();     // populates verifiedIds from disk file
+        const diskVerified = new Set(verifiedIds); // snapshot of what's on disk
+
+        const lsCount = loadFromLocalStorage(); // merges ls IDs into verifiedIds
+        const newFromLs = [...verifiedIds].filter(id => !diskVerified.has(id));
+
+        if (newFromLs.length > 0) {
+          // There are locally-cached verifications not yet written to disk
+          document.getElementById('session-restored-badge').classList.remove('hidden');
+          // These are unsaved relative to disk
+          setUnsavedChanges(true);
+          showToast(`Session restored: ${newFromLs.length} unsaved verification(s) recovered from browser cache.`, 'info');
+        } else if (lsCount > 0) {
+          // localStorage matched the file – show a subtle indicator briefly
+          document.getElementById('session-restored-badge').classList.remove('hidden');
+          setTimeout(() => {
+            document.getElementById('session-restored-badge').classList.add('hidden');
+          }, 3000);
+        }
+
+        // Update indicators
+        updateStats();
+        applyFilters();
+        
+      } catch (err) {
+        console.error(err);
+        document.getElementById('questions-grid').innerHTML = `
+          <div class="col-span-full bg-red-950/20 border border-red-900/60 p-6 rounded-2xl text-center">
+            <svg class="w-12 h-12 text-red-500 mx-auto mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+            <h3 class="text-lg font-bold text-white">Database Load Failure</h3>
+            <p class="text-slate-400 text-sm mt-1">${err.message}</p>
+            <button onclick="loadDatabase()" class="mt-4 px-4 py-2 bg-indigo-600 text-xs font-semibold rounded-lg hover:bg-indigo-500 transition">Retry Load</button>
+          </div>
+        `;
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    // Fetch and parse the markdown table mapping of verified questions
+    async function parseProvenanceFile() {
+      verifiedIds.clear();
+      try {
+        const resp = await fetch('data/data-provenance.md');
+        if (!resp.ok) {
+          console.warn("data-provenance.md not found or inaccessible; starting fresh.");
+          return;
+        }
+        
+        const markdown = await resp.text();
+        const lines = markdown.split('\n');
+        
+        let inTable = false;
+        for (const line of lines) {
+          // Detect table rows by finding patterns of pipes
+          if (line.includes('|')) {
+            const parts = line.split('|').map(p => p.trim());
+            // Ignore headers and separator rows
+            if (parts.length >= 3 && !parts[1].toLowerCase().includes('verified') && !parts[1].includes(':---')) {
+              const checkCell = parts[1]; // Verified column: e.g. `[x]` or `[ ]`
+              const questionId = parts[2]; // ID column
+              
+              if (questionId && questionId !== 'Question ID') {
+                const isVerified = checkCell === '[x]' || checkCell === '[X]' || checkCell.toLowerCase().includes('yes') || checkCell.includes('✅');
+                if (isVerified) {
+                  verifiedIds.add(questionId);
+                }
+              }
+            }
+          }
+        }
+        console.log(`Parsed ${verifiedIds.size} verified questions from data-provenance.md.`);
+      } catch (err) {
+        console.error("Error parsing data-provenance.md", err);
+      }
+    }
+
+    // Toggle single question verification status
+    function toggleVerification(id) {
+      if (verifiedIds.has(id)) {
+        verifiedIds.delete(id);
+      } else {
+        verifiedIds.add(id);
+      }
+
+      // ── Always persist to localStorage immediately so progress survives ──
+      saveToLocalStorage();
+      
+      setUnsavedChanges(true);
+      updateStats();
+      
+      // Update specific card UI without redraw to preserve scroll & layout state
+      const card = document.querySelector(`[data-q-id="${id}"]`);
+      if (card) {
+        const isVerified = verifiedIds.has(id);
+        const checkEl = card.querySelector('.q-checkbox');
+        if (checkEl) checkEl.checked = isVerified;
+        
+        if (isVerified) {
+          card.classList.remove('border-slate-800', 'bg-slate-900/40');
+          card.classList.add('border-emerald-500/50', 'bg-emerald-950/5', 'glow-emerald');
+          card.querySelector('.status-tag').innerHTML = `<span class="px-2.5 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full text-xs font-semibold">Verified</span>`;
+        } else {
+          card.classList.remove('border-emerald-500/50', 'bg-emerald-950/5', 'glow-emerald');
+          card.classList.add('border-slate-800', 'bg-slate-900/40');
+          card.querySelector('.status-tag').innerHTML = `<span class="px-2.5 py-0.5 bg-slate-800 text-slate-400 border border-slate-700/60 rounded-full text-xs font-semibold">Auditing</span>`;
+        }
+      }
+
+      // Auto-save to workspace .md file in the background if enabled
+      if (document.getElementById('cb-autosave').checked) {
+        saveToDiskSilently();
+      }
+    }
+
+    // Toggle status filters (All, Verified, Unverified)
+    function setStatusFilter(status) {
+      filterState.status = status;
+      
+      // Update UI button states
+      const buttons = {
+        all: document.getElementById('btn-status-all'),
+        verified: document.getElementById('btn-status-verified'),
+        unverified: document.getElementById('btn-status-unverified')
+      };
+      
+      Object.keys(buttons).forEach(key => {
+        if (key === status) {
+          buttons[key].className = "px-4 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white transition";
+        } else {
+          buttons[key].className = "px-4 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition";
+        }
+      });
+
+      applyFilters();
+    }
+
+    // Apply active filter state and update visible list of cards
+    function applyFilters() {
+      filterState.search = document.getElementById('search-input').value.toLowerCase().trim();
+      filterState.topic = document.getElementById('filter-topic').value;
+      filterState.difficulty = document.getElementById('filter-difficulty').value;
+
+      const filtered = questions.filter(q => {
+        // Search filter
+        const matchesSearch = filterState.search === "" ||
+          q.id.toLowerCase().includes(filterState.search) ||
+          q.question.toLowerCase().includes(filterState.search) ||
+          q.explanation.toLowerCase().includes(filterState.search) ||
+          q.topic.toLowerCase().includes(filterState.search);
+
+        // Topic filter
+        const matchesTopic = filterState.topic === "all" || q.bankId === filterState.topic;
+
+        // Difficulty filter
+        const matchesDifficulty = filterState.difficulty === "all" || q.difficulty === filterState.difficulty;
+
+        // Status filter
+        const isVerified = verifiedIds.has(q.id);
+        const matchesStatus = filterState.status === "all" || 
+          (filterState.status === "verified" && isVerified) ||
+          (filterState.status === "unverified" && !isVerified);
+
+        return matchesSearch && matchesTopic && matchesDifficulty && matchesStatus;
+      });
+
+      renderQuestionCards(filtered);
+    }
+
+    // Reset all filter fields
+    function resetFilters() {
+      document.getElementById('search-input').value = "";
+      document.getElementById('filter-topic').value = "all";
+      document.getElementById('filter-difficulty').value = "all";
+      setStatusFilter('all');
+    }
+
+    // Render cards to UI
+    function renderQuestionCards(filteredQuestions) {
+      const grid = document.getElementById('questions-grid');
+      const emptyState = document.getElementById('empty-state');
+      const badge = document.getElementById('filtered-count-badge');
+      
+      badge.textContent = `${filteredQuestions.length} of ${questions.length} matches`;
+
+      if (filteredQuestions.length === 0) {
+        grid.innerHTML = "";
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      
+      emptyState.classList.add('hidden');
+
+      grid.innerHTML = filteredQuestions.map(q => {
+        const isVerified = verifiedIds.has(q.id);
+        const borderClass = isVerified 
+          ? 'border-emerald-500/50 bg-emerald-950/5 glow-emerald' 
+          : 'border-slate-800 bg-slate-900/40';
+          
+        const statusBadge = isVerified 
+          ? `<span class="px-2.5 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full text-xs font-semibold">Verified</span>`
+          : `<span class="px-2.5 py-0.5 bg-slate-800 text-slate-400 border border-slate-700/60 rounded-full text-xs font-semibold">Auditing</span>`;
+
+        let difficultyColor = "bg-slate-800 text-slate-400 border-slate-700";
+        if (q.difficulty === 'beginner') difficultyColor = "bg-green-500/10 text-green-400 border-green-500/20";
+        else if (q.difficulty === 'intermediate') difficultyColor = "bg-sky-500/10 text-sky-400 border-sky-500/20";
+        else if (q.difficulty === 'advanced') difficultyColor = "bg-amber-500/10 text-amber-400 border-amber-500/20";
+        else if (q.difficulty === 'expert') difficultyColor = "bg-purple-500/10 text-purple-400 border-purple-500/20";
+
+        // Generate options display
+        const optionsListHtml = q.options.map((opt, index) => {
+          const isCorrect = index === q.correctAnswerIndex;
+          const bgClass = isCorrect ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300' : 'bg-slate-950/40 border-slate-800/60 text-slate-400';
+          const icon = isCorrect 
+            ? `<svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>`
+            : `<span class="w-4 h-4 rounded-full border border-slate-700 shrink-0 text-[10px] flex items-center justify-center font-mono">${String.fromCharCode(65 + index)}</span>`;
+
+          return `
+            <div class="flex items-start gap-2.5 p-2 rounded-lg border ${bgClass} text-xs">
+              ${icon}
+              <span class="leading-tight">${escapeHtml(opt)}</span>
+            </div>
+          `;
+        }).join('');
+
+        // Only render source as a clickable link if it is a safe http(s) URL.
+        // This prevents javascript:/data: URLs from becoming clickable anchors.
+        const safeSourceUrl = typeof q.source === 'string' && /^https?:\/\//i.test(q.source) ? q.source : null;
+        const sourceLinkHtml = safeSourceUrl
+          ? `<a href="${escapeHtml(safeSourceUrl)}" target="_blank" class="inline-flex items-center gap-1 text-[11px] text-indigo-400 hover:text-indigo-300 transition hover:underline mt-2">
+              Source Citation: ${escapeHtml(safeSourceUrl)}
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+             </a>`
+          : `<span class="text-[11px] text-slate-600 block mt-2">${q.source ? 'Source: (invalid URL — not rendered)' : 'No source citation provided'}</span>`;
+
+        return `
+          <div data-q-id="${q.id}" class="glass-panel rounded-xl p-5 border transition-all duration-200 flex flex-col justify-between space-y-4 hover:border-slate-700 ${borderClass}">
+            
+            <!-- Card Header -->
+            <div class="flex items-start justify-between gap-3">
+              <div class="space-y-1">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="font-mono text-xs font-bold text-slate-400 bg-slate-900 border border-slate-800 px-2 py-0.5 rounded">${q.id}</span>
+                  <span class="px-2.5 py-0.5 border rounded-full text-xs font-medium uppercase tracking-wider ${difficultyColor}">${q.difficulty}</span>
+                  <span class="text-[11px] text-slate-400 bg-slate-900/60 border border-slate-800/80 px-2 py-0.5 rounded">${escapeHtml(q.topic)}</span>
+                </div>
+                <h3 class="text-sm font-semibold text-white leading-snug mt-2">${escapeHtml(q.question)}</h3>
+              </div>
+              
+              <!-- Checkbox -->
+              <div class="flex items-center shrink-0">
+                <input type="checkbox" 
+                       id="cb-${q.id}"
+                       class="q-checkbox w-5.5 h-5.5 rounded border-slate-800 text-indigo-600 focus:ring-indigo-500 focus:ring-offset-slate-900 bg-slate-950 transition cursor-pointer"
+                       ${isVerified ? 'checked' : ''}
+                       onclick="toggleVerification('${q.id}')">
+              </div>
+            </div>
+
+            <!-- Options & Explanation -->
+            <div class="space-y-3 pt-1">
+              <div class="grid grid-cols-1 gap-2">
+                ${optionsListHtml}
+              </div>
+              
+              <div class="p-3 bg-slate-950/60 border border-slate-900 rounded-lg space-y-1 text-xs">
+                <span class="font-semibold text-slate-400 block tracking-wide uppercase text-[10px]">Explanation:</span>
+                <p class="text-slate-300 leading-relaxed">${escapeHtml(q.explanation)}</p>
+              </div>
+            </div>
+
+            <!-- Card Footer -->
+            <div class="flex justify-between items-center border-t border-slate-800/50 pt-3 mt-1">
+              <div class="status-tag">
+                ${statusBadge}
+              </div>
+              ${sourceLinkHtml}
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Helper functions
+    function showLoading(isLoading) {
+      // Unused since cards layout handles the spinner inside grid directly
+    }
+
+    function setUnsavedChanges(unsaved) {
+      hasUnsavedChanges = unsaved;
+      const badge = document.getElementById('unsaved-badge');
+      if (unsaved) {
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
+
+    // Update the visual charts and statistics dashboard values
+    function updateStats() {
+      const total = questions.length;
+      const verified = verifiedIds.size;
+      const unverified = total - verified;
+      const percent = total > 0 ? ((verified / total) * 100).toFixed(1) : "0.0";
+
+      document.getElementById('stat-total').textContent = total;
+      document.getElementById('stat-verified').textContent = verified;
+      document.getElementById('stat-verified-raw').textContent = verified;
+      document.getElementById('stat-remaining').textContent = unverified;
+      document.getElementById('stat-unverified-raw').textContent = unverified;
+      document.getElementById('stat-percent').textContent = `${percent}%`;
+      
+      document.getElementById('stat-progress-bar').style.width = `${percent}%`;
+      
+      // Color shifts the bar for higher percentage completion
+      const progressBar = document.getElementById('stat-progress-bar');
+      if (parseFloat(percent) === 100) {
+        progressBar.className = "bg-emerald-500 h-2.5 rounded-full transition-all duration-300";
+      } else if (parseFloat(percent) > 50) {
+        progressBar.className = "bg-indigo-500 h-2.5 rounded-full transition-all duration-300";
+      } else {
+        progressBar.className = "bg-amber-500 h-2.5 rounded-full transition-all duration-300";
+      }
+    }
+
+    // Generate markdown string for provenance table
+    function generateMarkdown() {
+      const total = questions.length;
+      const verified = verifiedIds.size;
+      const percent = total > 0 ? ((verified / total) * 100).toFixed(1) : "0.0";
+
+      let md = `# Data Provenance & Verification\n\n`;
+      md += `This file tracks the verification status of all questions in the AI Fluency Quiz database.\n`;
+      md += `An administrator/expert can audit and verify questions using the \`audit.html\` tool at the root of the project.\n\n`;
+      md += `Total Questions: ${total}\n`;
+      md += `Verified Questions: ${verified} (${percent}%)\n\n`;
+      md += `## Verification Table\n\n`;
+      md += `| Verified | Question ID | Topic | Difficulty | Question | Explanation | Source |\n`;
+      md += `| :---: | :---: | :--- | :---: | :--- | :--- | :--- |\n`;
+
+      // Sort questions by ID to maintain a stable markdown output order (prevent git diff noise)
+      const sortedQuestions = [...questions].sort((a, b) => a.id.localeCompare(b.id));
+
+      sortedQuestions.forEach(q => {
+        const isVerified = verifiedIds.has(q.id) ? '[x]' : '[ ]';
+        const cleanQuestion = escapeMarkdownCell(q.question);
+        const cleanExplanation = escapeMarkdownCell(q.explanation);
+        const sourceVal = q.source ? q.source : 'N/A';
+        
+        md += `| ${isVerified} | ${q.id} | ${q.topic} | ${q.difficulty} | ${cleanQuestion} | ${cleanExplanation} | ${sourceVal} |\n`;
+      });
+
+      return md;
+    }
+
+    function escapeMarkdownCell(text) {
+      if (!text) return 'N/A';
+      return text
+        .replace(/\|/g, '\\|')        // Escape markdown pipe
+        .replace(/\r?\n/g, '<br>')    // Replace newlines with HTML linebreaks to keep rows intact
+        .trim();
+    }
+
+    function escapeHtml(unsafe) {
+      if (!unsafe) return "";
+      return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // --- Save Actions ---
+
+    // Primary: Save directly to Workspace File System Access API or local backend API
+    async function saveToDisk() {
+      const markdown = generateMarkdown();
+
+      // Try local server API first
+      try {
+        const response = await fetch('/api/save', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ markdown })
+        });
+        
+        if (response.ok) {
+          const resData = await response.json();
+          if (resData.success) {
+            setUnsavedChanges(false);
+            showToast("Saved directly to data/data-provenance.md!", "success");
+            return;
+          }
+        }
+      } catch (err) {
+        console.log("Local API save failed or not available, falling back to browser APIs...", err);
+      }
+      
+      // If we already obtained a file handle, save directly
+      if (fileHandle) {
+        try {
+          await writeContentToFileHandle(fileHandle, markdown);
+          setUnsavedChanges(false);
+          showToast("Saved directly to Workspace successfully!", "success");
+          return;
+        } catch (err) {
+          console.error("Direct write failed, requesting new file picker", err);
+          fileHandle = null;
+        }
+      }
+
+      // Check support for File System Access API
+      if ('showSaveFilePicker' in window) {
+        try {
+          const options = {
+            suggestedName: 'data-provenance.md',
+            types: [{
+              description: 'Markdown Files',
+              accept: {
+                'text/markdown': ['.md'],
+              },
+            }],
+          };
+          
+          fileHandle = await window.showSaveFilePicker(options);
+          await writeContentToFileHandle(fileHandle, markdown);
+          setUnsavedChanges(false);
+          showToast("Workspace file updated successfully!", "success");
+        } catch (err) {
+          // User cancelled or write failed
+          console.warn("Save picker failed or aborted", err);
+          if (err.name !== 'AbortError') {
+            showToast("Failed to write to file system. Attempting file download...", "warning");
+            downloadFileFallback(markdown);
+          }
+        }
+      } else {
+        // Fallback for browsers that don't support showSaveFilePicker
+        showToast("File System Access API not supported. Downloading markdown...", "info");
+        downloadFileFallback(markdown);
+      }
+    }
+
+    // Auto-saves in background without showing visual alerts to keep workflow smooth.
+    // Falls back gracefully if the dev server isn't running.
+    async function saveToDiskSilently() {
+      const markdown = generateMarkdown();
+      try {
+        const response = await fetch('/api/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ markdown })
+        });
+        if (response.ok) {
+          const resData = await response.json();
+          if (resData.success) {
+            setUnsavedChanges(false);
+            // Update last-saved timestamp
+            const ts = new Date().toLocaleTimeString();
+            document.getElementById('stat-last-saved').textContent = ts + ' (disk)';
+            // Also sync localStorage so it matches disk
+            saveToLocalStorage();
+            return;
+          }
+        }
+      } catch (err) {
+        // Dev server not running — that's OK, localStorage already saved progress.
+        console.log('Silent auto-save to disk skipped (server not available). Progress is in browser cache.', err.message);
+      }
+    }
+
+    async function writeContentToFileHandle(handle, content) {
+      // Request writing permission
+      const options = { mode: 'readwrite' };
+      if (await handle.queryPermission(options) !== 'granted') {
+        if (await handle.requestPermission(options) !== 'granted') {
+          throw new Error("Write permission denied by user");
+        }
+      }
+      
+      const writable = await handle.createWritable();
+      await writable.write(content);
+      await writable.close();
+    }
+
+    // Download fallback (always download)
+    function downloadFile() {
+      const markdown = generateMarkdown();
+      downloadFileFallback(markdown);
+    }
+
+    function downloadFileFallback(content) {
+      const blob = new Blob([content], { type: 'text/markdown;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", "data-provenance.md");
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      setUnsavedChanges(false);
+      showToast("Downloaded data-provenance.md file!", "success");
+    }
+
+    // Copy to clipboard fallback
+    async function copyToClipboard() {
+      const markdown = generateMarkdown();
+      try {
+        await navigator.clipboard.writeText(markdown);
+        showToast("Markdown copied to clipboard!", "success");
+      } catch (err) {
+        showToast("Failed to copy text. Please try downloading.", "error");
+      }
+    }
+
+    // Premium Toast Notification system
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      
+      let typeClasses = "bg-slate-900 border-slate-800 text-slate-200";
+      let icon = `
+        <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+      `;
+
+      if (type === 'success') {
+        typeClasses = "bg-emerald-950/90 border-emerald-500/30 text-emerald-100";
+        icon = `
+          <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        `;
+      } else if (type === 'error') {
+        typeClasses = "bg-red-950/90 border-red-500/30 text-red-100";
+        icon = `
+          <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
+        `;
+      } else if (type === 'warning') {
+        typeClasses = "bg-amber-950/90 border-amber-500/30 text-amber-100";
+        icon = `
+          <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
+        `;
+      }
+
+      toast.className = `flex items-center gap-3 px-4 py-3 rounded-xl border shadow-2xl transition duration-300 translate-y-2 opacity-0 glass-panel ${typeClasses}`;
+      toast.innerHTML = `
+        ${icon}
+        <span class="text-sm font-medium leading-tight">${message}</span>
+      `;
+
+      container.appendChild(toast);
+      
+      // Trigger animations
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 50);
+
+      // Remove after 3.5s
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'scale-95');
+        setTimeout(() => {
+          container.removeChild(toast);
+        }, 300);
+      }, 3500);
+    }
+  </script>
+</body>
+</html>

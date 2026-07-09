@@ -1,0 +1,28 @@
+---
+// Copyright (c) 2026 Kunal Suri (CEA LIST). Apache-2.0.
+// The only island in the product. Question data is embedded at build time as
+// JSON (escaped so "</script>" in content can't break out), so the page makes
+// zero network requests after load.
+import { getQuizPayload } from '../lib/data';
+import type { Lang } from '../lib/types';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const payload = getQuizPayload(lang);
+const json = JSON.stringify(payload).replace(/</g, '\\u003c');
+---
+
+<div class="page">
+  <div class="measure" style="margin-inline: auto;">
+    <script type="application/json" id="quiz-data" set:html={json} />
+    <div id="quiz-root"></div>
+  </div>
+</div>
+
+<script>
+  import { mountQuiz } from '../scripts/quiz-island';
+  mountQuiz();
+</script>

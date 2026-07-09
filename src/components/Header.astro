@@ -1,0 +1,39 @@
+---
+// Copyright (c) 2026 Kunal Suri (CEA LIST). Apache-2.0.
+import { alternatePath, localePrefix, tr } from '../lib/i18n';
+import type { Lang } from '../lib/types';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const p = localePrefix(lang);
+const path = Astro.url.pathname;
+
+const items = [
+  { href: `${p}/`, label: tr(lang, 'navAssessment') },
+  { href: `${p}/guide/`, label: tr(lang, 'navGuide') },
+  { href: `${p}/frontier/`, label: tr(lang, 'navFrontier') },
+];
+
+function isCurrent(href: string): boolean {
+  const clean = path.endsWith('/') ? path : `${path}/`;
+  if (href === `${p}/`) return clean === href || clean.startsWith(`${p}/quiz`);
+  return clean.startsWith(href);
+}
+---
+
+<header class="site-header">
+  <div class="page">
+    <a class="wordmark" href={`${p}/`}>AI<em>Fluency</em></a>
+    <nav class="site-nav" aria-label="Main">
+      {items.map((item) => (
+        <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+      ))}
+      <a class="lang-toggle" href={alternatePath(lang, path)} aria-label={lang === 'en' ? 'Version française' : 'English version'}>
+        {lang === 'en' ? 'FR' : 'EN'}
+      </a>
+    </nav>
+  </div>
+</header>

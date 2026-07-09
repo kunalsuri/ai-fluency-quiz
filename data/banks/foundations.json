@@ -1,0 +1,137 @@
+{
+  "id": "foundations",
+  "topic": "AI Foundations",
+  "description": "Core terminology: models, tokens, training, inference, hallucination.",
+  "questions": [
+    {
+      "id": "fnd-01",
+      "difficulty": "beginner",
+      "question": "What does 'LLM' stand for?",
+      "options": [
+        "Large Language Model",
+        "Linear Logic Machine",
+        "Latent Learning Matrix",
+        "Layered Lexical Memory"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Large Language Models are neural networks trained on massive text datasets to process and generate language."
+    },
+    {
+      "id": "fnd-02",
+      "difficulty": "beginner",
+      "question": "In model names like GPT-4, what does 'GPT' stand for?",
+      "options": [
+        "General Purpose Technology Engine",
+        "Generative Pre-trained Transformer",
+        "Guided Prediction Tool Framework",
+        "Graphical Processing Terminal System"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "GPT stands for Generative Pre-trained Transformer: a transformer-based model that is first pre-trained on large text corpora and then generates text."
+    },
+    {
+      "id": "fnd-03",
+      "difficulty": "beginner",
+      "question": "What is a 'token' in the context of language models?",
+      "options": [
+        "A specialized cryptocurrency token used to pay for API usage rates",
+        "A temporary cryptographic security credential and OAuth validation token used for user authentication",
+        "A chunk of text (a word, subword, or character) that the model processes",
+        "A single pixel value extracted from an image payload during processing"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Tokens are the basic units language models read and produce. Depending on the tokenizer, a token can be a whole word, part of a word, or a single character."
+    },
+    {
+      "id": "fnd-04",
+      "difficulty": "beginner",
+      "question": "What does 'training' refer to in machine learning?",
+      "options": [
+        "Developing instructional courses to teach enterprise users how to operate the model interface",
+        "Adjusting the model's internal mathematical weights by exposing it to training data",
+        "Compiling, packaging, and installing the model registry files onto a production GPU server",
+        "Manually coding the logical rules and constraints that the model must follow"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Training is the process where a model learns patterns from data by iteratively adjusting its parameters (weights) to reduce prediction error."
+    },
+    {
+      "id": "fnd-05",
+      "difficulty": "beginner",
+      "question": "What is 'inference' in the context of AI models?",
+      "options": [
+        "The specific training phase where model weights are updated dynamically using new optimization algorithms",
+        "Processing input queries through a frozen, pre-trained model to generate corresponding predictions or outputs",
+        "Compressing, pruning, and quantizing a pre-trained model to fit on resource-constrained mobile hardware",
+        "The comprehensive legal and compliance review performed on a model before its commercial public release"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Inference is using an already-trained model to make predictions or generate output. The weights are frozen; no learning happens during inference."
+    },
+    {
+      "id": "fnd-06",
+      "difficulty": "beginner",
+      "question": "What is an AI 'hallucination'?",
+      "options": [
+        "A visual noise artifact or rendering error occurring inside generated image files",
+        "When the model refuses to answer a question due to its safety guardrails",
+        "When the model produces fluent, confident output that is factually false or fabricated",
+        "A critical software memory leak bug that completely crashes the hosted model server"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Hallucinations are outputs that sound plausible and confident but are wrong or invented, such as fake citations, nonexistent APIs, or incorrect facts."
+    },
+    {
+      "id": "fnd-07",
+      "difficulty": "beginner",
+      "question": "Which statement best describes the relationship between AI, machine learning, and deep learning?",
+      "options": [
+        "They represent three completely unrelated technological fields developed in parallel by separate scientific research bodies",
+        "Deep learning is a specific subset of machine learning, which itself is a subset of the broader field of AI",
+        "Artificial intelligence is a small subset of machine learning, which itself is a subset of deep learning systems",
+        "Machine learning and deep learning are competing software alternatives to artificial intelligence"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "AI is the broadest field. Machine learning is the subset where systems learn from data, and deep learning is the subset of ML that uses multi-layer neural networks."
+    },
+    {
+      "id": "fnd-08",
+      "difficulty": "beginner",
+      "question": "What is a 'multimodal' model?",
+      "options": [
+        "A model compiler configured to run efficiently on multiple operating systems and CPU styles",
+        "A model trained collaboratively by multiple organizations using decentralized federated learning",
+        "A language model optimized to switch dynamically between multiple customized user personalities, response tones, and writing styles",
+        "A model that can natively process more than one type of data, such as text, images, and audio"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "Multimodal models handle multiple modalities of input and/or output — for example text, images, audio, or video — rather than text alone."
+    },
+    {
+      "id": "fnd-09",
+      "difficulty": "beginner",
+      "question": "What does it mean for a model to be 'open-weights'?",
+      "options": [
+        "The pre-trained parameter weights are officially published, allowing developers to download, modify, and run the model locally",
+        "The model is freely accessible for interactive web usage through a public playground or chatbot dashboard hosted by the model creators",
+        "The model's original training dataset directories, scraping scripts, and raw data pipelines are published under a fully public repository",
+        "The software distribution license has zero legal usage restrictions, allowing anyone to build commercial features with no compliance guidelines"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Open-weights means the trained parameter files are released for download (as with Meta's Llama models). This does not necessarily include the training data or an unrestricted license."
+    },
+    {
+      "id": "fnd-10",
+      "difficulty": "beginner",
+      "question": "When a model is described as having '7B parameters', what are the parameters?",
+      "options": [
+        "The total number of raw text documents, web scrapes, and academic research papers it was exposed to during the initial pre-training run",
+        "The learned internal mathematical weights and biases that define the neural network structure — totaling about 7 billion values",
+        "The maximum capacity of the input context window, which determines how many text tokens the model can process and remember at any one time",
+        "The hardware specifications detailing the exact quantity of high-performance GPU tensor cores needed to successfully load the model weights"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Parameters are the learned weights of the neural network. '7B' means roughly 7 billion of these values, a rough indicator of model size and capacity."
+    }
+  ]
+}

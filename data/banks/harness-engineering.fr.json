@@ -1,0 +1,112 @@
+{
+  "id": "harness-engineering",
+  "topic": "Ingénierie de harnais",
+  "description": "Concevoir l'environnement autour de l'agent : outils, permissions, boucles de rétroaction.",
+  "questions": [
+    {
+      "id": "hns-01",
+      "difficulty": "expert",
+      "question": "Dans la formule de l'ère des agents « Agent = Modèle + Harnais », qu'est-ce que le harnais ?",
+      "options": [
+        "La couche externe de filtrage de sécurité conçue pour bloquer des mots-clés et expressions spécifiques dans les sorties du modèle",
+        "Le câblage physique en fibre optique, les commutateurs haute performance et les canalisations de liquide de refroidissement reliant les clusters de GPU dans un datacenter",
+        "La couche logicielle autour du modèle : ses prompts système, ses outils, ses permissions, son environnement d'exécution et ses boucles de rétroaction",
+        "Un quota de tokens sur abonnement conçu pour limiter le nombre de mots que le modèle peut générer en un seul appel"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Le harnais est tout ce qui entoure le modèle brut et le transforme en un agent fonctionnel — accès aux outils, prompts, garde-fous, environnement et boucles de contrôle. Les agents de codage comme Claude Code, Codex CLI et Gemini CLI sont des harnais construits autour de modèles sous-jacents."
+    },
+    {
+      "id": "hns-02",
+      "difficulty": "expert",
+      "question": "Qu'est-ce que l'« ingénierie de harnais » ?",
+      "options": [
+        "Exécuter des procédures d'alignement personnalisées, des règles d'IA constitutionnelle et de l'apprentissage par renforcement pour affiner les paramètres du modèle afin qu'il se comporte de manière plus sûre et plus utile",
+        "Concevoir délibérément l'environnement de l'agent — outils, vérification, permissions, boucles de rétroaction — pour que l'agent fonctionne de manière fiable et que les erreurs passées deviennent difficiles à reproduire",
+        "Rédiger un document d'instructions système hautement optimisé et exhaustif détaillant chaque tâche utilisateur potentielle que le modèle doit exécuter à l'exécution",
+        "Comparer et représenter graphiquement la latence d'exécution, le débit de tokens et la qualité des réponses de différents modèles de langage fondamentaux en production"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "L'ingénierie de harnais traite l'environnement d'exploitation de l'agent comme la surface d'ingénierie : lorsque l'agent échoue, on améliore l'environnement (ajout d'une vérification, d'un outil, d'une règle, d'une documentation) plutôt que de se contenter d'une correction conversationnelle — de sorte que la correction persiste à travers toutes les sessions futures."
+    },
+    {
+      "id": "hns-03",
+      "difficulty": "expert",
+      "question": "Qui est crédité d'avoir popularisé le terme « ingénierie de harnais » (harness engineering) début 2026 ?",
+      "options": [
+        "Mitchell Hashimoto (créateur de Terraform et Ghostty), dans son essai de février 2026 « My AI Adoption Journey »",
+        "Les chercheurs et ingénieurs de Google Brain qui ont rédigé l'article fondateur original sur le Transformer",
+        "Le comité de pilotage des standards web du W3C lors de sa revue annuelle des directives d'ingénierie logicielle",
+        "Le groupe conjoint de développeurs d'Anthropic et d'organisations partenaires qui ont rédigé et lancé les spécifications du Model Context Protocol (MCP)"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "L'essai de Hashimoto de février 2026 a nommé la pratique qu'il avait développée avec les agents de codage : « chaque fois que vous constatez qu'un agent fait une erreur, vous prenez le temps de concevoir une solution telle que l'agent ne refasse plus jamais cette erreur ». Constatant qu'aucun terme standard n'existait encore dans l'industrie, il a commencé à appeler cela « harness engineering », et le concept s'est rapidement diffusé dans les écrits sur l'ingénierie des agents dans les semaines qui ont suivi.",
+      "source": "https://mitchellh.com/writing/my-ai-adoption-journey"
+    },
+    {
+      "id": "hns-04",
+      "difficulty": "expert",
+      "question": "Un principe central de l'ingénierie de harnais : que faire lorsqu'un agent commet une erreur ?",
+      "options": [
+        "Basculer immédiatement la connexion du modèle actif vers un autre point de terminaison fournisseur ou configurer un script de secours pour sélectionner une variante de modèle avec un plus grand nombre de paramètres",
+        "Ajouter une correction permanente à l'environnement — une règle de lint, un test, un outil ou une convention documentée — afin que cette classe d'erreur soit détectée ou empêchée de manière structurelle",
+        "Corriger l'erreur directement dans l'interface de chat et compter sur les poids d'attention internes du modèle pour retenir la consigne lors de toutes les sessions futures",
+        "Configurer le harnais de l'agent pour réduire les paramètres de température du modèle ou appliquer un contrôle par échantillonnage nucléaire afin de rendre les chemins de génération du prochain token plus déterministes"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Les corrections faites dans le chat s'évaporent à la fin de la session. Encoder la correction dans le harnais (vérifications, outils, documentation que l'agent charge toujours) rend l'amélioration durable — chaque échec devient un investissement ponctuel dans la fiabilité."
+    },
+    {
+      "id": "hns-05",
+      "difficulty": "expert",
+      "question": "Pourquoi les vérifications déterministes (compilateurs, vérificateurs de types, linters, suites de tests) sont-elles si précieuses au sein d'un harnais d'agent ?",
+      "options": [
+        "Elles éliminent complètement le besoin architectural d'utiliser un modèle de langage dans la boucle en remplaçant les décisions heuristiques par une logique de compilateur stricte",
+        "Elles forcent les algorithmes de sélection du prochain token et les paramètres d'échantillonnage du modèle à agir de manière strictement déterministe et non aléatoire à travers les tours d'exécution",
+        "Elles capturent systématiquement les traces d'interaction utilisateur pour générer des fichiers de données de fine-tuning de haute qualité afin d'entraîner la prochaine itération du modèle fondamental",
+        "Elles fournissent au modèle de langage stochastique une rétroaction d'exécution immédiate et objective, lui permettant de détecter et de corriger lui-même ses erreurs"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "La sortie d'un LLM est probabiliste ; le harnais compense en l'entourant d'une vérification déterministe. Un agent capable d'exécuter des tests et d'observer les échecs peut itérer vers un résultat correct au lieu de livrer une réponse fausse avec assurance."
+    },
+    {
+      "id": "hns-06",
+      "difficulty": "expert",
+      "question": "En quoi un harnais diffère-t-il du modèle lui-même ?",
+      "options": [
+        "Le harnais est un logiciel externe — il façonne le comportement du modèle via le contexte, les outils et les contraintes, mais ne modifie jamais les poids du modèle",
+        "Le harnais est un réseau de neurones spécialisé et plus petit conçu pour s'exécuter à l'intérieur des couches du transformeur central afin de filtrer les prédictions et d'intercepter les sorties toxiques",
+        "Le harnais représente les poids de paramètres initiaux, les matrices d'attention et les couches de connexion créées lors de la phase de pré-entraînement à forte intensité de calcul du modèle",
+        "Il n'existe aucune différence architecturale ou technique significative ; harnais n'est qu'un nouveau terme marketing de l'industrie désignant simplement le fichier du modèle lui-même"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Tout ce qui se trouve dans le harnais — prompts, schémas d'outils, portes de permission, environnements isolés, boucles de rétroaction — fonctionne en dehors du modèle figé. Un même modèle peut se comporter très différemment selon les harnais, ce qui explique pourquoi la qualité du harnais compte autant pour la performance de l'agent."
+    },
+    {
+      "id": "hns-07",
+      "difficulty": "expert",
+      "question": "Lequel des éléments suivants n'est PAS typiquement un composant d'un harnais d'agent ?",
+      "options": [
+        "Des règles de permission strictes à l'exécution et des environnements d'isolation (sandboxing) conçus pour contrôler les écritures dangereuses en terminal ou en base de données",
+        "Des définitions d'outils JSON détaillées et des spécifications de schéma décrivant les fonctions d'API externes que l'agent est autorisé à exécuter",
+        "L'optimiseur mathématique de descente de gradient et les fonctions de perte appliqués pour ajuster les poids pendant la phase de pré-entraînement du modèle",
+        "Des instructions de contexte de projet personnalisées et des directives de style (comme AGENTS.md) chargées automatiquement au début de chaque session utilisateur"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Les optimiseurs appartiennent à l'entraînement, qui produit le modèle. Le harnais est une infrastructure d'exécution : outils, permissions, sandboxes, instructions de projet persistantes, observabilité et hooks de vérification."
+    },
+    {
+      "id": "hns-08",
+      "difficulty": "expert",
+      "question": "Quel est le lien entre l'ingénierie de harnais et l'ingénierie du contexte ?",
+      "options": [
+        "Ce sont des méthodologies de conception de systèmes concurrentes qui résolvent des problèmes identiques, obligeant les développeurs logiciels à faire un choix exclusif lors de la conception des environnements d'exécution et du choix des API fournisseurs à intégrer dans leurs applications",
+        "L'ingénierie du contexte sélectionne les tokens à l'intérieur de la fenêtre du modèle ; l'ingénierie de harnais conçoit l'environnement persistant autour de l'agent — les outils, vérifications et règles qui façonnent chaque session (et qui déterminent une grande partie de ce qui entre dans le contexte)",
+        "L'ingénierie de harnais est une architecture d'exécution qui s'applique exclusivement aux familles de modèles à poids ouverts exécutées dans des datacenters d'entreprise privés, tandis que l'ingénierie du contexte est conçue strictement pour les API de modèles propriétaires en cloud",
+        "L'ingénierie du contexte a complètement remplacé les anciens cadres d'ingénierie de harnais fin 2025 en raison de la sortie commerciale de fenêtres de contexte extrêmement grandes traitant jusqu'à deux millions de tokens en une seule passe d'attention causale"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Elles opèrent à des niveaux différents et se combinent : le harnais fournit l'environnement, les outils et les boucles de rétroaction ; l'ingénierie du contexte régit quelles informations occupent l'attention limitée du modèle à chaque étape d'inférence au sein de cet environnement."
+    }
+  ]
+}

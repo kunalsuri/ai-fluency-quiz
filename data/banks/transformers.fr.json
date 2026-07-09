@@ -1,0 +1,112 @@
+{
+  "id": "transformers",
+  "topic": "Architecture Transformer",
+  "description": "Attention, encodage positionnel, mélange d'experts, compromis architecturaux.",
+  "questions": [
+    {
+      "id": "tfm-01",
+      "difficulty": "intermediate",
+      "question": "Quel article de 2017 a introduit l'architecture Transformer qui sous-tend les LLM modernes ?",
+      "options": [
+        "« ImageNet Classification with Deep Convolutional Neural Networks »",
+        "« Playing Atari with Deep Reinforcement Learning »",
+        "« Attention Is All You Need »",
+        "« Language Models are Few-Shot Learners »"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "« Attention Is All You Need » (Vaswani et al., 2017, Google) a introduit le Transformer, remplaçant la récurrence par l'auto-attention et rendant possibles les LLM d'aujourd'hui.",
+      "source": "https://arxiv.org/abs/1706.03762"
+    },
+    {
+      "id": "tfm-02",
+      "difficulty": "intermediate",
+      "question": "Quel est l'objectif principal de l'« attention » dans les modèles Transformer ?",
+      "options": [
+        "Analyser, catégoriser et adapter le ton conversationnel du modèle pour correspondre à l'état émotionnel actuel de l'utilisateur en temps réel",
+        "Pondérer dynamiquement la pertinence de chaque token du contexte par rapport à chaque autre token",
+        "Identifier et surligner les termes de vocabulaire clés dans la mise en page de l'interface utilisateur front-end",
+        "Calculer des valeurs de probabilité qui décident quand la boucle de génération doit cesser d'émettre des tokens"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "L'attention calcule des relations pondérées entre les tokens, permettant au modèle de se concentrer sur les parties les plus pertinentes du contexte lors du traitement ou de la génération de chaque token."
+    },
+    {
+      "id": "tfm-03",
+      "difficulty": "advanced",
+      "question": "Dans l'auto-attention, quels rôles jouent les projections Query, Key et Value ?",
+      "options": [
+        "Query chiffre les paramètres d'entrée, Key les déchiffre à l'exécution, et Value stocke les résultats finaux en mémoire",
+        "Les Queries sont comparées aux Keys pour évaluer la pertinence, et ces scores pondèrent une somme des Values",
+        "Query représente la question de l'invite de l'utilisateur, Key est le jeton d'autorisation, et Value est la réponse textuelle renvoyée",
+        "Elles représentent trois copies identiques de la matrice de poids utilisées pour garantir une redondance matérielle structurelle pendant l'inférence"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Chaque token émet un vecteur query, key et value. Les produits scalaires entre les queries et les keys (mis à l'échelle, puis passés par softmax) produisent des poids d'attention, utilisés pour effectuer une somme pondérée des vecteurs value."
+    },
+    {
+      "id": "tfm-04",
+      "difficulty": "advanced",
+      "question": "Quel est le rôle de la fonction softmax dans le calcul de l'attention ?",
+      "options": [
+        "Ajuster et adoucir dynamiquement le ton de la réponse générée par le modèle lorsqu'il aborde des sujets utilisateur sensibles ou controversés",
+        "Réduire la complexité globale du modèle en élaguant les matrices de paramètres redondantes dans les couches d'attention multi-têtes",
+        "Implémenter des dropouts en coupant aléatoirement des connexions d'attention pour éviter le surapprentissage du modèle",
+        "Convertir mathématiquement les scores d'attention bruts en une distribution de probabilité normalisée dont la somme vaut exactement 1"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "Le softmax convertit les scores bruts query-key en poids normalisés dont la somme vaut 1, de sorte que chaque token répartit son attention proportionnellement sur le contexte."
+    },
+    {
+      "id": "tfm-05",
+      "difficulty": "advanced",
+      "question": "Pourquoi les Transformers ont-ils besoin d'encodages positionnels (ou de mécanismes comme RoPE) ?",
+      "options": [
+        "Parce que l'auto-attention en elle-même est indifférente à l'ordre, ce qui signifie que le modèle n'a aucun moyen inhérent de percevoir l'ordre séquentiel des tokens",
+        "Pour identifier et enregistrer les coordonnées GPS géographiques ou les paramètres de fuseau horaire du serveur où le texte de l'invite a été initialement compilé",
+        "Pour ajouter des poids structurels indiquant à la couche d'auto-attention quels tokens sont les plus importants",
+        "Pour implémenter des matrices de compression conçues pour tasser de longues séquences de tokens dans des vecteurs d'activation plus courts"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "L'attention traite l'entrée comme un ensemble : sans information positionnelle, « le chien mord l'homme » et « l'homme mord le chien » sembleraient identiques. Les encodages positionnels (sinusoïdaux, appris, ou rotatifs/RoPE) injectent l'ordre des tokens."
+    },
+    {
+      "id": "tfm-06",
+      "difficulty": "advanced",
+      "question": "Pourquoi l'auto-attention standard devient-elle coûteuse à mesure que les séquences s'allongent ?",
+      "options": [
+        "Parce que les poids du modèle de langage doivent subir un entraînement d'alignement personnalisé pour chaque nouvelle longueur de séquence d'entrée",
+        "Parce que le mécanisme d'attention calcule des scores par paires entre chaque token de la séquence, ce qui augmente de façon quadratique avec la longueur",
+        "Parce qu'elle force les tokens d'entrée à être traités dans un goulot d'étranglement strictement séquentiel sans aucun potentiel de parallélisme",
+        "Parce que la taille du vocabulaire du tokeniseur augmente dynamiquement en proportion directe de la longueur de l'invite d'entrée"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Chaque token porte attention à chaque autre token, de sorte que le calcul et la mémoire nécessaires à la matrice d'attention croissent en O(n²) avec la longueur de la séquence — un moteur clé de la recherche sur le contexte long et d'optimisations comme FlashAttention."
+    },
+    {
+      "id": "tfm-07",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce qu'une architecture de type Mixture-of-Experts (MoE, mélange d'experts) ?",
+      "options": [
+        "Une configuration d'ensemble où plusieurs modèles de fondation complets et distincts fonctionnent en parallèle pour voter et parvenir à un consensus sur la réponse générée finale",
+        "Un pipeline opérationnel d'entreprise où un panel certifié d'experts humains du domaine examine et valide manuellement toutes les sorties générées par le modèle avant leur diffusion",
+        "Une architecture de réseau de neurones comportant plusieurs sous-couches expertes, utilisant une passerelle de routage apprise pour diriger chaque token vers un sous-ensemble d'experts",
+        "Une méthode de pipeline de données de pré-entraînement qui mélange, filtre et échantillonne dynamiquement des jeux de données textuelles provenant de domaines de vocabulaire académique complètement différents"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Les modèles MoE remplacent les couches feed-forward denses par de nombreux sous-réseaux « experts » et un routeur appris qui envoie chaque token vers un petit sous-ensemble d'entre eux. Cela permet d'obtenir un très grand nombre total de paramètres tout en gardant un calcul par token faible ; des modèles comme Mixtral et DeepSeek-V3 utilisent cette conception."
+    },
+    {
+      "id": "tfm-08",
+      "difficulty": "advanced",
+      "question": "Quel modèle architectural la plupart des LLM génératifs modernes (comme les familles GPT et Llama) utilisent-ils ?",
+      "options": [
+        "Des modèles Transformer encodeur uniquement à masquage causal",
+        "Des modèles Transformer décodeur uniquement autorégressifs",
+        "Des réseaux de neurones récurrents contenant des cellules LSTM",
+        "Des réseaux de neurones convolutifs opérant sur des grilles de pixels"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "La plupart des LLM génératifs sont des Transformers décodeur uniquement : un empilement de couches d'auto-attention à masquage causal qui prédisent le token suivant. Les modèles encodeur uniquement (comme BERT) sont principalement utilisés pour des tâches de compréhension ou d'embedding."
+    }
+  ]
+}

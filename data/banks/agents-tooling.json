@@ -1,0 +1,139 @@
+{
+  "id": "agents-tooling",
+  "topic": "Agents & Tool Use",
+  "description": "Agentic loops, function calling, MCP, evals, multi-agent patterns.",
+  "questions": [
+    {
+      "id": "agt-01",
+      "difficulty": "intermediate",
+      "question": "In the context of LLMs, what is an 'AI agent'?",
+      "options": [
+        "A chatbot configured with a friendly tone of voice and personality that simulates human interaction",
+        "A dedicated human moderator tasked with reviewing and correcting model outputs before final delivery",
+        "A system where an LLM runs in a loop, using tools and observations to work toward a goal with some autonomy",
+        "A background browser plugin designed to scan user inputs and automatically complete repeating patterns"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "An agent pairs a model with tools and a feedback loop: it plans, acts (e.g., calls tools, edits files), observes results, and iterates — directing its own process rather than following a single fixed script."
+    },
+    {
+      "id": "agt-02",
+      "difficulty": "intermediate",
+      "question": "How does LLM 'tool use' (function calling) actually work?",
+      "options": [
+        "The model directly compiles, runs, and executes custom runtime scripts and handles data updates on the provider's secure sandbox servers",
+        "The model outputs a structured request naming a tool and arguments; the host application executes it and returns the result to the model",
+        "The model downloads, verifies, and installs the required packages and external tool executables onto the local machine",
+        "The host platform automatically parses the model's free-text thoughts and triggers corresponding tools on every mention"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "The model never executes anything itself. It emits a structured tool call (name + JSON arguments); the calling application runs the actual function and feeds the result back into the context for the model's next step."
+    },
+    {
+      "id": "agt-03",
+      "difficulty": "advanced",
+      "question": "What is the Model Context Protocol (MCP)?",
+      "options": [
+        "A proprietary API gateway developed exclusively by Anthropic to manage session tokens and context routing for Claude models in enterprise cloud deployments",
+        "A specialized high-throughput networking protocol designed for low-latency node communication within modern GPU clusters",
+        "An algorithmic compression method aimed at reducing token usage inside context windows without losing semantic fidelity",
+        "An open standard, introduced by Anthropic in November 2024, for connecting AI applications to external tools and data sources"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "MCP standardizes how AI apps connect to tools, data, and prompts via MCP servers and clients — often described as a 'USB-C port for AI applications'. Though created by Anthropic, it is open source and was subsequently adopted across the industry, including by OpenAI in 2025.",
+      "source": "https://modelcontextprotocol.io"
+    },
+    {
+      "id": "agt-04",
+      "difficulty": "advanced",
+      "question": "In Anthropic's 'Building Effective Agents' framing, what distinguishes a 'workflow' from an 'agent'?",
+      "options": [
+        "Workflows are restricted to running lightweight, fine-tuned models for operational speed, whereas agents require complex multi-billion parameter models",
+        "In workflows, LLMs and tools are orchestrated through predefined code paths; agents dynamically direct their own process and tool usage",
+        "Workflows run inside serverless environments in the cloud, while agents are designed to execute code directly on local clients",
+        "There are no architectural or conceptual differences, as developers use the two terms interchangeably in production"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "The December 2024 guide distinguishes workflows (fixed, developer-defined orchestration like prompt chaining or routing) from agents, where the model itself decides the steps and tool calls — and recommends the simplest pattern that works.",
+      "source": "https://www.anthropic.com/engineering/building-effective-agents"
+    },
+    {
+      "id": "agt-05",
+      "difficulty": "advanced",
+      "question": "What is the 'orchestrator–worker' (or lead-agent/subagent) pattern in multi-agent systems?",
+      "options": [
+        "One central agent breaks a task into subtasks, delegates them to worker agents, and synthesizes their results",
+        "A decentralized peer network in which all agents cast votes on every potential action to achieve group consensus",
+        "A system configuration where a human developer manually reviews and approves every individual subagent action",
+        "A cooperative design in which agent roles rotate dynamically on a fixed, pre-scheduled tick cycle to distribute workload"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "An orchestrator plans and delegates focused subtasks to workers, each operating with its own context, then integrates their outputs. This parallelizes work and keeps any single context window from overflowing."
+    },
+    {
+      "id": "agt-06",
+      "difficulty": "intermediate",
+      "question": "What are 'evals' in LLM development?",
+      "options": [
+        "Financial valuations conducted by external firms to assess the market value of AI startups",
+        "Systematic tests that measure a model's or an AI system's performance on defined tasks and criteria",
+        "User-provided feedback and stars collected in the user interface during real-time chat interactions",
+        "The internal confidence probabilities output by a model alongside its token predictions"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Evals are repeatable test suites — from graded question sets to end-to-end task benchmarks — used to measure quality, catch regressions, and compare prompts, models, or agent designs."
+    },
+    {
+      "id": "agt-07",
+      "difficulty": "advanced",
+      "question": "What is the 'LLM-as-judge' technique?",
+      "options": [
+        "Applying a fine-tuned legal model to review case files and suggest rulings in small-claims court jurisdictions",
+        "Configuring the generating model to run a self-correction pass and grade its own response quality before outputting",
+        "Using an LLM, guided by a rubric, to evaluate the quality of outputs (often another model's) at scale",
+        "Executing random sampling strategies to select generated responses for manual, high-cost human evaluation"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "LLM-as-judge uses a model with a scoring rubric to grade outputs, enabling large-scale automated evaluation. It's cheaper than human review but has known biases (e.g., position and verbosity effects), so it's typically validated against human judgments."
+    },
+    {
+      "id": "agt-08",
+      "difficulty": "advanced",
+      "question": "What is 'computer use' as an agent capability?",
+      "options": [
+        "The cumulative processor utilization metrics, memory footprints, and raw GPU execution times recorded during active agent session runs",
+        "An agent operating a computer like a human — viewing the screen (e.g., via screenshots) and issuing clicks, keystrokes, and scrolls",
+        "An IT policy framework outlining strict compliance guidelines under which corporate employees are permitted to interact with external AI assistants at work",
+        "A basic software automation script restricted strictly to executing low-level terminal or shell commands without a graphical user interface"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Computer-use agents perceive the screen and act through the GUI itself — moving the cursor, clicking, and typing — letting them drive software with no API. Anthropic shipped an early public version of this capability for Claude in October 2024."
+    },
+    {
+      "id": "agt-09",
+      "difficulty": "intermediate",
+      "question": "Why do production agent systems include 'human-in-the-loop' checkpoints?",
+      "options": [
+        "Because international compliance mandates and strict regional data privacy regulations explicitly prohibit the deployment of fully autonomous systems",
+        "To bypass model latency by delegating computationally expensive decisions to human operators in real-time",
+        "So a human approves consequential or irreversible actions (payments, deletions, sending messages) before the agent executes them",
+        "To gather reinforcement learning feedback signals from human action traces so the model can be continuously updated in production"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Agents make mistakes, so systems gate high-stakes actions behind human approval, matching the level of autonomy to the reversibility and blast radius of each action."
+    },
+    {
+      "id": "agt-10",
+      "difficulty": "advanced",
+      "question": "Why is giving an agent both untrusted content (e.g., web pages) and powerful tools (e.g., email, file access) a security concern?",
+      "options": [
+        "It introduces significant network latency, increases overall system overhead, and risks exposing sensitive local server configuration parameters to third-party endpoints during page retrieval",
+        "Untrusted content can carry injected instructions that the agent may follow using those tools — the 'lethal trifecta' of private data access, untrusted input, and external communication",
+        "It raises token consumption levels and compute costs way beyond typical context window limits, causing prompt truncation, causal context overflow, and hosted model memory crashes",
+        "Standard tool execution libraries are incompatible with raw web document trees and cannot parse, render, style, or run complex client-side script formats on target sites"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Prompt-injected instructions in retrieved content can steer an agent to misuse its tools — e.g., exfiltrating private data. Combining private data access, exposure to untrusted content, and the ability to communicate externally (a mix developer and researcher Simon Willison dubbed the 'lethal trifecta') is the highest-risk configuration, so agent designs restrict or gate these capabilities."
+    }
+  ]
+}

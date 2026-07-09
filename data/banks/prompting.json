@@ -1,0 +1,141 @@
+{
+  "id": "prompting",
+  "topic": "Prompting Techniques",
+  "description": "From zero-shot to chain-of-thought, ReAct, and structured outputs.",
+  "questions": [
+    {
+      "id": "pmt-01",
+      "difficulty": "beginner",
+      "question": "What is 'prompt engineering'?",
+      "options": [
+        "Building physical hardware prompts and interface ports for external input devices",
+        "Crafting and refining the instructions given to an AI model to get better outputs",
+        "Writing complex training algorithms and low-level source code that trains the model",
+        "Designing user interface layouts and custom key shortcuts for chat applications to improve input speeds"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Prompt engineering is the practice of designing, structuring, and iterating on the input text given to a model to reliably elicit the desired behavior."
+    },
+    {
+      "id": "pmt-02",
+      "difficulty": "intermediate",
+      "question": "What is a 'system prompt'?",
+      "options": [
+        "A system-level warning alert emitted by the host operating system kernel when database connections fail",
+        "The initial prompt question or chat message submitted by the end user to start a session",
+        "Instructions set by the developer that define the model's role, rules, and behavior before user messages",
+        "An automated instruction script generated internally by the model to handle prompt expansions"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "The system prompt is developer-provided context (role, tone, constraints, tool instructions) that frames the whole conversation and typically takes priority over individual user messages."
+    },
+    {
+      "id": "pmt-03",
+      "difficulty": "intermediate",
+      "question": "What is the difference between zero-shot and few-shot prompting?",
+      "options": [
+        "Zero-shot prompts do not consume any GPU memory, while few-shot prompts require multi-GPU setups",
+        "Zero-shot gives the task with no examples; few-shot includes a few worked examples in the prompt",
+        "Zero-shot requests are processed for free, whereas few-shot requests are billed per example block",
+        "Zero-shot query patterns route to a single model instance, while few-shot query patterns query several different models in parallel"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "In zero-shot prompting the model gets only the task description. Few-shot prompting adds several input→output examples so the model can infer the pattern. GPT-3's 2020 paper 'Language Models are Few-Shot Learners' showed large models can learn tasks this way, in context, without weight updates.",
+      "source": "https://arxiv.org/abs/2005.14165"
+    },
+    {
+      "id": "pmt-04",
+      "difficulty": "intermediate",
+      "question": "What is 'chain-of-thought' (CoT) prompting?",
+      "options": [
+        "Linking and orchestrating several distinct small language models together in a sequential, high-speed execution pipeline",
+        "A specialized deep neural network architecture configured with chained activation layers",
+        "Sending the exact same prompt query repeatedly to the API until the generated answer improves",
+        "Eliciting intermediate reasoning steps before the final answer to improve accuracy on complex problems"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "Chain-of-thought prompting (Wei et al., 2022) has the model produce step-by-step reasoning before answering, which significantly improves performance on arithmetic, logic, and multi-step tasks.",
+      "source": "https://arxiv.org/abs/2201.11903"
+    },
+    {
+      "id": "pmt-05",
+      "difficulty": "advanced",
+      "question": "How does 'self-consistency' improve on basic chain-of-thought prompting?",
+      "options": [
+        "It implements validation filters to verify that the model's generated answer matches its training data",
+        "It samples multiple independent reasoning paths from the model and selects the final answer that achieves majority consensus",
+        "It introduces system level constraints that force the model to reuse identical wording in every response",
+        "It executes the same prompt sequence at temperature 0 multiple times across different GPU nodes to eliminate statistical sampling randomness"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Self-consistency (Wang et al., 2022) samples several diverse chain-of-thought solutions and selects the most common final answer, trading extra compute for higher accuracy.",
+      "source": "https://arxiv.org/abs/2203.11171"
+    },
+    {
+      "id": "pmt-06",
+      "difficulty": "advanced",
+      "question": "What does the ReAct prompting pattern combine?",
+      "options": [
+        "Reasoning traces and actions (like tool calls), interleaved so each observation informs the next thought",
+        "Integrating pre-built React.js web application components with real-time AI-generated programming code snippets inside browser frameworks",
+        "Optimizing rewards and actions within reinforcement learning algorithms using custom loss calculations",
+        "Applying reading comprehension datasets and script-based acting lessons to customize chatbot personalities"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "ReAct (Yao et al., 2022) interleaves 'Thought → Action → Observation' steps: the model reasons, takes an action such as a search or tool call, observes the result, and continues — a foundation of modern agent loops.",
+      "source": "https://arxiv.org/abs/2210.03629"
+    },
+    {
+      "id": "pmt-07",
+      "difficulty": "intermediate",
+      "question": "Why do developers request 'structured output' (such as JSON) from LLMs?",
+      "options": [
+        "Because structured JSON responses are billed at cheaper rates per token compared to unstructured text blocks",
+        "Because current generation language models are mathematically restricted to producing structured code syntax",
+        "So that downstream application code can programmatically parse and validate the model's responses against a defined schema",
+        "Because forcing the model to adhere to structured syntax schemas mathematically guarantees that the output cannot contain hallucinations"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "When a model's output feeds into software rather than a human, constraining it to a schema (via JSON modes, tool schemas, or constrained decoding) makes it machine-parseable and reduces integration failures. It does not by itself guarantee factual accuracy."
+    },
+    {
+      "id": "pmt-08",
+      "difficulty": "intermediate",
+      "question": "What is 'role' or 'persona' prompting?",
+      "options": [
+        "Instructing the model to act as a specific role (e.g., 'you are a senior security reviewer') to steer its tone, expertise, and behavioral boundaries",
+        "Setting up and registering a dedicated developer user profile, security authorization tokens, and API credentials for the AI agent on a web platform",
+        "Splitting the core neural network architecture into multiple isolated model checkpoints, each configured with a different custom personality permanently",
+        "Enabling the model's load balancing or routing layer to dynamically select which active user queries it prefers to process and respond to in real-time"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Persona prompting frames the model's task by assigning it a role, which shapes vocabulary, perspective, and focus. It steers style and framing, though it doesn't grant knowledge the model lacks."
+    },
+    {
+      "id": "pmt-09",
+      "difficulty": "intermediate",
+      "question": "What is a 'prompt injection' attack?",
+      "options": [
+        "Injecting malicious SQL syntax and database commands through a public chat interface to drop tables or exfiltrate private records from backend databases",
+        "Adversarial instructions embedded within processed data (such as web pages or emails) that override system prompts and hijack model behavior",
+        "Executing automated denial-of-service query spikes to overload the hosted model's inference API servers with millions of concurrent prompt inputs",
+        "Hacking the model's hosting infrastructure to dynamically inject custom parameter weights and modify model neural connections during active user sessions"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Prompt injection embeds adversarial instructions in data the model reads — documents, web pages, tool results — causing it to follow the attacker's instructions instead of the user's. It is a top-ranked risk in the OWASP Top 10 for LLM applications."
+    },
+    {
+      "id": "pmt-10",
+      "difficulty": "advanced",
+      "question": "In extended/long reasoning modes ('thinking' models), what is the model given a budget of?",
+      "options": [
+        "Extra offline training runs and validation fine-tuning loops before returning its final text response to the user",
+        "Additional output tokens that it may spend on internal reasoning steps before committing to its final visible answer",
+        "Dynamically activating dormant neural layers in Mixture-of-Experts networks only for complex queries",
+        "Configuring a longer network response timeout limit on the client API gateway to prevent session connection drops"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Reasoning models (such as OpenAI's o-series and Claude's extended thinking) allocate a test-time budget of reasoning tokens generated before the final answer — spending more inference-time compute to improve results on hard problems."
+    }
+  ]
+}

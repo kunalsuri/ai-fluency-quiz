@@ -1,0 +1,137 @@
+{
+  "metadata": {
+    "title": "Évaluation de la maturité en IA",
+    "version": "2.0.0",
+    "updated": "2026-07",
+    "description": "Base de questions modulaire couvrant les connaissances en IA/LLM, des notions fondamentales aux disciplines avancées de l'ère des agents comme l'ingénierie du contexte et l'ingénierie de harnais."
+  },
+  "difficultyPoints": {
+    "beginner": 5,
+    "intermediate": 10,
+    "advanced": 15,
+    "expert": 20
+  },
+  "scoringTiers": [
+    {
+      "minPercent": 0,
+      "status": "Novice en IA",
+      "description": "Vous débutez. Explorez les notions fondamentales de l'IA et de l'apprentissage automatique."
+    },
+    {
+      "minPercent": 35,
+      "status": "Ingénieur Prompt",
+      "description": "À l'aise avec les schémas d'interaction avec les LLM, les réglages d'échantillonnage et les techniques de prompting."
+    },
+    {
+      "minPercent": 65,
+      "status": "Ingénieur Contexte",
+      "description": "Maîtrise la recherche documentaire, les agents et la curation de ce qui entre dans la fenêtre de contexte d'un modèle."
+    },
+    {
+      "minPercent": 85,
+      "status": "Architecte IA-natif",
+      "description": "Maîtrise approfondie des mécanismes internes des transformers, des harnais d'agents et de la conception de systèmes d'IA en production."
+    }
+  ],
+  "managerialScoringTiers": [
+    {
+      "minPercent": 0,
+      "status": "Explorateur IA",
+      "description": "Vous débutez avec les concepts d'IA. Concentrez-vous sur la compréhension des cas d'usage simples et des outils de base."
+    },
+    {
+      "minPercent": 35,
+      "status": "Manager assisté par l'IA",
+      "description": "À l'aise pour appliquer l'IA dans les tâches quotidiennes et identifier des gains d'efficacité dans les flux de travail."
+    },
+    {
+      "minPercent": 65,
+      "status": "Stratège IA",
+      "description": "Compétent pour évaluer le ROI, gérer les risques, les exigences de confidentialité et faire monter en charge les projets pilotes."
+    },
+    {
+      "minPercent": 85,
+      "status": "Dirigeant IA-natif",
+      "description": "Fait preuve d'une capacité visionnaire à aligner les systèmes d'IA, gérer le coût total de possession et gouverner les produits IA en toute sécurité."
+    }
+  ],
+  "banks": [
+    {
+      "id": "foundations",
+      "file": "banks/foundations.json",
+      "topic": "Fondamentaux de l'IA",
+      "description": "Terminologie de base : modèles, tokens, entraînement, inférence, hallucination.",
+      "role": "technical"
+    },
+    {
+      "id": "llm-mechanics",
+      "file": "banks/llm-mechanics.json",
+      "topic": "Mécanismes des LLM",
+      "description": "Fonctionnement des LLM : échantillonnage, fenêtre de contexte, embeddings, cache KV, quantification.",
+      "role": "technical"
+    },
+    {
+      "id": "transformers",
+      "file": "banks/transformers.json",
+      "topic": "Architecture Transformer",
+      "description": "Attention, encodage positionnel, mélange d'experts, arbitrages architecturaux.",
+      "role": "technical"
+    },
+    {
+      "id": "prompting",
+      "file": "banks/prompting.json",
+      "topic": "Techniques de prompting",
+      "description": "Du zero-shot au chain-of-thought, en passant par ReAct et les sorties structurées.",
+      "role": "technical"
+    },
+    {
+      "id": "rag-retrieval",
+      "file": "banks/rag-retrieval.json",
+      "topic": "RAG et recherche documentaire",
+      "description": "Génération augmentée par la recherche, recherche vectorielle, découpage en chunks, reranking.",
+      "role": "technical"
+    },
+    {
+      "id": "agents-tooling",
+      "file": "banks/agents-tooling.json",
+      "topic": "Agents et utilisation d'outils",
+      "description": "Boucles agentiques, appels de fonction, MCP, évaluations, systèmes multi-agents.",
+      "role": "technical"
+    },
+    {
+      "id": "context-engineering",
+      "file": "banks/context-engineering.json",
+      "topic": "Ingénierie du contexte",
+      "description": "Gérer le budget de tokens : compaction, recherche juste-à-temps, mémoire agentique.",
+      "role": "technical"
+    },
+    {
+      "id": "harness-engineering",
+      "file": "banks/harness-engineering.json",
+      "topic": "Ingénierie de harnais",
+      "description": "Concevoir l'environnement autour de l'agent : outils, permissions, boucles de rétroaction.",
+      "role": "technical"
+    },
+    {
+      "id": "safety-alignment",
+      "file": "banks/safety-alignment.json",
+      "topic": "Sécurité et alignement",
+      "description": "RLHF, IA constitutionnelle, jailbreaks, injection de prompt, red teaming.",
+      "role": "technical"
+    },
+    {
+      "id": "ai-business-value",
+      "file": "banks/ai-business-value.json",
+      "topic": "Valeur métier de l'IA et ROI",
+      "description": "Indicateurs, coûts, estimation du ROI, sélection de fournisseurs et alignement stratégique.",
+      "role": "managerial"
+    },
+    {
+      "id": "ai-work-application",
+      "file": "banks/ai-work-application.json",
+      "topic": "L'IA au travail",
+      "description": "Efficacité opérationnelle, humain dans la boucle, confidentialité, gestion des risques et adoption.",
+      "role": "managerial"
+    }
+  ]
+}

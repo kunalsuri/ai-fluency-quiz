@@ -1,0 +1,111 @@
+{
+  "id": "ai-business-value",
+  "topic": "Valeur métier de l'IA et ROI",
+  "description": "Indicateurs, coûts, estimation du ROI, sélection des fournisseurs et alignement stratégique.",
+  "questions": [
+    {
+      "id": "mval-01",
+      "difficulty": "beginner",
+      "question": "Comment le retour sur investissement (ROI) d'un pilote IA est-il généralement mesuré dans les premières étapes ?",
+      "options": [
+        "Exclusivement en analysant les réductions directes des coûts de licences logicielles tierces et l'amortissement du matériel",
+        "En combinant la réduction directe des coûts, les heures de travail économisées, le débit des tâches et les améliorations de qualité",
+        "En suivant le volume total de requêtes API quotidiennes soumises au modèle de base par l'ensemble des utilisateurs internes",
+        "En mesurant les taux bruts d'utilisation du GPU et les cycles de température du processeur pendant les heures de bureau standard"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Une évaluation complète du ROI de l'IA intègre les réductions directes de coûts ainsi que les multiplicateurs de productivité (heures économisées, débit accru) et les améliorations de la qualité des résultats."
+    },
+    {
+      "id": "mval-02",
+      "difficulty": "intermediate",
+      "question": "Lors de l'évaluation du choix « Acheter vs. Construire » pour les applications LLM en entreprise, quel est un facteur stratégique majeur en faveur d'une solution développée en interne ?",
+      "options": [
+        "Éliminer tout investissement initial en capital et toutes les dépenses opérationnelles futures grâce à une infrastructure cloud mutualisée multi-locataires",
+        "Protéger les actifs de données propriétaires, éviter la dépendance à un fournisseur d'API et développer une propriété intellectuelle défendable à long terme",
+        "S'assurer que l'hébergement du modèle sous-jacent, la mise à l'échelle et les tâches de conformité sont entièrement gérés par des partenaires externes de confiance",
+        "Minimiser le besoin de recruter des talents en ingénierie de machine learning et des équipes d'ingénierie des données hautement spécialisés en interne"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Construire ou affiner des modèles sur des jeux de données propriétaires permet aux entreprises de créer une propriété intellectuelle unique et défendable, de protéger les données sensibles en interne et de réduire la dépendance aux API externes."
+    },
+    {
+      "id": "mval-03",
+      "difficulty": "advanced",
+      "question": "Parmi les éléments suivants, lequel constitue généralement le plus grand contributeur au coût total de possession (TCO) d'un agent IA en production ?",
+      "options": [
+        "L'intégration initiale des développeurs, la configuration de l'environnement de travail et les mises à niveau matérielles des postes de travail GPU locaux",
+        "La maintenance continue, la validation/les évaluations, la correction de la dérive des prompts et les coûts des tokens de contexte",
+        "Les coûts réglementaires et administratifs liés à l'achat de noms de domaine web sécurisés pour chaque agent utilitaire individuel",
+        "L'exécution de procédures de pré-entraînement personnalisées sur des modèles de fondation à partir de zéro, selon un calendrier mensuel strict"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Si le développement initial est visible, c'est l'ingénierie continue requise pour les évaluations, la gestion de la dérive des prompts, la gestion de la base de données vectorielle et l'utilisation des tokens de contexte qui constitue l'essentiel du coût opérationnel d'un agent sur toute sa durée de vie."
+    },
+    {
+      "id": "mval-04",
+      "difficulty": "intermediate",
+      "question": "Selon les études d'entreprise (comme les rapports McKinsey sur l'état de l'IA), quel est l'obstacle opérationnel le plus courant lors du passage des pilotes d'IA générative à la production ?",
+      "options": [
+        "Une pénurie totale de modèles de base transformer pré-entraînés modernes et commercialement viables sur les registres open source",
+        "Les problèmes de qualité et de gouvernance des données, l'absence de cas d'usage métier clairs et la gestion du changement organisationnel",
+        "L'augmentation de la consommation électrique et des coûts de refroidissement générés par des postes de travail développeurs à forte puissance",
+        "Les limitations mathématiques fondamentales empêchant les modèles de langage actuels de générer une syntaxe de programmation valide"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Le passage à l'échelle de l'IA est rarement un simple problème technique ; il nécessite des pipelines de données propres et accessibles, un alignement clair sur les cas d'usage métier et des programmes de formation pour gérer le changement organisationnel."
+    },
+    {
+      "id": "mval-05",
+      "difficulty": "advanced",
+      "question": "Dans le cadre du NIST AI Risk Management Framework, quelle fonction essentielle est considérée comme le fondement de la gestion des risques et de la mise en place de la gouvernance de l'IA au sein d'une organisation ?",
+      "options": [
+        "Map (Cartographier)",
+        "Measure (Mesurer)",
+        "Govern (Gouverner)",
+        "Manage (Gérer)"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "La fonction « Govern » du NIST AI RMF est transversale. Elle établit la culture, les politiques, les processus et les structures qui permettent à une organisation de cartographier, mesurer et gérer efficacement les risques liés à l'IA."
+    },
+    {
+      "id": "mval-06",
+      "difficulty": "expert",
+      "question": "Comment la structure des coûts évolue-t-elle lors du passage d'un point d'accès API public (par ex. paiement à l'usage par token) à l'hébergement d'un modèle à poids ouverts sur des GPU cloud dédiés ?",
+      "options": [
+        "Elle passe d'un coût opérationnel variable basé sur l'usage (OpEx) à un coût fixe basé sur la capacité, qui nécessite une utilisation élevée pour être rentable",
+        "Elle passe d'un modèle logiciel à forte dépense en capital (CapEx) à une structure de licence à poids ouverts totalement gratuite, sans frais récurrents pour les développeurs",
+        "Elle élimine tous les coûts d'hébergement opérationnels récurrents et les frais de calcul grâce à des postes de travail développeurs distribués en pair-à-pair",
+        "Elle transforme directement tous les salaires d'ingénierie interne et les dépenses de test en budgets de relations publiques et de marketing d'entreprise"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "L'hébergement dédié remplace la tarification variable par token par des coûts fixes de VM/GPU horaires. Ce changement fait passer le modèle financier d'un OpEx variable à une capacité fixe, ce qui n'est rentable que si l'organisation maintient des volumes de requêtes élevés et constants."
+    },
+    {
+      "id": "mval-07",
+      "difficulty": "beginner",
+      "question": "Lequel des cadres suivants est le plus adapté pour évaluer l'impact multidimensionnel de la productivité des assistants IA sur les développeurs ?",
+      "options": [
+        "Le cadre SPACE (Satisfaction, Performance, Activité, Communication, Efficacité)",
+        "La mesure quantitative des contributions de code via un simple comptage brut et agrégé des lignes de code",
+        "Le suivi du rendement opérationnel en enregistrant le nombre moyen d'e-mails envoyés par développeur et par jour",
+        "L'application des jalons séquentiels traditionnels du modèle en cascade (waterfall) du développement logiciel"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Le cadre SPACE saisit plusieurs dimensions de la productivité des développeurs (satisfaction, collaboration, efficacité), en évitant les pièges du suivi d'une seule métrique comme le nombre de commits ou de lignes de code."
+    },
+    {
+      "id": "mval-08",
+      "difficulty": "advanced",
+      "question": "Que définit la norme ISO/IEC 42001 pour les organisations ?",
+      "options": [
+        "Une norme d'installation matérielle spécifiant le blindage, les débits de transmission de données et les exigences de mise à la terre pour les câbles réseau en cuivre de catégorie 8",
+        "Un cadre de certification mondial définissant les exigences pour l'établissement et l'audit des systèmes de management de l'intelligence artificielle (SMIA)",
+        "Un protocole de conformité définissant les lignes directrices de gestion du consentement, les règles de traitement des données et les modèles obligatoires de bannières de cookies de confidentialité en Europe",
+        "Un document international complet de lignes directrices détaillant les agencements optimaux d'espaces de travail physiques et les configurations de bureau pour l'ergonomie de bureau moderne"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "L'ISO/IEC 42001 est la norme internationale qui spécifie les exigences pour l'établissement, la mise en œuvre, le maintien et l'amélioration continue d'un système de management de l'intelligence artificielle (SMIA) au sein des organisations."
+    }
+  ]
+}

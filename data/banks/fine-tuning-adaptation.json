@@ -1,0 +1,141 @@
+{
+  "id": "fine-tuning-adaptation",
+  "topic": "Fine-tuning & Adaptation",
+  "description": "LoRA, PEFT, RLHF mechanics, DPO, instruction tuning, and domain adaptation.",
+  "questions": [
+    {
+      "id": "ft-01",
+      "difficulty": "beginner",
+      "question": "What is 'fine-tuning' a language model?",
+      "options": [
+        "Adjusting the model's sampling temperature and top-p settings to improve response quality",
+        "Continuing to train a pre-trained model on a smaller, task-specific dataset to specialize its behavior",
+        "Compressing the model's weights to make inference faster on lower-powered hardware",
+        "Writing a detailed system prompt that instructs the model how to respond in a specific domain"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Fine-tuning takes a pre-trained model and trains it further on a narrower dataset — instruction pairs, domain documents, or preference data — to shift its behavior toward a desired task or style while retaining broad pre-training knowledge."
+    },
+    {
+      "id": "ft-02",
+      "difficulty": "intermediate",
+      "question": "What does 'PEFT' stand for, and why is it useful?",
+      "options": [
+        "Post-Evaluation Fine-Tuning — adding extra training after benchmarking to fix low-scoring questions",
+        "Parameter-Efficient Fine-Tuning — updating only a small fraction of parameters so fine-tuning is cheap and avoids catastrophic forgetting",
+        "Probabilistic Ensemble Fine-Tuning — combining multiple model checkpoints to reduce variance on downstream tasks",
+        "Pre-Encoded Feature Transfer — re-using early-layer feature maps across different model families without retraining"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "PEFT methods (LoRA, prefix tuning, adapters) add or modify a tiny number of trainable parameters while keeping the bulk of the pre-trained weights frozen. This drastically reduces GPU memory and compute requirements and lets multiple fine-tuned variants share one base model."
+    },
+    {
+      "id": "ft-03",
+      "difficulty": "intermediate",
+      "question": "What is LoRA (Low-Rank Adaptation)?",
+      "options": [
+        "A library for locally running quantized open-weights models on consumer GPUs",
+        "A PEFT technique that injects small trainable low-rank matrices into the model's weight layers so only those extra parameters are updated during fine-tuning",
+        "A method for merging two fully fine-tuned model checkpoints by averaging their weight tensors",
+        "A sampling algorithm that restricts generation to a low-rank vocabulary subset to reduce hallucination"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "LoRA (Hu et al., 2021) freezes the original weight matrix W and learns two small matrices A and B such that the fine-tuning update is ΔW = BA (a low-rank product). At inference, BA can be merged into W with zero overhead. QLoRA extends it with 4-bit quantization for even lower memory.",
+      "source": "https://arxiv.org/abs/2106.09685"
+    },
+    {
+      "id": "ft-04",
+      "difficulty": "intermediate",
+      "question": "What is 'instruction tuning'?",
+      "options": [
+        "Writing a long system prompt with step-by-step instructions at the start of every API request",
+        "Fine-tuning a base language model on (instruction, response) pairs so it learns to follow natural-language directions",
+        "A data augmentation technique that rewrites training examples as instructions to reduce repetition",
+        "Updating only the instruction-following layers of a model while leaving all other layers frozen"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Instruction tuning (e.g., FLAN, InstructGPT) fine-tunes a base model on diverse (instruction, desired output) examples. It transforms a text-completion model into an assistant that reliably follows user directives across many task types."
+    },
+    {
+      "id": "ft-05",
+      "difficulty": "advanced",
+      "question": "What is the role of the 'reward model' in RLHF?",
+      "options": [
+        "It is a lookup table that maps predefined keywords in the model output to fixed numerical reward scores",
+        "It is a separate neural network trained on human preference rankings that predicts how much a human would prefer one model output over another",
+        "It is the main language model that is being fine-tuned; the term 'reward model' is another name for the policy model",
+        "It is a classifier that filters unsafe content from training batches before they are fed into the policy update step"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "In RLHF, human annotators rank pairs of model outputs. A reward model (typically an LLM with a scalar head) is trained on those rankings to predict preference scores. The policy (the main LLM) is then optimized with PPO to maximize the reward model's scores, subject to a KL penalty against the reference policy."
+    },
+    {
+      "id": "ft-06",
+      "difficulty": "advanced",
+      "question": "What is DPO (Direct Preference Optimization), and how does it differ from PPO-based RLHF?",
+      "options": [
+        "DPO is a pre-training objective that directly optimizes for human preference data without any supervised fine-tuning phase",
+        "DPO reformulates the RLHF objective so the language model itself implicitly acts as its own reward model, removing the need for a separate reward model and a reinforcement-learning optimizer",
+        "DPO fine-tunes only the decoder layers while PPO fine-tunes all layers, making DPO faster but less effective",
+        "DPO and PPO are two interchangeable names for the same algorithm — one used by academic researchers and the other by industry practitioners"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "DPO (Rafailov et al., 2023) shows the RLHF objective can be optimized directly as a classification loss over (chosen, rejected) pairs without training a reward model or running an RL loop. It is simpler, more stable, and widely adopted in open-source fine-tuning pipelines.",
+      "source": "https://arxiv.org/abs/2305.18290"
+    },
+    {
+      "id": "ft-07",
+      "difficulty": "advanced",
+      "question": "What is 'catastrophic forgetting' in the context of fine-tuning?",
+      "options": [
+        "The model discarding knowledge about the fine-tuning task when it encounters out-of-distribution prompts at test time",
+        "The tendency of neural networks to over-write previously learned general knowledge when trained on a new, narrow dataset",
+        "A failure mode where the model forgets the beginning of long prompts because they fall outside the attention window",
+        "A hardware fault causing GPU memory to be wiped when a fine-tuning job is interrupted mid-epoch"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "When a model is fully fine-tuned on a new task, gradient updates can overwrite the weights encoding earlier capabilities — a phenomenon called catastrophic forgetting. PEFT methods (LoRA, adapters) mitigate it by keeping most pre-trained weights frozen."
+    },
+    {
+      "id": "ft-08",
+      "difficulty": "advanced",
+      "question": "What is 'QLoRA' and what problem does it solve?",
+      "options": [
+        "A quantization format that allows model weights to be served with query-level access control for multi-tenant deployments",
+        "A technique that combines 4-bit NF4 quantization of the frozen base model with LoRA adapters, dramatically cutting the GPU memory needed to fine-tune large models",
+        "A quality-assurance protocol that runs LoRA fine-tuned models through standardized benchmark suites before deployment",
+        "A variant of LoRA that constrains rank to powers of two so weight matrices can be stored in quarter-precision integers"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "QLoRA (Dettmers et al., 2023) quantizes the frozen base model to 4-bit NF4 format, adds LoRA adapters at full precision, and uses double quantization and paged optimizers to fit large-model fine-tuning on a single consumer GPU. It democratized fine-tuning of 7B–70B models.",
+      "source": "https://arxiv.org/abs/2305.14314"
+    },
+    {
+      "id": "ft-09",
+      "difficulty": "expert",
+      "question": "What is 'RLAIF' (Reinforcement Learning from AI Feedback), and what is the key motivation for using it instead of RLHF?",
+      "options": [
+        "RLAIF replaces the language model policy with a smaller distilled model to reduce the cost of inference at scale",
+        "RLAIF uses a separate AI model to generate the preference labels used to train the reward model, reducing dependency on expensive human annotation while retaining alignment signal",
+        "RLAIF is an offline version of RLHF that pre-computes all reward scores before training begins, making the pipeline deterministic",
+        "RLAIF fine-tunes only the attention layers using synthetic preference data, while RLHF fine-tunes all layers using human data"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "RLAIF (Lee et al., 2023; used in Anthropic's Constitutional AI) replaces human preference labelers with a capable LLM judge. The LLM scores response pairs according to a principle set, removing the bottleneck of expensive human annotation while achieving preference-learning quality comparable to RLHF at scale.",
+      "source": "https://arxiv.org/abs/2309.00267"
+    },
+    {
+      "id": "ft-10",
+      "difficulty": "expert",
+      "question": "What is 'model merging' (e.g., SLERP or TIES-merging), and why is it appealing compared to ensembling?",
+      "options": [
+        "Merging the training datasets of two models and retraining from scratch to produce a combined model",
+        "Averaging the logits of two separately running models at inference time so predictions reflect both models' distributions",
+        "Combining the weight tensors of two or more fine-tuned models — e.g., via spherical interpolation or sign-based merging — to obtain a single model that inherits capabilities from each parent without any additional training or inference overhead",
+        "Splitting a large model into two halves that each handle different parts of a task and communicate via a learned routing layer"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Model merging operates directly in weight space: techniques like SLERP (spherical linear interpolation) or TIES (resolving sign conflicts before averaging) blend two fine-tuned checkpoints into one. The merged model inherits complementary skills with zero extra inference cost — unlike ensembling which requires running multiple models. It is widely used in the open-source community (e.g., Hugging Face mergekit)."
+    }
+  ]
+}

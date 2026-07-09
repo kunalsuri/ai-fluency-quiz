@@ -1,0 +1,112 @@
+{
+  "id": "context-engineering",
+  "topic": "Ingénierie du contexte",
+  "description": "Gérer le budget de tokens : compaction, récupération juste-à-temps, mémoire agentique.",
+  "questions": [
+    {
+      "id": "ctx-01",
+      "difficulty": "expert",
+      "question": "Qu'est-ce que l'« ingénierie du contexte » ?",
+      "options": [
+        "Concevoir des modèles d'instructions toujours plus longs et détaillés pour des interactions en un seul tour",
+        "L'ensemble des stratégies visant à sélectionner et à maintenir l'ensemble optimal de tokens dans le contexte d'un modèle pendant l'inférence",
+        "Concevoir des serveurs de mise en cache distribués haute performance et des bases de données relationnelles pour stocker de longs historiques de conversation",
+        "Traduire les entrées en langage naturel des utilisateurs dans les langues sources spécifiques rencontrées par le modèle durant le pré-entraînement"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Comme défini dans les recommandations techniques d'Anthropic, l'ingénierie du contexte gère tout ce qui entre dans le contexte limité du modèle — instructions système, outils, données récupérées, historique des messages — en traitant le contexte comme une ressource finie à sélectionner avec soin, et non comme un simple prompt à rédiger.",
+      "source": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+    },
+    {
+      "id": "ctx-02",
+      "difficulty": "expert",
+      "question": "En quoi l'ingénierie du contexte diffère-t-elle de l'ingénierie de prompt ?",
+      "options": [
+        "Ce sont des concepts d'optimisation identiques, l'ingénierie du contexte n'étant qu'un rebranding marketing d'entreprise des instructions traditionnelles utilisées pour les chatbots",
+        "L'ingénierie de prompt s'applique exclusivement aux modèles génératifs d'image, de vidéo et d'audio, tandis que l'ingénierie du contexte se limite strictement aux interfaces de chat textuelles",
+        "L'ingénierie de prompt se concentre sur la rédaction d'instructions efficaces ; l'ingénierie du contexte gère l'ensemble du contexte évolutif (outils, historique, données récupérées, mémoire) sur les nombreux tours d'inférence d'un agent",
+        "L'ingénierie du contexte remplace entièrement le besoin de rédiger des instructions de prompt en construisant et en injectant dynamiquement des paramètres de contexte variables côté serveur"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "L'ingénierie de prompt optimise les mots d'une instruction, ce qui convient aux tâches ponctuelles. Les agents bouclent sur de nombreux tours et génèrent toujours plus de données, si bien que la question la plus difficile devient : quel sous-ensemble de toutes les informations disponibles doit occuper le contexte à chaque étape ? Cette sélection, c'est l'ingénierie du contexte."
+    },
+    {
+      "id": "ctx-03",
+      "difficulty": "expert",
+      "question": "Quel phénomène le terme « context rot » (dégradation du contexte) décrit-il ?",
+      "options": [
+        "La dégradation progressive des poids d'un modèle pré-entraîné stockés sur des disques de faible qualité pendant de longues périodes d'inactivité",
+        "Le risque que les représentations des données d'entraînement deviennent obsolètes ou factuellement inexactes après la date de coupure des connaissances publiques du modèle",
+        "La suppression et l'élagage automatisés d'anciens fichiers journaux de conversations clients sur des serveurs cloud pour respecter les normes de conformité",
+        "Le déclin de la capacité d'un modèle à rappeler et à utiliser efficacement l'information à mesure que la taille de la fenêtre de contexte active augmente"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "Le « context rot » — nommé dans un rapport de recherche de Chroma en 2025 et repris dans les recommandations d'Anthropic sur l'ingénierie du contexte — désigne la baisse observée de la qualité de récupération et de raisonnement à mesure que la longueur d'entrée augmente, même bien en deçà de la fenêtre de contexte annoncée. C'est pourquoi davantage de contexte n'est pas automatiquement meilleur."
+    },
+    {
+      "id": "ctx-04",
+      "difficulty": "expert",
+      "question": "Qu'entend-on par le « budget d'attention » d'un modèle ?",
+      "options": [
+        "Le budget financier alloué aux ressources de calcul pour les couches d'attention pendant l'entraînement initial du modèle",
+        "La capacité finie qu'un modèle possède pour porter son attention sur l'ensemble de son contexte — capacité que chaque token ajouté entame",
+        "La limite absolue de requêtes et de sessions utilisateur simultanées qu'une seule instance de modèle peut traiter activement en mémoire",
+        "Un système de quota d'abonnement conçu pour limiter le nombre de questions qu'un utilisateur peut soumettre en une heure"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Comme l'attention des transformeurs relie chaque token à tous les autres, l'attention effective s'étire de plus en plus finement à mesure que le contexte grandit. Considérer l'attention comme un budget mène à l'heuristique directrice suivante : trouver le plus petit ensemble de tokens à haut signal qui maximise la probabilité d'obtenir le résultat souhaité."
+    },
+    {
+      "id": "ctx-05",
+      "difficulty": "expert",
+      "question": "Dans les agents à exécution longue, qu'est-ce que la « compaction » ?",
+      "options": [
+        "Compresser les poids du réseau de neurones dans un format de quantification à précision réduite pour accélérer l'initialisation",
+        "Compresser et archiver les historiques de conversation d'une base de données avant de les envoyer vers un stockage de fichiers froid à long terme",
+        "Résumer la conversation jusqu'ici et redémarrer le contexte avec ce résumé, ce qui libère de l'espace tout en préservant les détails clés",
+        "Supprimer par programmation les espaces blancs redondants et les blocs de commentaires des prompts bruts pour minimiser l'utilisation de tokens"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Lorsqu'une conversation approche de la limite de contexte, l'agent la distille — décisions prises, problèmes non résolus, faits clés — et poursuit avec cette version distillée. La fonction d'auto-compaction de Claude Code fait exactement cela à mesure que la fenêtre se remplit."
+    },
+    {
+      "id": "ctx-06",
+      "difficulty": "expert",
+      "question": "Qu'est-ce que la récupération de contexte « juste-à-temps » pour les agents ?",
+      "options": [
+        "Précharger et indexer tous les documents potentiellement pertinents en mémoire avant que l'agent ne reçoive sa première requête",
+        "L'agent charge les données à l'exécution via des outils (chemins de fichiers, requêtes, liens) exactement au moment où elles sont nécessaires, au lieu de tout ingérer d'emblée",
+        "Diffuser les tokens de texte en sortie vers le client dès leur génération par le modèle pendant l'inférence",
+        "Mettre en cache et réutiliser l'intégralité de la fenêtre de contexte de conversation de la veille pour réduire la latence de calcul au démarrage des nouvelles exécutions"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Plutôt que de bourrer le contexte de toutes les données d'emblée, l'agent conserve des références légères (chemins, requêtes, identifiants) et récupère le contenu à la demande — à l'image de la façon dont les humains utilisent les systèmes de fichiers et les signets plutôt que de tout mémoriser."
+    },
+    {
+      "id": "ctx-07",
+      "difficulty": "expert",
+      "question": "Qu'est-ce que la « prise de notes structurée » (mémoire agentique) ?",
+      "options": [
+        "L'agent écrit régulièrement des éléments d'état clés dans un stockage persistant en dehors de la fenêtre de contexte (par exemple un fichier NOTES.md ou une liste de tâches) et les relit plus tard",
+        "Appliquer des instructions de style personnalisées qui forcent le modèle de langage à formater tous ses états de raisonnement interne et ses réponses finales sous forme de tableaux markdown structurés",
+        "Exécuter des cycles de fine-tuning automatisés sur le modèle de langage en utilisant la base de données de notes personnelles de l'utilisateur selon un calendrier hebdomadaire hors ligne",
+        "Appliquer des algorithmes cryptographiques pour chiffrer la base de données brute de l'historique des conversations avant de la stocker sur des instances de serveurs cloud"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "En conservant des notes en dehors de la fenêtre, un agent maintient ses objectifs, sa progression et les détails appris à travers les compactions et les longs horizons de tâches — une mémoire qui survit même lorsque le contexte est réinitialisé."
+    },
+    {
+      "id": "ctx-08",
+      "difficulty": "expert",
+      "question": "Comment les architectures à sous-agents aident-elles à gérer le contexte ?",
+      "options": [
+        "Les sous-agents sont contraints de partager une seule fenêtre de contexte globale, leur permettant d'accéder au même historique afin de minimiser l'allocation concurrente de mémoire GPU",
+        "Les sous-agents exécutent leurs tâches à l'aide de variantes de modèles plus petites et fortement compressées afin d'optimiser la latence de réponse et les coûts en tokens",
+        "Les sous-agents contournent entièrement le besoin de récupération de données externes en mémorisant la base de données vectorielle pendant les phases d'entraînement",
+        "Chaque sous-agent traite sa tâche assignée dans une fenêtre de contexte séparée et isolée, puis ne renvoie qu'un résumé de haut niveau à l'orchestrateur principal"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "Un sous-agent peut consommer des dizaines de milliers de tokens à rechercher et à lire, mais ne restituer qu'un résumé distillé. L'orchestrateur obtient les enseignements sans hériter du coût en tokens de l'exploration — une isolation qui garde le contexte principal ciblé."
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "id": "agents-tooling",
+  "topic": "Agents et utilisation d'outils",
+  "description": "Boucles agentiques, function calling, MCP, évaluations, patterns multi-agents.",
+  "questions": [
+    {
+      "id": "agt-01",
+      "difficulty": "intermediate",
+      "question": "Dans le contexte des LLM, qu'est-ce qu'un « agent IA » ?",
+      "options": [
+        "Un chatbot configuré avec un ton de voix amical et une personnalité qui simule l'interaction humaine",
+        "Un modérateur humain dédié chargé de réviser et de corriger les réponses du modèle avant la livraison finale",
+        "Un système dans lequel un LLM fonctionne en boucle, utilisant des outils et des observations pour progresser vers un objectif avec une certaine autonomie",
+        "Un plugin de navigateur fonctionnant en arrière-plan, conçu pour scanner les entrées utilisateur et compléter automatiquement les motifs répétitifs"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Un agent associe un modèle à des outils et à une boucle de rétroaction : il planifie, agit (par exemple, appelle des outils, modifie des fichiers), observe les résultats et itère — dirigeant son propre processus plutôt que de suivre un script fixe unique."
+    },
+    {
+      "id": "agt-02",
+      "difficulty": "intermediate",
+      "question": "Comment fonctionne réellement l'« utilisation d'outils » (function calling) d'un LLM ?",
+      "options": [
+        "Le modèle compile, exécute et lance directement des scripts d'exécution personnalisés et gère les mises à jour de données sur les serveurs sandbox sécurisés du fournisseur",
+        "Le modèle produit une requête structurée nommant un outil et des arguments ; l'application hôte l'exécute et renvoie le résultat au modèle",
+        "Le modèle télécharge, vérifie et installe les paquets et exécutables d'outils externes requis sur la machine locale",
+        "La plateforme hôte analyse automatiquement les pensées en texte libre du modèle et déclenche les outils correspondants à chaque mention"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Le modèle n'exécute jamais rien lui-même. Il émet un appel d'outil structuré (nom + arguments JSON) ; l'application appelante exécute la fonction réelle et renvoie le résultat dans le contexte pour l'étape suivante du modèle."
+    },
+    {
+      "id": "agt-03",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce que le Model Context Protocol (MCP) ?",
+      "options": [
+        "Une passerelle API propriétaire développée exclusivement par Anthropic pour gérer les jetons de session et le routage du contexte pour les modèles Claude dans les déploiements cloud d'entreprise",
+        "Un protocole réseau spécialisé à haut débit conçu pour la communication à faible latence entre nœuds au sein de clusters GPU modernes",
+        "Une méthode de compression algorithmique visant à réduire l'utilisation des tokens dans les fenêtres de contexte sans perte de fidélité sémantique",
+        "Une norme ouverte, introduite par Anthropic en novembre 2024, permettant de connecter les applications d'IA à des outils et des sources de données externes"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "Le MCP standardise la manière dont les applications d'IA se connectent aux outils, aux données et aux prompts via des serveurs et clients MCP — souvent décrit comme un « port USB-C pour les applications d'IA ». Bien que créé par Anthropic, il est open source et a ensuite été adopté dans l'ensemble du secteur, y compris par OpenAI en 2025.",
+      "source": "https://modelcontextprotocol.io"
+    },
+    {
+      "id": "agt-04",
+      "difficulty": "advanced",
+      "question": "Dans le cadre défini par Anthropic dans « Building Effective Agents », qu'est-ce qui distingue un « workflow » d'un « agent » ?",
+      "options": [
+        "Les workflows sont limités à l'exécution de modèles légers et affinés pour la rapidité opérationnelle, tandis que les agents nécessitent des modèles complexes de plusieurs milliards de paramètres",
+        "Dans les workflows, les LLM et les outils sont orchestrés via des chemins de code prédéfinis ; les agents dirigent dynamiquement leur propre processus et leur utilisation des outils",
+        "Les workflows s'exécutent dans des environnements serverless dans le cloud, tandis que les agents sont conçus pour exécuter du code directement sur les clients locaux",
+        "Il n'existe aucune différence architecturale ou conceptuelle, les développeurs utilisant les deux termes de manière interchangeable en production"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Le guide de décembre 2024 distingue les workflows (orchestration fixe, définie par le développeur, comme le chaînage de prompts ou le routage) des agents, où le modèle lui-même décide des étapes et des appels d'outils — et recommande le motif le plus simple qui fonctionne.",
+      "source": "https://www.anthropic.com/engineering/building-effective-agents"
+    },
+    {
+      "id": "agt-05",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce que le pattern « orchestrateur-travailleur » (ou agent principal/sous-agent) dans les systèmes multi-agents ?",
+      "options": [
+        "Un agent central décompose une tâche en sous-tâches, les délègue à des agents travailleurs, puis synthétise leurs résultats",
+        "Un réseau pair-à-pair décentralisé dans lequel tous les agents votent sur chaque action potentielle pour atteindre un consensus de groupe",
+        "Une configuration système où un développeur humain examine et approuve manuellement chaque action individuelle d'un sous-agent",
+        "Une conception coopérative dans laquelle les rôles des agents alternent dynamiquement selon un cycle fixe et préprogrammé pour répartir la charge de travail"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Un orchestrateur planifie et délègue des sous-tâches ciblées à des travailleurs, chacun opérant avec son propre contexte, puis intègre leurs résultats. Cela parallélise le travail et évite qu'une seule fenêtre de contexte ne déborde."
+    },
+    {
+      "id": "agt-06",
+      "difficulty": "intermediate",
+      "question": "Que sont les « évaluations » (evals) dans le développement de LLM ?",
+      "options": [
+        "Des évaluations financières menées par des cabinets externes pour estimer la valeur marchande des startups d'IA",
+        "Des tests systématiques qui mesurent la performance d'un modèle ou d'un système d'IA sur des tâches et des critères définis",
+        "Des retours et notes fournis par les utilisateurs dans l'interface utilisateur lors d'interactions de chat en temps réel",
+        "Les probabilités de confiance internes produites par un modèle en parallèle de ses prédictions de tokens"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Les evals sont des suites de tests reproductibles — allant d'ensembles de questions notées à des benchmarks de tâches de bout en bout — utilisées pour mesurer la qualité, détecter les régressions et comparer des prompts, des modèles ou des conceptions d'agents."
+    },
+    {
+      "id": "agt-07",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce que la technique « LLM-as-judge » ?",
+      "options": [
+        "L'application d'un modèle juridique affiné pour examiner des dossiers et suggérer des jugements dans les juridictions de petites créances",
+        "Le fait de configurer le modèle générateur pour qu'il effectue une passe d'autocorrection et note la qualité de sa propre réponse avant de la produire",
+        "L'utilisation d'un LLM, guidé par une grille d'évaluation, pour évaluer à grande échelle la qualité des réponses (souvent celles d'un autre modèle)",
+        "L'exécution de stratégies d'échantillonnage aléatoire pour sélectionner les réponses générées en vue d'une évaluation humaine manuelle et coûteuse"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "La technique LLM-as-judge utilise un modèle doté d'une grille de notation pour évaluer des réponses, permettant une évaluation automatisée à grande échelle. C'est moins coûteux que la révision humaine mais cela présente des biais connus (par exemple, les effets de position et de verbosité), c'est pourquoi elle est généralement validée par rapport à des jugements humains."
+    },
+    {
+      "id": "agt-08",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce que l'« utilisation d'ordinateur » (computer use) en tant que capacité d'agent ?",
+      "options": [
+        "Les métriques cumulées d'utilisation du processeur, l'empreinte mémoire et les temps d'exécution GPU bruts enregistrés pendant les sessions d'agent actives",
+        "Un agent qui utilise un ordinateur comme le ferait un humain — en observant l'écran (par exemple via des captures d'écran) et en effectuant des clics, des frappes au clavier et des défilements",
+        "Un cadre de politique informatique décrivant des directives de conformité strictes selon lesquelles les employés d'une entreprise sont autorisés à interagir avec des assistants d'IA externes au travail",
+        "Un script d'automatisation logicielle basique strictement limité à l'exécution de commandes terminal ou shell bas niveau sans interface graphique"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Les agents dotés de la capacité « computer use » perçoivent l'écran et agissent à travers l'interface graphique elle-même — en déplaçant le curseur, en cliquant et en tapant — ce qui leur permet de piloter un logiciel sans API. Anthropic a lancé une première version publique de cette capacité pour Claude en octobre 2024."
+    },
+    {
+      "id": "agt-09",
+      "difficulty": "intermediate",
+      "question": "Pourquoi les systèmes d'agents en production incluent-ils des points de contrôle « human-in-the-loop » ?",
+      "options": [
+        "Parce que les mandats de conformité internationaux et les réglementations régionales strictes en matière de protection des données interdisent explicitement le déploiement de systèmes entièrement autonomes",
+        "Pour contourner la latence du modèle en déléguant les décisions coûteuses en calcul à des opérateurs humains en temps réel",
+        "Afin qu'un humain approuve les actions conséquentes ou irréversibles (paiements, suppressions, envoi de messages) avant que l'agent ne les exécute",
+        "Pour recueillir des signaux de rétroaction d'apprentissage par renforcement à partir des traces d'actions humaines afin que le modèle puisse être mis à jour en continu en production"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Les agents font des erreurs, c'est pourquoi les systèmes conditionnent les actions à enjeux élevés à une approbation humaine, en adaptant le niveau d'autonomie à la réversibilité et à l'ampleur des conséquences de chaque action."
+    },
+    {
+      "id": "agt-10",
+      "difficulty": "advanced",
+      "question": "Pourquoi le fait de donner à un agent à la fois du contenu non fiable (par exemple, des pages web) et des outils puissants (par exemple, e-mail, accès aux fichiers) constitue-t-il une préoccupation de sécurité ?",
+      "options": [
+        "Cela introduit une latence réseau significative, augmente la surcharge globale du système et risque d'exposer des paramètres de configuration de serveur locaux sensibles à des points de terminaison tiers lors de la récupération de pages",
+        "Le contenu non fiable peut porter des instructions injectées que l'agent peut suivre en utilisant ces outils — la « trifecta mortelle » de l'accès aux données privées, de l'entrée non fiable et de la communication externe",
+        "Cela augmente les niveaux de consommation de tokens et les coûts de calcul bien au-delà des limites typiques de la fenêtre de contexte, provoquant une troncature des prompts, un débordement du contexte causal et des plantages de mémoire du modèle hébergé",
+        "Les bibliothèques d'exécution d'outils standard sont incompatibles avec les arbres de documents web bruts et ne peuvent pas analyser, restituer, styliser ou exécuter des formats de scripts complexes côté client sur les sites cibles"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Des instructions injectées via des prompts dans le contenu récupéré peuvent orienter un agent vers un mauvais usage de ses outils — par exemple, l'exfiltration de données privées. Combiner l'accès aux données privées, l'exposition à du contenu non fiable et la capacité de communiquer vers l'extérieur (un mélange que le développeur et chercheur Simon Willison a surnommé la « trifecta mortelle ») constitue la configuration la plus risquée, c'est pourquoi les conceptions d'agents restreignent ou conditionnent ces capacités."
+    }
+  ]
+}

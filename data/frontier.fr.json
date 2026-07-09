@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "title": "Frontière — Sélection de la rédaction",
+    "description": "Articles fondateurs triés sur le volet derrière les concepts couverts par ce quiz. Sélectionnés et relus, contrairement au flux arXiv en direct."
+  },
+  "entries": [
+    {
+      "id": "attention-is-all-you-need",
+      "title": "Attention Is All You Need",
+      "authors": "Vaswani et al.",
+      "date": "2017-06",
+      "topic": "Architecture Transformer",
+      "why": "A introduit le Transformer — une architecture encodeur/décodeur reposant entièrement sur l'auto-attention, sans récurrence — qui sous-tend pratiquement tous les LLM modernes.",
+      "source": "https://arxiv.org/abs/1706.03762"
+    },
+    {
+      "id": "gpt3-few-shot-learners",
+      "title": "Language Models are Few-Shot Learners",
+      "authors": "Brown et al.",
+      "date": "2020-05",
+      "topic": "Fondamentaux de l'IA",
+      "why": "A montré que faire passer un transformer décodeur seul à 175 milliards de paramètres débloque un apprentissage few-shot et en contexte performant, sans fine-tuning spécifique à la tâche.",
+      "source": "https://arxiv.org/abs/2005.14165"
+    },
+    {
+      "id": "retrieval-augmented-generation",
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "authors": "Lewis et al.",
+      "date": "2020-05",
+      "topic": "RAG et recherche documentaire",
+      "why": "A associé un modèle seq2seq pré-entraîné à un module de recherche dense appris sur un index vectoriel — le schéma que suivent encore les pipelines RAG modernes.",
+      "source": "https://arxiv.org/abs/2005.11401"
+    },
+    {
+      "id": "instructgpt-rlhf",
+      "title": "Training Language Models to Follow Instructions with Human Feedback",
+      "authors": "Ouyang et al.",
+      "date": "2022-03",
+      "topic": "Sécurité et alignement",
+      "why": "A introduit la recette de fine-tuning RLHF utilisée pour que les modèles de base suivent des instructions et privilégient des réponses utiles et honnêtes — la technique derrière ChatGPT.",
+      "source": "https://arxiv.org/abs/2203.02155"
+    },
+    {
+      "id": "chain-of-thought-prompting",
+      "title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+      "authors": "Wei et al.",
+      "date": "2022-01",
+      "topic": "Techniques de prompting",
+      "why": "A montré que demander à un modèle de produire des étapes de raisonnement intermédiaires, plutôt que de sauter directement à la réponse, améliore nettement la résolution de problèmes à plusieurs étapes.",
+      "source": "https://arxiv.org/abs/2201.11903"
+    },
+    {
+      "id": "react-reasoning-acting",
+      "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+      "authors": "Yao et al.",
+      "date": "2022-10",
+      "topic": "Agents et utilisation d'outils",
+      "why": "Entrelace des traces de raisonnement avec des actions d'appel d'outils et des observations — la boucle sur laquelle reposent la plupart des frameworks d'agents modernes.",
+      "source": "https://arxiv.org/abs/2210.03629"
+    },
+    {
+      "id": "constitutional-ai",
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "date": "2022-12",
+      "topic": "Sécurité et alignement",
+      "why": "Remplace une grande partie du feedback humain par des critiques générées par l'IA, jugées à l'aune d'une constitution écrite, réduisant la dépendance aux annotateurs humains pour l'entraînement à la sécurité.",
+      "source": "https://arxiv.org/abs/2212.08073"
+    },
+    {
+      "id": "self-consistency",
+      "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models",
+      "authors": "Wang et al.",
+      "date": "2022-03",
+      "topic": "Techniques de prompting",
+      "why": "Échantillonne plusieurs chemins de raisonnement chain-of-thought différents pour la même question et retient la réponse majoritaire, échangeant du calcul supplémentaire contre une meilleure précision.",
+      "source": "https://arxiv.org/abs/2203.11171"
+    }
+  ]
+}

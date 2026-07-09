@@ -1,0 +1,137 @@
+{
+  "id": "llm-mechanics",
+  "topic": "Mécanismes des LLM",
+  "description": "Comment fonctionnent les LLM : échantillonnage, fenêtres de contexte, embeddings, cache KV, quantification.",
+  "questions": [
+    {
+      "id": "mech-01",
+      "difficulty": "intermediate",
+      "question": "Que contrôle la « température » dans l'échantillonnage des LLM ?",
+      "options": [
+        "Les contraintes de température physique de fonctionnement du matériel GPU pendant l'exécution",
+        "La latence d'inférence absolue des pipelines de génération du modèle",
+        "Le caractère aléatoire de la sélection des tokens — plus elle est basse, plus c'est déterministe ; plus elle est haute, plus c'est varié",
+        "La durée du budget de calcul de « réflexion » allouée au modèle avant qu'il ne réponde"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "La température redimensionne la distribution de probabilité sur les tokens suivants. Proche de 0, le modèle choisit presque toujours le token le plus probable ; des valeurs plus élevées aplatissent la distribution et augmentent la variété."
+    },
+    {
+      "id": "mech-02",
+      "difficulty": "intermediate",
+      "question": "Qu'est-ce que l'échantillonnage « top-p » (par noyau) ?",
+      "options": [
+        "Configurer l'échantillonneur pour ne choisir que parmi le seul token suivant de plus haute probabilité",
+        "Échantillonner à partir du plus petit ensemble de tokens dont la probabilité cumulée atteint p",
+        "Sélectionner exactement la prédiction du token suivant classée au rang p à chaque étape",
+        "Exécuter les processus de génération de tokens sur p threads parallèles puis moyenner les poids"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "L'échantillonnage par noyau conserve le plus petit ensemble de tokens les plus probables dont les probabilités totalisent au moins p (par ex. 0,9) et n'échantillonne qu'au sein de ce « noyau », en écartant la longue traîne improbable."
+    },
+    {
+      "id": "mech-03",
+      "difficulty": "intermediate",
+      "question": "Qu'est-ce que la « fenêtre de contexte » d'un modèle ?",
+      "options": [
+        "La plage de dates historiques et la chronologie des jeux de données textuelles sur lesquels le modèle a été entraîné",
+        "La fenêtre ou le cadre de mise en page du navigateur côté client où les utilisateurs discutent avec le modèle",
+        "La capacité de requêtes utilisateur simultanées qu'un seul modèle hébergé peut servir à la fois",
+        "La longueur de séquence maximale des tokens d'entrée et de sortie que le modèle peut traiter en une seule fois"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "La fenêtre de contexte est la longueur de séquence maximale — invite plus sortie générée — qu'un modèle peut traiter à la fois. Le contenu qui la dépasse n'est tout simplement pas visible pour le modèle."
+    },
+    {
+      "id": "mech-04",
+      "difficulty": "intermediate",
+      "question": "Qu'est-ce qu'un « embedding » en apprentissage automatique ?",
+      "options": [
+        "Une représentation vectorielle de haute dimension capturant le sens sémantique d'un texte, d'une image ou d'un audio",
+        "Un patron de conception logicielle permettant d'imbriquer un modèle directement dans une autre application locale",
+        "Une copie de sauvegarde fortement compressée des données d'entraînement stockée sur des volumes de disque locaux",
+        "Le code HTML et JavaScript spécifique utilisé pour intégrer et styliser une interface de chatbot interactive sur une page web d'entreprise"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Les embeddings projettent du texte (ou des images, de l'audio, etc.) dans des vecteurs numériques de haute dimension où les éléments sémantiquement proches se retrouvent proches les uns des autres — le fondement de la recherche sémantique."
+    },
+    {
+      "id": "mech-05",
+      "difficulty": "intermediate",
+      "question": "Comment le byte-pair encoding (BPE), une méthode de tokenisation courante, construit-il son vocabulaire ?",
+      "options": [
+        "Il indexe les mots du langage naturel et attribue un unique entier de token par mot du dictionnaire",
+        "Il fusionne itérativement les paires de symboles les plus fréquentes du corpus d'entraînement en de nouveaux tokens",
+        "Il tokenise le texte brut en le découpant uniquement à chaque espace ou caractère de ponctuation",
+        "Il s'appuie sur des annotateurs humains recrutés en masse pour définir et valider les limites sémantiques des tokens"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Le BPE part de petites unités (octets ou caractères) et fusionne de manière répétée les paires adjacentes les plus fréquentes, produisant un vocabulaire d'unités de sous-mots qui équilibre couverture et efficacité."
+    },
+    {
+      "id": "mech-06",
+      "difficulty": "intermediate",
+      "question": "Qu'est-ce que la « date limite de connaissances » (knowledge cutoff) d'un modèle ?",
+      "options": [
+        "Le seuil limitant le nombre total de faits que le modèle peut stocker",
+        "La condition ou le token de fin spécifique où le modèle cesse de générer du texte",
+        "La date limite spécifique au-delà de laquelle les événements ne sont pas représentés dans les données d'entraînement du modèle",
+        "Un filtre de sécurité conçu pour caviarder les extraits de texte protégés par des droits d'auteur"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "La date limite de connaissances est la date de fin approximative des données d'entraînement. Sans outils externes comme la recherche web, le modèle n'a aucune connaissance fiable des événements postérieurs à cette date."
+    },
+    {
+      "id": "mech-07",
+      "difficulty": "intermediate",
+      "question": "Que signifie le fait que la plupart des LLM génèrent du texte de manière « autorégressive » ?",
+      "options": [
+        "Ils traitent les entrées et produisent la chaîne de réponse complète en une seule étape parallèle",
+        "Ils génèrent la sortie un token à la fois, chaque nouvelle prédiction de token étant conditionnée par tous les tokens générés précédemment",
+        "Ils calculent leurs tableaux de réponse cible dans l'ordre inverse des tokens puis les inversent avant de renvoyer le texte final à l'interface",
+        "Ils font régresser mathématiquement leurs distributions de probabilité de tokens de sortie vers la moyenne statistique absolue observée dans les données d'entraînement"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "La génération autorégressive prédit le token suivant en fonction de tout ce qui précède, l'ajoute, puis recommence — c'est pourquoi les réponses s'affichent token par token en flux continu."
+    },
+    {
+      "id": "mech-08",
+      "difficulty": "advanced",
+      "question": "À quoi sert le cache KV pendant l'inférence d'un LLM ?",
+      "options": [
+        "Stocker des bases de données de conversations historiques sur des disques locaux pour des exécutions de validation de pipeline ultérieures et un réglage hors ligne",
+        "Mettre en cache des réponses textuelles complètes à des requêtes utilisateur fréquemment rencontrées pour éviter entièrement les passes d'inférence du modèle",
+        "Stocker les tenseurs clé et valeur d'attention des tokens précédents afin qu'ils ne soient pas recalculés pour chaque nouveau token",
+        "Conserver une copie active en cache des poids des paramètres du réseau en mémoire RAM pour éviter la latence d'accès au disque"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Dans le décodage autorégressif, chaque nouveau token porte attention à tous les tokens précédents. Le cache KV stocke les projections clé/valeur déjà calculées afin que chaque étape ne calcule l'attention que pour le nouveau token, accélérant considérablement la génération au prix d'une consommation mémoire accrue."
+    },
+    {
+      "id": "mech-09",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce que la « quantification » d'un modèle ?",
+      "options": [
+        "Réduire la précision numérique des poids (par ex. de 16 bits à 4 bits) pour diminuer les coûts de mémoire et de calcul",
+        "Répartir les tâches d'exécution du transformer sur plusieurs ordinateurs quantiques expérimentaux",
+        "Évaluer et compter les paramètres et couches de nœuds exacts configurés dans le réseau",
+        "Appliquer des clés de chiffrement cryptographique avancées aux fichiers de paramètres de poids du modèle afin qu'ils ne puissent pas être copiés ou rétro-ingénierés par des développeurs"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "La quantification stocke les poids (et parfois les activations) à une précision numérique plus faible, comme les formats INT8 ou 4 bits. Elle réduit l'empreinte mémoire et accélère l'inférence, généralement au prix d'une légère perte de précision."
+    },
+    {
+      "id": "mech-10",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce que la « distillation de connaissances » ?",
+      "options": [
+        "Exécuter des routines de conformité post-entraînement pour identifier et supprimer les faits erronés des poids figés du modèle",
+        "Entraîner un modèle « élève » plus petit et économe en ressources à reproduire les logits et le comportement d'un plus grand modèle « enseignant »",
+        "Extraire de manière reconstructive les fichiers de données d'entraînement originaux protégés par des droits d'auteur à partir des paramètres figés du modèle",
+        "Fusionner et moyenner les paramètres de deux couches distinctes d'un même modèle de taille identique en un seul réseau"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "La distillation transfère les capacités d'un grand modèle enseignant vers un modèle élève plus petit en entraînant l'élève sur les sorties de l'enseignant, produisant des modèles moins coûteux qui conservent une grande partie des performances."
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "id": "harness-engineering",
+  "topic": "Harness Engineering",
+  "description": "Designing the environment around the agent: tools, permissions, feedback loops.",
+  "questions": [
+    {
+      "id": "hns-01",
+      "difficulty": "expert",
+      "question": "In the agent-era formula 'Agent = Model + Harness', what is the harness?",
+      "options": [
+        "The external safety filtering layer designed to block specific keywords and phrases in model outputs",
+        "The physical fiber-optic cabling, high-performance switches, and coolant pipes connecting clusters of GPUs inside a datacenter",
+        "The software layer around the model: its system prompts, tools, permissions, execution environment, and feedback loops",
+        "A subscription-based token quota leash designed to limit how many words the model can generate in one call"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "The harness is everything wrapped around the raw model that turns it into a working agent — tool access, prompts, guardrails, environment, and control loops. Coding agents like Claude Code, Codex CLI, and Gemini CLI are harnesses around underlying models."
+    },
+    {
+      "id": "hns-02",
+      "difficulty": "expert",
+      "question": "What is 'harness engineering'?",
+      "options": [
+        "Executing custom alignment procedures, Constitutional AI rules, and reinforcement learning to fine-tune model parameters to behave in a safer, more helpful manner",
+        "Deliberately designing the agent's environment — tools, verification, permissions, feedback loops — so the agent works reliably and past mistakes become hard to repeat",
+        "Writing a highly optimized, comprehensive system prompt instructions document that details every potential user task the model must execute at runtime",
+        "Benchmarking and charting the execution latency, token throughput, and response qualities of different foundation language models against each other in production"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Harness engineering treats the agent's operating environment as the engineering surface: when the agent fails, you improve the environment (add a check, a tool, a rule, a doc) rather than only correcting it conversationally — so the fix persists across all future sessions."
+    },
+    {
+      "id": "hns-03",
+      "difficulty": "expert",
+      "question": "Who is credited with popularizing the term 'harness engineering' in early 2026?",
+      "options": [
+        "Mitchell Hashimoto (creator of Terraform and Ghostty), in his February 2026 essay 'My AI Adoption Journey'",
+        "The research scientists and engineers at Google Brain who authored the original landmark Transformer paper",
+        "The W3C web standards steering committee during their annual software engineering guidelines review session",
+        "The joint developer group at Anthropic and partner organizations who authored and launched the Model Context Protocol (MCP) specifications"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Hashimoto's February 2026 essay named the practice he'd developed with coding agents: 'anytime you find an agent makes a mistake, you take the time to engineer a solution such that the agent never makes that mistake again.' Noting that no industry-standard term existed yet, he took to calling it 'harness engineering', and the framing spread quickly through agent-engineering writing in the weeks that followed.",
+      "source": "https://mitchellh.com/writing/my-ai-adoption-journey"
+    },
+    {
+      "id": "hns-04",
+      "difficulty": "expert",
+      "question": "A core principle of harness engineering: when an agent makes a mistake, what should you do?",
+      "options": [
+        "Immediately swap the active model connection to a different provider endpoint or configure a fallback script to select a larger parameter size model variant",
+        "Add a permanent fix to the environment — a lint rule, test, tool, or documented convention — so that class of mistake is caught or prevented structurally",
+        "Correct the mistake directly inside the chat user interface and rely on the model's internal attention weight parameters to remember the guidance in all future sessions",
+        "Configure the agent harness to reduce the model's temperature settings or apply nucleus sampling controls to make the next-token generation paths more deterministic"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Chat corrections evaporate when the session ends. Encoding the fix into the harness (checks, tools, docs the agent always loads) makes the improvement durable — each failure becomes a one-time investment in reliability."
+    },
+    {
+      "id": "hns-05",
+      "difficulty": "expert",
+      "question": "Why are deterministic checks (compilers, type checkers, linters, test suites) so valuable inside an agent harness?",
+      "options": [
+        "They completely eliminate the architectural need for using a language model inside the loop by replacing heuristic decisions with strict compiler logic",
+        "They force the model's next-token selection algorithms and sampling parameters to act in a strictly deterministic, non-random manner across execution turns",
+        "They systematically capture user interaction traces to generate high-quality fine-tuning dataset files for training the next iteration of the foundation model",
+        "They provide the stochastic language model with immediate, objective execution feedback loops, enabling it to detect and self-correct its own mistakes"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "LLM output is probabilistic; the harness compensates by surrounding it with deterministic verification. An agent that can run tests and see failures can iterate to a correct result instead of confidently shipping a wrong one."
+    },
+    {
+      "id": "hns-06",
+      "difficulty": "expert",
+      "question": "How does a harness differ from the model itself?",
+      "options": [
+        "The harness is external software — it shapes the model's behavior through context, tools, and constraints, but never changes the model's weights",
+        "The harness is a specialized, smaller neural network designed to run inside the core transformer layers to filter predictions and intercept toxic outputs",
+        "The harness represents the initial parameter weights, attention matrices, and connection layers created during the high-compute pre-training phase of the model",
+        "There are no significant architectural or technical differences; harness is simply a newer industry marketing buzzword used to refer to the model file itself"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Everything in the harness — prompts, tool schemas, permission gates, sandboxes, feedback loops — operates outside the frozen model. The same model can behave very differently under different harnesses, which is why harness quality matters so much for agent performance."
+    },
+    {
+      "id": "hns-07",
+      "difficulty": "expert",
+      "question": "Which of these is NOT typically a component of an agent harness?",
+      "options": [
+        "Strict runtime permission rules and isolated sandboxing environments designed to gate highly dangerous terminal or database writes",
+        "Detailed JSON tool definitions and schema specifications that outline the external API functions the agent is permitted to execute",
+        "The mathematical gradient descent optimizer and loss functions applied to adjust weights during the model pre-training phase",
+        "Custom project context instructions and style guidelines (like AGENTS.md) loaded automatically at the start of each user session"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Optimizers belong to training, which produces the model. The harness is runtime infrastructure: tools, permissions, sandboxes, persistent project instructions, observability, and verification hooks."
+    },
+    {
+      "id": "hns-08",
+      "difficulty": "expert",
+      "question": "How do harness engineering and context engineering relate?",
+      "options": [
+        "They represent competing system design methodologies that solve identical problems, requiring software developers to make an either-or choice when designing runtime environments and selecting which vendor APIs to integrate in their applications",
+        "Context engineering curates the tokens inside the model's window; harness engineering designs the persistent environment around the agent — the tools, checks, and rules that shape every session (and that determine much of what enters the context)",
+        "Harness engineering is an execution architecture that applies exclusively to open-weights model families run inside private enterprise datacenters, while context engineering is designed strictly for cloud-based proprietary model APIs",
+        "Context engineering completely replaced older harness engineering frameworks in late 2025 due to the commercial release of extremely large context windows that process up to two million tokens in a single causal attention pass"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "They operate at different layers and compose: the harness supplies the environment, tools, and feedback loops; context engineering governs which information occupies the model's limited attention at each inference step within that environment."
+    }
+  ]
+}

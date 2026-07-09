@@ -1,0 +1,208 @@
+---
+// Copyright (c) 2026 Kunal Suri (CEA LIST). Apache-2.0.
+// The front door: two decisions (who are you, how long do you have) and one
+// button. The form is plain HTML and works with JavaScript disabled; a small
+// progressive-enhancement script adds a live "N questions match" counter so
+// nobody can start a filter combination with an empty pool.
+import { getAllQuestions, getManifest } from '../lib/data';
+import { DIFFICULTY_LABELS, localePrefix, tr } from '../lib/i18n';
+import type { Difficulty, Lang } from '../lib/types';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const p = localePrefix(lang);
+const manifest = getManifest(lang);
+const allQuestions = getAllQuestions(lang);
+const technicalBanks = manifest.banks.filter((b) => (b.role ?? 'technical') === 'technical');
+const managerialBanks = manifest.banks.filter((b) => b.role === 'managerial');
+const difficulties: Difficulty[] = ['beginner', 'intermediate', 'advanced', 'expert'];
+
+// Per-track stats for the role cards, and per-bank difficulty counts for the
+// live match counter — all computed at build time.
+function trackStats(role: 'technical' | 'managerial') {
+  const banks = role === 'technical' ? technicalBanks : managerialBanks;
+  const questions = allQuestions.filter((q) => q.role === role).length;
+  return tr(lang, 'roleStat', { topics: banks.length, questions });
+}
+
+const poolData = {
+  banks: manifest.banks.map((b) => {
+    const qs = allQuestions.filter((q) => q.bankId === b.id);
+    const counts: Record<string, number> = { beginner: 0, intermediate: 0, advanced: 0, expert: 0 };
+    for (const q of qs) counts[q.difficulty]++;
+    return { id: b.id, role: b.role ?? 'technical', total: qs.length, counts };
+  }),
+  strings: {
+    some: tr(lang, 'matchSome'),
+    none: tr(lang, 'matchNone'),
+  },
+};
+const poolJson = JSON.stringify(poolData).replace(/</g, '\\u003c');
+---
+
+<div class="page">
+  <section class="measure">
+    <p class="kicker">{tr(lang, 'siteTagline')}</p>
+    <h1 style="font-size: clamp(2.6rem, 6.5vw, 4.6rem);">{tr(lang, 'heroTitle')}</h1>
+    <p class="lede" style="margin-top: 1.4rem;">{tr(lang, 'heroLede')}</p>
+  </section>
+
+  <hr class="rule" />
+
+  <form action={`${p}/quiz/`} method="get" id="setup-form">
+    <fieldset class="choices">
+      <legend>{tr(lang, 'roleLegend')}</legend>
+      <div class="choice">
+        <input type="radio" name="role" value="technical" id="role-t" checked />
+        <label for="role-t">
+          <span class="choice-title">{tr(lang, 'roleTechnicalTitle')}</span>
+          <span class="choice-desc">{tr(lang, 'roleTechnicalDesc')}</span>
+          <span class="choice-stat">{trackStats('technical')}</span>
+        </label>
+      </div>
+      <div class="choice">
+        <input type="radio" name="role" value="managerial" id="role-m" />
+        <label for="role-m">
+          <span class="choice-title">{tr(lang, 'roleManagerialTitle')}</span>
+          <span class="choice-desc">{tr(lang, 'roleManagerialDesc')}</span>
+          <span class="choice-stat">{trackStats('managerial')}</span>
+        </label>
+      </div>
+    </fieldset>
+    <p class="role-note">{tr(lang, 'roleNote')}</p>
+
+    <fieldset class="choices" style="margin-top: 2.2rem; margin-bottom: 2.2rem;">
+      <legend>{tr(lang, 'lengthLegend')}</legend>
+      <div class="choice">
+        <input type="radio" name="len" value="quick" id="len-q" />
+        <label for="len-q">
+          <span class="choice-title">{tr(lang, 'lengthQuick')}</span>
+          <span class="choice-desc">{tr(lang, 'lengthQuickDesc')}</span>
+        </label>
+      </div>
+      <div class="choice">
+        <input type="radio" name="len" value="standard" id="len-s" checked />
+        <label for="len-s">
+          <span class="choice-title">{tr(lang, 'lengthStandard')}</span>
+          <span class="choice-desc">{tr(lang, 'lengthStandardDesc')}</span>
+        </label>
+      </div>
+      <div class="choice">
+        <input type="radio" name="len" value="full" id="len-f" />
+        <label for="len-f">
+          <span class="choice-title">{tr(lang, 'lengthFull')}</span>
+          <span class="choice-desc">{tr(lang, 'lengthFullDesc')}</span>
+        </label>
+      </div>
+    </fieldset>
+
+    <details class="customize" style="margin-bottom: 2.2rem;">
+      <summary>{tr(lang, 'customizeSummary')}</summary>
+
+      <div class="filter-group">
+        <h3>{tr(lang, 'difficultyLabel')}</h3>
+        <div class="chip-row">
+          <span class="chip">
+            <input type="radio" name="diff" value="all" id="diff-all" checked />
+            <label for="diff-all">{tr(lang, 'labelAll')}</label>
+          </span>
+          {difficulties.map((d) => (
+            <span class="chip">
+              <input type="radio" name="diff" value={d} id={`diff-${d}`} />
+              <label for={`diff-${d}`}>{DIFFICULTY_LABELS[lang][d]}</label>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div class="filter-group" data-role="technical">
+        <h3>{tr(lang, 'topicsTechnical')}</h3>
+        <div class="chip-row">
+          {technicalBanks.map((b) => (
+            <span class="chip">
+              <input type="checkbox" name="topics" value={b.id} id={`topic-${b.id}`} />
+              <label for={`topic-${b.id}`}>{b.topic}</label>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div class="filter-group" data-role="managerial">
+        <h3>{tr(lang, 'topicsManagerial')}</h3>
+        <div class="chip-row">
+          {managerialBanks.map((b) => (
+            <span class="chip">
+              <input type="checkbox" name="topics" value={b.id} id={`topic-${b.id}`} />
+              <label for={`topic-${b.id}`}>{b.topic}</label>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <p class="hint">{tr(lang, 'topicsHint')}</p>
+    </details>
+
+    <button type="submit" class="btn" id="begin-btn">{tr(lang, 'btnBegin')} →</button>
+    <p class="pool-count" id="pool-count" hidden aria-live="polite"></p>
+  </form>
+
+  <script type="application/json" id="pool-data" set:html={poolJson} />
+
+  <hr class="rule" />
+
+  <section class="teasers">
+    <div class="teaser">
+      <h2>{tr(lang, 'landingGuideTitle')}</h2>
+      <p>{tr(lang, 'landingGuideDesc')}</p>
+      <a href={`${p}/guide/`}>{tr(lang, 'landingBrowse')} →</a>
+    </div>
+    <div class="teaser">
+      <h2>{tr(lang, 'landingFrontierTitle')}</h2>
+      <p>{tr(lang, 'landingFrontierDesc')}</p>
+      <a href={`${p}/frontier/`}>{tr(lang, 'landingBrowse')} →</a>
+    </div>
+  </section>
+</div>
+
+<script>
+  // Progressive enhancement only: the form submits fine without this. It keeps
+  // a live count of matching questions and blocks combinations with zero.
+  const dataEl = document.getElementById('pool-data');
+  const form = document.getElementById('setup-form') as HTMLFormElement | null;
+  const countEl = document.getElementById('pool-count');
+  const beginBtn = document.getElementById('begin-btn') as HTMLButtonElement | null;
+
+  if (dataEl && form && countEl && beginBtn) {
+    interface PoolBank {
+      id: string;
+      role: string;
+      total: number;
+      counts: Record<string, number>;
+    }
+    const data: { banks: PoolBank[]; strings: { some: string; none: string } } = JSON.parse(
+      dataEl.textContent ?? '{}',
+    );
+
+    const update = () => {
+      const fd = new FormData(form);
+      const role = fd.get('role');
+      const diff = String(fd.get('diff') ?? 'all');
+      const roleBanks = data.banks.filter((b) => b.role === role);
+      // Checked topics from the other track are ignored, mirroring the quiz island.
+      const picked = fd.getAll('topics').map(String).filter((t) => roleBanks.some((b) => b.id === t));
+      const active = picked.length === 0 ? roleBanks : roleBanks.filter((b) => picked.includes(b.id));
+      const n = active.reduce((sum, b) => sum + (diff === 'all' ? b.total : (b.counts[diff] ?? 0)), 0);
+
+      countEl.hidden = false;
+      countEl.classList.toggle('is-none', n === 0);
+      countEl.textContent = n === 0 ? data.strings.none : data.strings.some.replace('{n}', String(n));
+      beginBtn.disabled = n === 0;
+    };
+
+    form.addEventListener('change', update);
+    update();
+  }
+</script>

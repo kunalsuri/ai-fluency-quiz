@@ -1,0 +1,112 @@
+{
+  "id": "rag-retrieval",
+  "topic": "RAG et recherche documentaire",
+  "description": "Génération augmentée par récupération, recherche vectorielle, découpage en chunks, reranking.",
+  "questions": [
+    {
+      "id": "rag-01",
+      "difficulty": "intermediate",
+      "question": "Qu'est-ce que la génération augmentée par récupération (RAG) ?",
+      "options": [
+        "L'augmentation et la modification aléatoires des lots de données d'entraînement avec des échantillons de texte générés de manière synthétique",
+        "La récupération de documents externes pertinents et leur ajout au contexte du modèle afin d'ancrer sa réponse",
+        "Le réentraînement des paramètres du modèle chaque fois que de nouveaux documents de connaissances arrivent dans le système",
+        "La suppression d'informations d'entraînement obsolètes ou toxiques directement des poids des paramètres du modèle"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Le RAG (introduit par Lewis et al., 2020) associe un module de récupération à un générateur : les documents pertinents sont récupérés au moment de la requête et placés dans le prompt, de sorte que les réponses s'appuient sur ces éléments de preuve.",
+      "source": "https://arxiv.org/abs/2005.11401"
+    },
+    {
+      "id": "rag-02",
+      "difficulty": "intermediate",
+      "question": "Laquelle de ces propositions constitue une motivation principale pour utiliser le RAG plutôt que de s'appuyer uniquement sur les poids du modèle ?",
+      "options": [
+        "Il accélère considérablement les vitesses d'inférence et les temps de réponse en mettant en cache et en indexant les réponses générées dans des tampons de mémoire locale",
+        "Il compresse dynamiquement et réduit la quantité totale de tokens d'entrée que le modèle doit traiter dans la fenêtre de contexte",
+        "Il donne au modèle accès à des connaissances fraîches ou privées sans réentraînement, et réduit les hallucinations en ancrant les réponses",
+        "Il supprime complètement le besoin architectural d'utiliser un modèle de langage en acheminant toutes les requêtes utilisateur directement vers une recherche en base de données"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Les poids du modèle sont figés à la date limite de connaissance et ne peuvent pas contenir vos données privées. Le RAG fournit des éléments de preuve actuels et spécifiques à un domaine au moment de la requête et permet aux réponses de citer des sources récupérables."
+    },
+    {
+      "id": "rag-03",
+      "difficulty": "intermediate",
+      "question": "À quoi sert une base de données vectorielle dans un système d'IA ?",
+      "options": [
+        "À stocker des embeddings et à trouver rapidement les plus similaires à un vecteur de requête",
+        "À stocker et sérialiser les poids des paramètres et les tenseurs de biais du réseau de neurones du modèle dans des fichiers vectoriels plats sur disque",
+        "À enregistrer et auditer tous les journaux de texte de conversation brute des utilisateurs à des fins de conformité réglementaire",
+        "À afficher des graphiques vectoriels réactifs et performants dans l'interface de chat côté client"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Les bases de données vectorielles (par exemple Pinecone, Milvus, pgvector, Chroma) indexent des vecteurs d'embeddings et prennent en charge une recherche rapide des plus proches voisins approximatifs, ce qui alimente la récupération sémantique dans le RAG."
+    },
+    {
+      "id": "rag-04",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce que le « chunking » dans un pipeline RAG ?",
+      "options": [
+        "La compression des fichiers de paramètres du modèle de langage central en segments plus petits et quantifiés pour un déploiement rapide sur du matériel local",
+        "Le découpage des documents en éléments plus petits avant l'embedding, afin que la récupération renvoie des passages ciblés et pertinents",
+        "Le regroupement et la mise en file d'attente de plusieurs requêtes utilisateur indépendantes en une seule requête API de modèle parallélisée",
+        "La suppression par programmation des fichiers volumineux et des répertoires de documents obsolètes qui dépassent les limites de stockage de la base de données"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Les documents sont découpés en chunks (par taille, phrase ou structure) avant l'embedding. La taille des chunks est un paramètre de réglage clé : trop grande, elle dilue la pertinence ; trop petite, elle fait perdre le contexte."
+    },
+    {
+      "id": "rag-05",
+      "difficulty": "advanced",
+      "question": "Quelle métrique est la plus couramment utilisée pour comparer deux embeddings en termes de similarité sémantique ?",
+      "options": [
+        "Le calcul de la distance d'édition de Levenshtein entre les chaînes de caractères du texte d'entrée brut",
+        "Le calcul de la similarité cosinus entre les vecteurs de haute dimension",
+        "La différence absolue entre les longueurs des vecteurs de haute dimension",
+        "Le coefficient de chevauchement de Jaccard calculé sur tous les caractères"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "La similarité cosinus mesure l'angle entre deux vecteurs, capturant la proximité sémantique indépendamment de la magnitude du vecteur. (Le produit scalaire et la distance euclidienne sont également utilisés ; la distance d'édition compare des chaînes brutes, pas des significations.)"
+    },
+    {
+      "id": "rag-06",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce que la « recherche hybride » dans les systèmes de récupération ?",
+      "options": [
+        "L'exécution de requêtes de recherche parallèles à la fois sur l'internet public ouvert et sur une base de données documentaire locale privée interne",
+        "La combinaison de la recherche par mots-clés/lexicale (comme BM25) avec la recherche vectorielle/sémantique, et la fusion des résultats",
+        "L'acheminement des requêtes utilisateur vers deux modèles de langage complètement différents pour comparer et fusionner les réponses",
+        "L'alternance dynamique entre des index de recherche mis en cache à grande vitesse et des analyses exhaustives lentes de la base de données"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "La recherche hybride fusionne la correspondance exacte de termes (qui excelle pour les noms, les codes et les termes rares) avec la correspondance sémantique basée sur les embeddings, surpassant généralement l'une ou l'autre approche seule."
+    },
+    {
+      "id": "rag-07",
+      "difficulty": "advanced",
+      "question": "Que fait un « reranker » dans un pipeline de récupération ?",
+      "options": [
+        "Il retrie les candidats initialement récupérés à l'aide d'un modèle de pertinence plus précis (mais plus lent) avant qu'ils n'atteignent le LLM",
+        "Il note et classe automatiquement différents modèles de langage en fonction de la qualité de leurs réponses générées",
+        "Il mélange aléatoirement les cartes de résultats de recherche pour éliminer l'impact des biais de position et de verbosité du modèle",
+        "Il calcule et classe mathématiquement les utilisateurs actifs du système en évaluant l'efficacité de leurs requêtes"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Un module de récupération de première étape récupère à moindre coût, disons, les 50 à 100 meilleurs candidats ; un reranker (souvent un cross-encoder) note ensuite chaque paire requête-document avec plus de précision afin que seuls les meilleurs passages entrent dans le contexte."
+    },
+    {
+      "id": "rag-08",
+      "difficulty": "advanced",
+      "question": "Une équipe doit choisir entre entasser tous les documents de référence dans une longue fenêtre de contexte et un pipeline RAG. Quel énoncé résume le mieux ce compromis ?",
+      "options": [
+        "Les architectures à longue fenêtre de contexte sont toujours supérieures car le modèle de langage observe et traite nativement chaque token du corpus en parallèle sans dépendre de filtres de documents sujets à erreur",
+        "Les architectures RAG sont toujours supérieures car les systèmes modernes d'indexation de documents, de stockage vectoriel haute performance et de récupération sémantique ne commettent jamais d'erreurs ni ne connaissent d'échecs de récupération en production",
+        "Le long contexte est plus simple et évite les échecs de récupération, mais coûte plus cher par appel et peut dégrader la qualité de l'attention ; le RAG est moins coûteux et s'adapte à d'immenses corpus, mais ajoute de la complexité de pipeline et des modes d'échec de récupération",
+        "Il n'existe aucune différence technique, opérationnelle ou financière significative entre les deux configurations de fenêtre, ce qui les rend totalement interchangeables pour le développement dans tout environnement cloud d'entreprise"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Entasser un long contexte évite de construire une infrastructure de récupération mais paie pour chaque token à chaque appel et peut souffrir d'un rappel dégradé sur des entrées très longues. Le RAG s'adapte au-delà de toute fenêtre et réduit les coûts, mais introduit le chunking, l'embedding et la qualité de récupération comme nouveaux points de défaillance. De nombreux systèmes de production combinent les deux."
+    }
+  ]
+}

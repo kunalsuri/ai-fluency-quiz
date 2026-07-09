@@ -1,0 +1,10 @@
+---
+// Copyright (c) 2026 Kunal Suri (CEA LIST). Apache-2.0.
+import Base from '../layouts/Base.astro';
+import Frontier from '../components/Frontier.astro';
+import { tr } from '../lib/i18n';
+---
+
+<Base lang="en" title={tr('en', 'frontierTitle')} description={tr('en', 'frontierLede')}>
+  <Frontier lang="en" />
+</Base>

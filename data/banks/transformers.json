@@ -1,0 +1,112 @@
+{
+  "id": "transformers",
+  "topic": "Transformer Architecture",
+  "description": "Attention, positional encoding, mixture-of-experts, architectural trade-offs.",
+  "questions": [
+    {
+      "id": "tfm-01",
+      "difficulty": "intermediate",
+      "question": "Which 2017 paper introduced the Transformer architecture that underpins modern LLMs?",
+      "options": [
+        "'ImageNet Classification with Deep Convolutional Neural Networks'",
+        "'Playing Atari with Deep Reinforcement Learning'",
+        "'Attention Is All You Need'",
+        "'Language Models are Few-Shot Learners'"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "'Attention Is All You Need' (Vaswani et al., 2017, Google) introduced the Transformer, replacing recurrence with self-attention and enabling today's LLMs.",
+      "source": "https://arxiv.org/abs/1706.03762"
+    },
+    {
+      "id": "tfm-02",
+      "difficulty": "intermediate",
+      "question": "What is the primary purpose of 'attention' in Transformer models?",
+      "options": [
+        "To analyze, categorize, and adapt the model's conversational tone to match the user's current emotional state in real-time",
+        "To dynamically weight how relevant each token in the context is to each other token",
+        "To identify and highlight key vocabulary terms in the front-end user interface layout",
+        "To compute probability values that decide when the generation loop must stop emitting tokens"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Attention computes weighted relationships between tokens, letting the model focus on the most relevant parts of the context when processing or generating each token."
+    },
+    {
+      "id": "tfm-03",
+      "difficulty": "advanced",
+      "question": "In self-attention, what roles do the Query, Key, and Value projections play?",
+      "options": [
+        "Query encrypts the input parameters, Key decrypts them at execution, and Value stores the final results in memory",
+        "Queries are matched against Keys to score relevance, and those scores weight a sum of the Values",
+        "Query represents the user's prompt question, Key is the authorization token, and Value is the returned text response",
+        "They represent three identical copies of the weight matrix used to ensure structural hardware redundancy during inference"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Each token emits a query, key, and value vector. Dot products between queries and keys (scaled, then softmaxed) produce attention weights, which are used to take a weighted sum of value vectors."
+    },
+    {
+      "id": "tfm-04",
+      "difficulty": "advanced",
+      "question": "What is the softmax function's role in attention computation?",
+      "options": [
+        "To dynamically adjust and soften the model's generated response tone when discussing highly sensitive or controversial user topics",
+        "To reduce overall model complexity by pruning redundant parameter matrices inside the multi-head attention layers",
+        "To implement dropouts by randomly cutting attention link connections to prevent model overfitting",
+        "To mathematically convert raw attention scores into a normalized probability distribution that sums to exactly 1"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "Softmax converts raw query-key scores into normalized weights summing to 1, so each token distributes its attention proportionally across the context."
+    },
+    {
+      "id": "tfm-05",
+      "difficulty": "advanced",
+      "question": "Why do Transformers need positional encodings (or mechanisms like RoPE)?",
+      "options": [
+        "Because self-attention by itself is order-agnostic, meaning the model has no inherent way to perceive token sequence order",
+        "To identify and log the geographical GPS coordinates or server timezone parameters where the prompt text was originally compiled",
+        "To append structural weights that instruct the self-attention layer which tokens are most important",
+        "To implement compression matrices designed to pack long token sequences into shorter activation vectors"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Attention treats input as a set: without positional information, 'dog bites man' and 'man bites dog' would look identical. Positional encodings (sinusoidal, learned, or rotary/RoPE) inject token order."
+    },
+    {
+      "id": "tfm-06",
+      "difficulty": "advanced",
+      "question": "Why does standard self-attention become expensive as sequences get long?",
+      "options": [
+        "Because the language model weights must undergo custom alignment training for each new input sequence length",
+        "Because the attention mechanism computes pairwise scores between every token in the sequence, scaling quadratically with length",
+        "Because it forces input tokens to be processed in a strict sequential bottleneck with no potential for parallelism",
+        "Because the tokenizer vocabulary size increases dynamically in direct proportion to the input prompt length"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Every token attends to every other token, so compute and memory for the attention matrix grow as O(n²) in sequence length — a key driver of long-context research and optimizations like FlashAttention."
+    },
+    {
+      "id": "tfm-07",
+      "difficulty": "advanced",
+      "question": "What is a Mixture-of-Experts (MoE) architecture?",
+      "options": [
+        "An ensemble configuration where several complete, distinct foundation models run in parallel to vote and achieve consensus on the final generated response",
+        "An enterprise operational pipeline where a certified panel of human domain experts manually reviews and validates all model generated outputs before release",
+        "A neural network design featuring multiple expert sub-layers, using a learned routing gate to direct each token to a subset of experts",
+        "A pre-training data pipeline method that dynamically mixes, filters, and samples text datasets from completely different academic vocabulary domains"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "MoE models replace dense feed-forward layers with many 'expert' sub-networks and a learned router that sends each token to a small subset. This gives a large total parameter count while keeping per-token compute low; models like Mixtral and DeepSeek-V3 use this design."
+    },
+    {
+      "id": "tfm-08",
+      "difficulty": "advanced",
+      "question": "Which architectural pattern do most modern generative LLMs (like the GPT and Llama families) use?",
+      "options": [
+        "Causally-masked encoder-only Transformer models",
+        "Autoregressive decoder-only Transformer models",
+        "Recurrent neural networks containing LSTM cells",
+        "Convolutional neural networks over pixel grids"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Most generative LLMs are decoder-only Transformers: a stack of causally-masked self-attention layers that predict the next token. Encoder-only models (like BERT) are used mainly for understanding/embedding tasks."
+    }
+  ]
+}

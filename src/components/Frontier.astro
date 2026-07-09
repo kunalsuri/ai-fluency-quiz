@@ -1,0 +1,41 @@
+---
+// Copyright (c) 2026 Kunal Suri (CEA LIST). Apache-2.0.
+import { getFrontier } from '../lib/data';
+import { isSafeHttpUrl } from '../lib/engine';
+import { tr } from '../lib/i18n';
+import type { Lang } from '../lib/types';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const entries = getFrontier(lang);
+---
+
+<div class="page">
+  <section class="measure">
+    <p class="kicker">{tr(lang, 'navFrontier')}</p>
+    <h1 style="font-size: clamp(2.4rem, 5.5vw, 4rem);">{tr(lang, 'frontierTitle')}</h1>
+    <p class="lede" style="margin-top: 1.3rem;">{tr(lang, 'frontierLede')}</p>
+  </section>
+
+  <hr class="rule" />
+
+  <div class="papers">
+    {entries.map((e) => (
+      <article class="paper">
+        <p class="p-meta">
+          {e.date && <span>{e.date}</span>}
+          {e.authors && <span>{e.authors}</span>}
+          {e.topic && <span class="p-topic">{e.topic}</span>}
+        </p>
+        <h2>{e.title}</h2>
+        <p class="why">{e.why}</p>
+        {isSafeHttpUrl(e.source) && (
+          <a class="p-link" href={e.source} target="_blank" rel="noopener noreferrer">{tr(lang, 'frontierRead')} →</a>
+        )}
+      </article>
+    ))}
+  </div>
+</div>

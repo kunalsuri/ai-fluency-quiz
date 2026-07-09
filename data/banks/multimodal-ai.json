@@ -1,0 +1,139 @@
+{
+  "id": "multimodal-ai",
+  "topic": "Multimodal AI",
+  "description": "Vision, speech, image generation, cross-modal embeddings, and multimodal architectures.",
+  "questions": [
+    {
+      "id": "mm-01",
+      "difficulty": "beginner",
+      "question": "What distinguishes a 'multimodal' AI model from a text-only language model?",
+      "options": [
+        "It runs on multiple CPUs in parallel rather than on a single GPU",
+        "It can process and/or generate more than one type of data, such as text, images, audio, or video",
+        "It is trained on text data in multiple human languages simultaneously",
+        "It uses multiple separate model checkpoints that vote to produce a final answer"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Multimodal models handle several data modalities — for example, GPT-4o can accept text, images, and audio, and produce text or audio — rather than being limited to a single data type."
+    },
+    {
+      "id": "mm-02",
+      "difficulty": "beginner",
+      "question": "What is a 'vision-language model' (VLM)?",
+      "options": [
+        "A text-only model fine-tuned on descriptions of visual content written by human annotators",
+        "A model that can both understand and describe images, combining image encoding with a language model decoder",
+        "A model deployed inside augmented-reality glasses to render visual overlays in real time",
+        "A model that converts language text into technical 3D scene-graph representations for computer graphics"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "VLMs pair an image encoder (such as a Vision Transformer or CNN) with a language model so the system can answer questions about images, caption them, or reason over visual content."
+    },
+    {
+      "id": "mm-03",
+      "difficulty": "intermediate",
+      "question": "In text-to-image models like Stable Diffusion, what role does the 'denoising diffusion' process play?",
+      "options": [
+        "It removes watermarks and compression artifacts from user-uploaded source images",
+        "It gradually removes noise from a random latent tensor, guided by a text conditioning signal, to produce a coherent image",
+        "It applies successive blur filters to upscale low-resolution images to print quality",
+        "It trains the model by randomly corrupting training images and teaching it to restore them without any text signal"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Diffusion models learn to reverse a noise process. At inference, they start from pure noise in a latent space and iteratively denoise, steered at each step by an embedding of the text prompt, until a sharp image emerges."
+    },
+    {
+      "id": "mm-04",
+      "difficulty": "intermediate",
+      "question": "What is CLIP (Contrastive Language–Image Pre-training)?",
+      "options": [
+        "A video editing toolkit that automatically clips and segments long recordings into highlights",
+        "A joint embedding model trained to align text and image representations in a shared vector space using contrastive learning",
+        "A safety filter that clips and removes explicit visual content from image generation pipelines",
+        "A lossless image compression algorithm optimized for neural-network feature maps"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "CLIP (Radford et al., 2021) is trained on (image, caption) pairs with a contrastive objective: matching image–text pairs are pulled together in embedding space and non-matching pairs are pushed apart. The resulting embeddings power zero-shot image classification and guide diffusion models.",
+      "source": "https://arxiv.org/abs/2103.00020"
+    },
+    {
+      "id": "mm-05",
+      "difficulty": "intermediate",
+      "question": "What is 'optical character recognition' (OCR) in the context of multimodal AI?",
+      "options": [
+        "A model skill that detects and corrects character-level spelling errors inside long documents",
+        "Extracting readable text from images or scanned documents so downstream models can process it",
+        "A method for encoding text characters into optical fiber signals for high-bandwidth transmission",
+        "Converting text prompts into stylized calligraphy images using generative diffusion models"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "OCR identifies and transcribes text visible in images — receipts, screenshots, PDFs, whiteboards — making pixel-level content machine-readable. Modern VLMs often perform OCR natively without a separate pipeline step."
+    },
+    {
+      "id": "mm-06",
+      "difficulty": "intermediate",
+      "question": "In automatic speech recognition (ASR), what does the model output?",
+      "options": [
+        "A sentiment score and emotional tone analysis of the speaker's vocal patterns",
+        "A waveform that replicates the audio in a different voice or accent",
+        "A text transcript of the spoken audio input",
+        "A MIDI file encoding the pitch and timing of phonemes in the recording"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "ASR (speech-to-text) models such as OpenAI Whisper take raw audio waveforms and produce text transcripts. They underpin voice assistants, meeting transcription tools, and voice-controlled agents."
+    },
+    {
+      "id": "mm-07",
+      "difficulty": "advanced",
+      "question": "What is a 'Vision Transformer' (ViT)?",
+      "options": [
+        "A convolutional neural network augmented with attention gates on the final classification layer",
+        "A transformer model that splits an image into fixed-size patches, embeds them as token sequences, and applies self-attention",
+        "A large language model fine-tuned exclusively on textual descriptions of visual art styles and scenes",
+        "A hardware accelerator chip optimized to run image-processing attention kernels at lower latency"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "ViT (Dosovitskiy et al., 2020) treats an image as a sequence of non-overlapping patches, linearly projects each patch into an embedding, and feeds the sequence to a standard Transformer encoder. It matched CNN performance at scale and is now the dominant image backbone in VLMs.",
+      "source": "https://arxiv.org/abs/2010.11929"
+    },
+    {
+      "id": "mm-08",
+      "difficulty": "advanced",
+      "question": "What is 'cross-modal retrieval'?",
+      "options": [
+        "Searching a text document corpus using another text document as the query",
+        "Using an input in one modality (e.g., a text query) to retrieve the most relevant items in a different modality (e.g., images or audio)",
+        "Translating a model trained on English text to operate on other languages without retraining",
+        "Transferring weights from a vision model into a language model through layer merging"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Cross-modal retrieval exploits shared embedding spaces like CLIP's: a text query can retrieve matching images, or an image can retrieve matching captions, because both modalities are projected into the same vector space where similarity is meaningful."
+    },
+    {
+      "id": "mm-09",
+      "difficulty": "advanced",
+      "question": "What is the 'image–text alignment' problem in training multimodal models?",
+      "options": [
+        "Ensuring image file formats are compatible with the text tokenizer's byte-encoding scheme",
+        "The challenge of learning a shared representation where semantically related images and texts are close in embedding space, despite their fundamentally different raw structures",
+        "Making sure that image captions appear at the correct pixel coordinates inside the rendered document layout",
+        "Preventing the model from generating text descriptions that do not match the visual style guide"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Images are 2D grids of pixel values; text is a sequence of discrete tokens. Bridging them requires architectures — cross-attention, contrastive projection heads, or Q-Former adapters — that can relate the two structurally dissimilar representations into a common semantic space."
+    },
+    {
+      "id": "mm-10",
+      "difficulty": "expert",
+      "question": "In native multimodal models like GPT-4o, how does early-fusion multimodality differ from the pipeline (late-fusion) approach?",
+      "options": [
+        "Early-fusion decodes each modality into text tokens first, then passes only the text to a single frozen LLM backbone",
+        "Late-fusion processes all modalities jointly from the very first layer using shared attention, while early-fusion chains specialized single-modal models in sequence",
+        "Early-fusion jointly encodes all modalities within the same transformer backbone from the start, allowing cross-modal attention at every layer, whereas pipeline approaches process modalities with separate specialized models and concatenate features only at a late stage",
+        "Early-fusion and late-fusion are interchangeable terms for the same architecture used to describe whether the image encoder precedes or follows the text encoder"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Pipeline ('late-fusion') systems run a dedicated image encoder, a dedicated ASR model, etc., and feed their outputs to an LLM; each model is pre-trained separately. Native early-fusion models share weights and attention across modalities from the beginning, enabling richer cross-modal reasoning but requiring more complex joint training."
+    }
+  ]
+}

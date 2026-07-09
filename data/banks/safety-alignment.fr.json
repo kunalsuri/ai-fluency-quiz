@@ -1,0 +1,113 @@
+{
+  "id": "safety-alignment",
+  "topic": "Sécurité et alignement",
+  "description": "RLHF, IA constitutionnelle, jailbreaks, injection de prompt, red teaming.",
+  "questions": [
+    {
+      "id": "saf-01",
+      "difficulty": "intermediate",
+      "question": "Que signifie l'« alignement » dans le développement de l'IA ?",
+      "options": [
+        "Mettre en forme et aligner les textes générés par le modèle en tableaux et colonnes nets",
+        "S'assurer que le modèle se comporte conformément aux intentions humaines, aux normes éthiques et aux valeurs des utilisateurs",
+        "Synchroniser différents points de contrôle des paramètres du modèle à travers des clusters de serveurs cloud distribués",
+        "Adapter les vitesses de traitement et le débit de tokens du modèle aux limites de bande passante du réseau local"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "L'alignement est l'effort visant à garantir que les systèmes d'IA font de manière fiable ce que leurs opérateurs et la société attendent d'eux — être utiles, honnêtes et inoffensifs plutôt que de simplement optimiser un objectif de substitution."
+    },
+    {
+      "id": "saf-02",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce que le RLHF ?",
+      "options": [
+        "Reinforcement Learning from Human Feedback (apprentissage par renforcement à partir de retours humains) — entraîner un modèle contre un signal de récompense dérivé de jugements de préférence humains",
+        "Recursive Language Heuristic Filtering — un ensemble d'étapes de post-traitement basées sur des règles conçues pour rechercher et filtrer les mots toxiques",
+        "Real-time Learning from Historical Facts — mettre à jour dynamiquement les poids figés du modèle pendant les sessions d'interaction utilisateur",
+        "Randomized Layer-wise Hyperparameter Fitting — optimiser les poids du transformeur lors des itérations de pré-entraînement initial"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Dans le RLHF, des humains classent les sorties du modèle ; un modèle de récompense apprend ces préférences, puis le LLM est optimisé par rapport à celui-ci. InstructGPT d'OpenAI (2022) a démontré l'approche qui a permis à des modèles comme ChatGPT de suivre les instructions de manière utile.",
+      "source": "https://arxiv.org/abs/2203.02155"
+    },
+    {
+      "id": "saf-03",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce que la méthode « IA constitutionnelle » (Constitutional AI) d'Anthropic ?",
+      "options": [
+        "Entraîner un modèle de langage exclusivement sur des mémoires juridiques, des dossiers de tribunaux fédéraux, des lois gouvernementales internationales et des documents constitutionnels historiques du monde entier",
+        "Un processus de certification de sécurité, de licence et d'audit de conformité mené par un gouvernement pour approuver les modèles d'IA de pointe avant leur déploiement public",
+        "Entraîner un modèle à critiquer et à réviser ses propres sorties selon un ensemble écrit de principes, combiné à un apprentissage des préférences à partir de retours d'IA (RLAIF)",
+        "Établir un système de vote décentralisé basé sur la blockchain permettant aux utilisateurs de voter collectivement sur les règles, directives et garde-fous de sécurité du modèle"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "L'IA constitutionnelle (Bai et al., 2022) utilise une liste explicite de principes — une « constitution » — pour guider l'auto-critique et la révision, et utilise des étiquettes de préférence générées par l'IA au lieu de s'appuyer uniquement sur des étiquettes humaines pour l'entraînement à l'innocuité.",
+      "source": "https://arxiv.org/abs/2212.08073"
+    },
+    {
+      "id": "saf-04",
+      "difficulty": "intermediate",
+      "question": "Qu'est-ce qu'un « jailbreak » dans le contexte des LLM ?",
+      "options": [
+        "Exécuter ou héberger les fichiers de paramètres d'un modèle commercial sur un matériel serveur local non autorisé et non conforme",
+        "Un prompt conçu pour tromper un modèle afin qu'il contourne son entraînement de sécurité et produise du contenu restreint",
+        "Extraire les poids de paramètres cachés d'un modèle à partir de son API d'inférence publique",
+        "Exploiter une vulnérabilité du noyau du système d'exploitation pour s'échapper d'un environnement Docker sécurisé pendant la phase d'inférence du modèle"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Les jailbreaks — mises en scène de jeu de rôle, encodages obfusqués, motifs en many-shot, et autres techniques similaires — tentent d'amener un modèle à ignorer ses consignes de sécurité. Les fournisseurs les corrigent continuellement ; les attaquants s'adaptent continuellement."
+    },
+    {
+      "id": "saf-05",
+      "difficulty": "advanced",
+      "question": "Quelle est la différence clé entre un jailbreak et une attaque par injection de prompt ?",
+      "options": [
+        "Ce sont deux noms interchangeables utilisés par les analystes en sécurité pour désigner exactement la même technique d'attaque, avec des mécanismes et des objectifs identiques en pratique",
+        "Les techniques de jailbreak ciblent exclusivement les modèles de génération d'images, tandis que les attaques par injection de prompt ciblent exclusivement les modèles de langage textuels",
+        "Les attaques par jailbreak ne peuvent être exécutées avec succès que contre des familles de modèles à poids ouverts hébergées dans des clouds matériels privés, tandis que les injections de prompt ciblent les API commerciales",
+        "Un jailbreak est le fait d'un utilisateur qui tente de contourner les propres règles de sécurité du modèle ; l'injection de prompt cache des instructions d'attaquant dans du contenu tiers pour détourner une application agissant au nom d'un utilisateur"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "Dans un jailbreak, l'attaquant est l'utilisateur, et la cible est l'entraînement de sécurité du modèle. Dans l'injection de prompt, la victime est souvent un utilisateur non averti dont l'application d'IA consomme du contenu contrôlé par l'attaquant (une page web, un e-mail ou un document) portant des instructions cachées."
+    },
+    {
+      "id": "saf-06",
+      "difficulty": "intermediate",
+      "question": "Qu'est-ce que le « red teaming » d'un système d'IA ?",
+      "options": [
+        "Sonder délibérément le système avec des entrées adverses pour découvrir les défaillances et vulnérabilités avant que de véritables adversaires ne le fassent",
+        "Personnaliser les feuilles de style de l'application front-end pour peindre en rouge toutes les alertes d'erreur système critiques et les avertissements limites dans l'interface utilisateur",
+        "Confier à une équipe marketing ou de relations publiques la promotion et la défense des métriques de sécurité du modèle sur les réseaux sociaux",
+        "Affiner les poids du modèle sous-jacent en utilisant exclusivement des jeux de données adverses et des instructions de cas limites"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Les équipes de red teaming attaquent systématiquement un système — jailbreaks, injections, incitation à produire du contenu nuisible, sondage des capacités — afin que les faiblesses soient découvertes et corrigées avant le déploiement. C'est une pratique standard dans les processus de sortie des modèles de pointe."
+    },
+    {
+      "id": "saf-07",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce que l'« empoisonnement de données » (data poisoning) ?",
+      "options": [
+        "Un modèle produisant des réponses textuelles toxiques, biaisées ou dangereuses en raison de couches de validation de sécurité manquantes",
+        "Un attaquant qui plante des exemples malveillants ou manipulés dans les données d'entraînement pour corrompre le comportement du modèle résultant",
+        "Des profils de représentation des données d'entraînement devenant obsolètes avec le temps à mesure que de nouvelles informations apparaissent",
+        "Accéder illégalement aux bases de données d'entraînement propriétaires ou aux pipelines de web scraping d'un concurrent et les supprimer"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Comme les grands modèles s'entraînent sur de vastes corpus extraits du web, les attaquants peuvent semer le web (ou un jeu de données de fine-tuning) avec des exemples conçus pour implanter des portes dérobées ou des comportements biaisés — des recherches ont montré que même un petit nombre de documents empoisonnés peut avoir des effets disproportionnés."
+    },
+    {
+      "id": "saf-08",
+      "difficulty": "intermediate",
+      "question": "Qu'est-ce qu'une « fiche de modèle » (model card) ou une « fiche système » (system card) ?",
+      "options": [
+        "Le matériel spécialisé de processeurs GPU haute performance et les cartes graphiques utilisés pour compiler et exécuter les fichiers de paramètres du modèle dans des clusters privés",
+        "Une grille tarifaire structurée détaillant les options de coût par token, les limites de débit et les niveaux d'accès à l'API pour les développeurs",
+        "Un document publié décrivant les capacités, les limites, les résultats d'évaluation et les caractéristiques de sécurité d'un modèle",
+        "Une carte à collectionner imprimable présentant des illustrations personnalisées de modèles d'IA célèbres et des statistiques d'entraînement"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Les fiches de modèle/système documentent ce qu'un modèle peut et ne peut pas faire, comment il a été évalué, et les risques connus. Les laboratoires de pointe les publient lors de la sortie (par exemple, les fiches système accompagnant les lancements des modèles GPT et Claude) pour favoriser la transparence et un déploiement éclairé."
+    }
+  ]
+}

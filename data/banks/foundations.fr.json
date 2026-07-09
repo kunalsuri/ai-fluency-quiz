@@ -1,0 +1,137 @@
+{
+  "id": "foundations",
+  "topic": "Fondamentaux de l'IA",
+  "description": "Terminologie de base : modèles, tokens, entraînement, inférence, hallucination.",
+  "questions": [
+    {
+      "id": "fnd-01",
+      "difficulty": "beginner",
+      "question": "Que signifie « LLM » ?",
+      "options": [
+        "Large Language Model (grand modèle de langage)",
+        "Linear Logic Machine (machine à logique linéaire)",
+        "Latent Learning Matrix (matrice d'apprentissage latent)",
+        "Layered Lexical Memory (mémoire lexicale en couches)"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "Les Large Language Models (grands modèles de langage) sont des réseaux de neurones entraînés sur d'immenses jeux de données textuelles afin de traiter et de générer du langage."
+    },
+    {
+      "id": "fnd-02",
+      "difficulty": "beginner",
+      "question": "Dans des noms de modèles comme GPT-4, que signifie « GPT » ?",
+      "options": [
+        "General Purpose Technology Engine (moteur technologique polyvalent)",
+        "Generative Pre-trained Transformer (transformeur génératif pré-entraîné)",
+        "Guided Prediction Tool Framework (cadre d'outils de prédiction guidée)",
+        "Graphical Processing Terminal System (système de terminal de traitement graphique)"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "GPT signifie Generative Pre-trained Transformer : un modèle basé sur l'architecture transformer qui est d'abord pré-entraîné sur de vastes corpus de texte, puis génère du texte."
+    },
+    {
+      "id": "fnd-03",
+      "difficulty": "beginner",
+      "question": "Qu'est-ce qu'un « token » dans le contexte des modèles de langage ?",
+      "options": [
+        "Un jeton de cryptomonnaie spécialisé utilisé pour payer les frais d'utilisation d'une API",
+        "Un identifiant cryptographique temporaire et un jeton de validation OAuth utilisés pour l'authentification des utilisateurs",
+        "Un fragment de texte (un mot, un sous-mot ou un caractère) que le modèle traite",
+        "Une valeur de pixel unique extraite d'une image lors du traitement"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Les tokens sont les unités de base que les modèles de langage lisent et produisent. Selon le tokeniseur, un token peut être un mot entier, une partie de mot ou un simple caractère."
+    },
+    {
+      "id": "fnd-04",
+      "difficulty": "beginner",
+      "question": "Que désigne l'« entraînement » en apprentissage automatique ?",
+      "options": [
+        "L'élaboration de cours de formation pour apprendre aux utilisateurs d'entreprise à utiliser l'interface du modèle",
+        "L'ajustement des poids mathématiques internes du modèle en l'exposant à des données d'entraînement",
+        "La compilation, l'empaquetage et l'installation des fichiers du registre de modèles sur un serveur GPU de production",
+        "La rédaction manuelle des règles logiques et des contraintes que le modèle doit respecter"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "L'entraînement est le processus par lequel un modèle apprend des motifs à partir de données en ajustant itérativement ses paramètres (poids) pour réduire l'erreur de prédiction."
+    },
+    {
+      "id": "fnd-05",
+      "difficulty": "beginner",
+      "question": "Qu'est-ce que l'« inférence » dans le contexte des modèles d'IA ?",
+      "options": [
+        "La phase d'entraînement spécifique où les poids du modèle sont mis à jour dynamiquement à l'aide de nouveaux algorithmes d'optimisation",
+        "Le traitement des requêtes d'entrée par un modèle pré-entraîné figé afin de générer les prédictions ou sorties correspondantes",
+        "La compression, l'élagage et la quantification d'un modèle pré-entraîné pour l'adapter à du matériel mobile aux ressources limitées",
+        "La revue juridique et de conformité complète effectuée sur un modèle avant sa mise sur le marché commercial"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "L'inférence consiste à utiliser un modèle déjà entraîné pour produire des prédictions ou générer une sortie. Les poids sont figés ; aucun apprentissage n'a lieu pendant l'inférence."
+    },
+    {
+      "id": "fnd-06",
+      "difficulty": "beginner",
+      "question": "Qu'est-ce qu'une « hallucination » de l'IA ?",
+      "options": [
+        "Un artefact de bruit visuel ou une erreur de rendu survenant dans des fichiers d'images générées",
+        "Le fait que le modèle refuse de répondre à une question en raison de ses garde-fous de sécurité",
+        "Le fait que le modèle produise une réponse fluide et assurée qui est factuellement fausse ou inventée",
+        "Un bug critique de fuite mémoire logicielle qui fait entièrement planter le serveur hébergeant le modèle"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Les hallucinations sont des sorties qui semblent plausibles et assurées mais sont erronées ou inventées, comme de fausses citations, des API inexistantes ou des faits incorrects."
+    },
+    {
+      "id": "fnd-07",
+      "difficulty": "beginner",
+      "question": "Quelle affirmation décrit le mieux la relation entre l'IA, l'apprentissage automatique et l'apprentissage profond ?",
+      "options": [
+        "Ce sont trois domaines technologiques totalement indépendants développés en parallèle par des organismes de recherche scientifique distincts",
+        "L'apprentissage profond est un sous-ensemble spécifique de l'apprentissage automatique, lui-même un sous-ensemble du domaine plus large de l'IA",
+        "L'intelligence artificielle est un petit sous-ensemble de l'apprentissage automatique, lui-même un sous-ensemble des systèmes d'apprentissage profond",
+        "L'apprentissage automatique et l'apprentissage profond sont des alternatives logicielles concurrentes de l'intelligence artificielle"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "L'IA est le domaine le plus large. L'apprentissage automatique est le sous-ensemble où les systèmes apprennent à partir de données, et l'apprentissage profond est le sous-ensemble du ML qui utilise des réseaux de neurones multicouches."
+    },
+    {
+      "id": "fnd-08",
+      "difficulty": "beginner",
+      "question": "Qu'est-ce qu'un modèle « multimodal » ?",
+      "options": [
+        "Un compilateur de modèle configuré pour fonctionner efficacement sur plusieurs systèmes d'exploitation et architectures CPU",
+        "Un modèle entraîné en collaboration par plusieurs organisations grâce à l'apprentissage fédéré décentralisé",
+        "Un modèle de langage optimisé pour basculer dynamiquement entre plusieurs personnalités, tons de réponse et styles d'écriture personnalisés",
+        "Un modèle capable de traiter nativement plus d'un type de données, comme le texte, les images et l'audio"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "Les modèles multimodaux gèrent plusieurs modalités d'entrée et/ou de sortie — par exemple texte, images, audio ou vidéo — plutôt que le texte seul."
+    },
+    {
+      "id": "fnd-09",
+      "difficulty": "beginner",
+      "question": "Que signifie le fait qu'un modèle soit « open-weights » (poids ouverts) ?",
+      "options": [
+        "Les poids paramétriques du modèle pré-entraîné sont officiellement publiés, permettant aux développeurs de les télécharger, de les modifier et d'exécuter le modèle localement",
+        "Le modèle est accessible gratuitement pour un usage interactif via un playground public ou un tableau de bord de chatbot hébergé par les créateurs du modèle",
+        "Les répertoires du jeu de données d'entraînement d'origine du modèle, les scripts de scraping et les pipelines de données brutes sont publiés dans un dépôt entièrement public",
+        "La licence de distribution logicielle n'impose aucune restriction d'usage, permettant à quiconque de créer des fonctionnalités commerciales sans directives de conformité"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "« Open-weights » signifie que les fichiers de paramètres entraînés sont publiés pour téléchargement (comme pour les modèles Llama de Meta). Cela n'inclut pas nécessairement les données d'entraînement ni une licence sans restriction."
+    },
+    {
+      "id": "fnd-10",
+      "difficulty": "beginner",
+      "question": "Lorsqu'un modèle est décrit comme ayant « 7 milliards de paramètres » (7B), que sont ces paramètres ?",
+      "options": [
+        "Le nombre total de documents textuels bruts, de pages web extraites et d'articles de recherche académique auxquels il a été exposé lors de l'exécution initiale du pré-entraînement",
+        "Les poids et biais mathématiques internes appris qui définissent la structure du réseau de neurones — totalisant environ 7 milliards de valeurs",
+        "La capacité maximale de la fenêtre de contexte d'entrée, qui détermine le nombre de tokens de texte que le modèle peut traiter et retenir à un instant donné",
+        "Les spécifications matérielles détaillant le nombre exact de cœurs tensoriels GPU haute performance nécessaires pour charger avec succès les poids du modèle"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Les paramètres sont les poids appris du réseau de neurones. « 7B » signifie environ 7 milliards de ces valeurs, un indicateur approximatif de la taille et de la capacité du modèle."
+    }
+  ]
+}

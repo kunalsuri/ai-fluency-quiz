@@ -1,0 +1,20 @@
+---
+// Copyright (c) 2026 Kunal Suri (CEA LIST). Apache-2.0.
+import Base from '../../../layouts/Base.astro';
+import GuideTopic from '../../../components/GuideTopic.astro';
+import { getGuideTopics } from '../../../lib/data';
+import { tr } from '../../../lib/i18n';
+
+export function getStaticPaths() {
+  return getGuideTopics('fr').map((topic) => ({
+    params: { slug: topic.slug },
+    props: { topic },
+  }));
+}
+
+const { topic } = Astro.props;
+---
+
+<Base lang="fr" title={`${topic.topic} · ${tr('fr', 'guideTitle')}`} description={topic.description}>
+  <GuideTopic lang="fr" topic={topic} />
+</Base>

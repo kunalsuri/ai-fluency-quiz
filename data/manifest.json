@@ -1,0 +1,165 @@
+{
+  "metadata": {
+    "title": "AI Fluency Quiz",
+    "version": "2.0.0",
+    "updated": "2026-07",
+    "description": "Modular question database covering AI/LLM knowledge from foundational terminology to advanced agent-era disciplines such as context engineering and harness engineering."
+  },
+  "difficultyPoints": {
+    "beginner": 5,
+    "intermediate": 10,
+    "advanced": 15,
+    "expert": 20
+  },
+  "scoringTiers": [
+    {
+      "minPercent": 0,
+      "status": "AI Novice",
+      "description": "Getting started. Explore the fundamentals of AI and machine learning concepts."
+    },
+    {
+      "minPercent": 35,
+      "status": "Prompt Engineer",
+      "description": "Comfortable with LLM interaction patterns, sampling controls, and prompting techniques."
+    },
+    {
+      "minPercent": 65,
+      "status": "Context Engineer",
+      "description": "Fluent in retrieval, agents, and curating what enters a model's context window."
+    },
+    {
+      "minPercent": 85,
+      "status": "AI-Native Architect",
+      "description": "Deep command of transformer internals, agent harnesses, and production AI systems design."
+    }
+  ],
+  "managerialScoringTiers": [
+    {
+      "minPercent": 0,
+      "status": "AI Explorer",
+      "description": "Getting started with AI concepts. Focus on understanding simple use cases and basic tools."
+    },
+    {
+      "minPercent": 35,
+      "status": "AI-Assisted Manager",
+      "description": "Comfortable applying AI in daily tasks and identifying workflow efficiency gains."
+    },
+    {
+      "minPercent": 65,
+      "status": "AI Strategist",
+      "description": "Competent in evaluating ROI, risk management, privacy requirements, and scaling pilots."
+    },
+    {
+      "minPercent": 85,
+      "status": "AI-Native Leader",
+      "description": "Demonstrates visionary capability in aligning AI systems, managing TCO, and governing AI products safely."
+    }
+  ],
+  "banks": [
+    {
+      "id": "foundations",
+      "file": "banks/foundations.json",
+      "topic": "AI Foundations",
+      "description": "Core terminology: models, tokens, training, inference, hallucination.",
+      "role": "technical"
+    },
+    {
+      "id": "llm-mechanics",
+      "file": "banks/llm-mechanics.json",
+      "topic": "LLM Mechanics",
+      "description": "How LLMs run: sampling, context windows, embeddings, KV cache, quantization.",
+      "role": "technical"
+    },
+    {
+      "id": "transformers",
+      "file": "banks/transformers.json",
+      "topic": "Transformer Architecture",
+      "description": "Attention, positional encoding, mixture-of-experts, architectural trade-offs.",
+      "role": "technical"
+    },
+    {
+      "id": "prompting",
+      "file": "banks/prompting.json",
+      "topic": "Prompting Techniques",
+      "description": "From zero-shot to chain-of-thought, ReAct, and structured outputs.",
+      "role": "technical"
+    },
+    {
+      "id": "rag-retrieval",
+      "file": "banks/rag-retrieval.json",
+      "topic": "RAG & Retrieval",
+      "description": "Retrieval-augmented generation, vector search, chunking, reranking.",
+      "role": "technical"
+    },
+    {
+      "id": "agents-tooling",
+      "file": "banks/agents-tooling.json",
+      "topic": "Agents & Tool Use",
+      "description": "Agentic loops, function calling, MCP, evals, multi-agent patterns.",
+      "role": "technical"
+    },
+    {
+      "id": "context-engineering",
+      "file": "banks/context-engineering.json",
+      "topic": "Context Engineering",
+      "description": "Curating the token budget: compaction, just-in-time retrieval, agentic memory.",
+      "role": "technical"
+    },
+    {
+      "id": "harness-engineering",
+      "file": "banks/harness-engineering.json",
+      "topic": "Harness Engineering",
+      "description": "Designing the environment around the agent: tools, permissions, feedback loops.",
+      "role": "technical"
+    },
+    {
+      "id": "safety-alignment",
+      "file": "banks/safety-alignment.json",
+      "topic": "Safety & Alignment",
+      "description": "RLHF, Constitutional AI, jailbreaks, prompt injection, red teaming.",
+      "role": "technical"
+    },
+    {
+      "id": "multimodal-ai",
+      "file": "banks/multimodal-ai.json",
+      "topic": "Multimodal AI",
+      "description": "Vision, speech, image generation, cross-modal embeddings, and multimodal architectures.",
+      "role": "technical"
+    },
+    {
+      "id": "ai-ethics-governance",
+      "file": "banks/ai-ethics-governance.json",
+      "topic": "AI Ethics & Governance",
+      "description": "Bias, fairness metrics, EU AI Act, watermarking, and responsible deployment.",
+      "role": "technical"
+    },
+    {
+      "id": "fine-tuning-adaptation",
+      "file": "banks/fine-tuning-adaptation.json",
+      "topic": "Fine-tuning & Adaptation",
+      "description": "LoRA, PEFT, RLHF mechanics, DPO, instruction tuning, and domain adaptation.",
+      "role": "technical"
+    },
+    {
+      "id": "evals-benchmarking",
+      "file": "banks/evals-benchmarking.json",
+      "topic": "Evals & Benchmarking",
+      "description": "MMLU, HumanEval, LLM-as-judge, regression suites, and production evaluation practices.",
+      "role": "technical"
+    },
+    {
+      "id": "ai-business-value",
+      "file": "banks/ai-business-value.json",
+      "topic": "AI Business Value & ROI",
+      "description": "Metrics, costs, ROI estimation, vendor selection, and strategic alignment.",
+      "role": "managerial"
+    },
+    {
+      "id": "ai-work-application",
+      "file": "banks/ai-work-application.json",
+      "topic": "AI in the Workspace",
+      "description": "Operational efficiency, human-in-the-loop, privacy, risk management, and adoption.",
+      "role": "managerial"
+    }
+  ]
+}

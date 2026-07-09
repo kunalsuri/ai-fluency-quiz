@@ -1,0 +1,406 @@
+{
+  "metadata": {
+    "title": "Fiche de référence terminologique sur l'IA",
+    "version": "1.0.0",
+    "updated": "2026-07",
+    "description": "Glossaire de référence rapide des termes IA/LLM, organisé selon la même taxonomie thématique que le quiz."
+  },
+  "terms": [
+    {
+      "term": "Large Language Model (LLM)",
+      "category": "Fondamentaux de l'IA",
+      "definition": "Un réseau de neurones entraîné sur d'immenses corpus de texte pour prédire et générer du langage, qui alimente les assistants de chat et les copilotes.",
+      "example": "GPT-4, Claude et Llama sont tous des LLM."
+    },
+    {
+      "term": "Token",
+      "category": "Fondamentaux de l'IA",
+      "definition": "L'unité de base de texte (un mot, un sous-mot ou un fragment de caractère) qu'un modèle lit et génère. Les limites de contexte et les coûts d'API sont mesurés en tokens.",
+      "example": "« unbelievable » peut se découper en « un », « believ », « able »."
+    },
+    {
+      "term": "Training",
+      "category": "Fondamentaux de l'IA",
+      "definition": "Le processus d'ajustement des paramètres internes d'un modèle à partir de données afin qu'il apprenne des schémas, généralement réalisé via un pré-entraînement suivi d'un fine-tuning.",
+      "example": "Pré-entraîner sur du texte web, puis affiner sur des instructions sélectionnées."
+    },
+    {
+      "term": "Inference",
+      "category": "Fondamentaux de l'IA",
+      "definition": "L'exécution d'un modèle déjà entraîné pour produire un résultat à partir d'une entrée donnée, par opposition à son entraînement.",
+      "example": "Envoyer un prompt à une API et recevoir une réponse en retour."
+    },
+    {
+      "term": "Hallucination",
+      "category": "Fondamentaux de l'IA",
+      "definition": "Lorsqu'un modèle génère un résultat qui semble sûr de lui mais qui est factuellement erroné ou entièrement inventé.",
+      "example": "Citer un article de recherche qui n'existe pas réellement."
+    },
+    {
+      "term": "Parameters",
+      "category": "Fondamentaux de l'IA",
+      "definition": "Les poids numériques internes qu'un modèle apprend pendant l'entraînement ; ils indiquent approximativement l'échelle et la capacité du modèle.",
+      "example": "Un modèle « 70B » compte environ 70 milliards de paramètres."
+    },
+    {
+      "term": "Context Window",
+      "category": "Mécanismes des LLM",
+      "definition": "Le nombre maximal de tokens (entrée plus sortie) qu'un modèle peut prendre en compte à un instant donné.",
+      "example": "Une fenêtre de contexte de 200K tokens peut contenir environ un livre de 500 pages."
+    },
+    {
+      "term": "Sampling / Temperature",
+      "category": "Mécanismes des LLM",
+      "definition": "Des paramètres utilisés pour choisir le prochain token dans la distribution de probabilité du modèle ; la température ajuste le degré d'aléatoire de ce choix.",
+      "example": "Une température de 0 donne des réponses déterministes et reproductibles."
+    },
+    {
+      "term": "Embedding",
+      "category": "Mécanismes des LLM",
+      "definition": "Un vecteur numérique dense représentant le sens d'un texte, utilisé pour la recherche et les comparaisons de similarité.",
+      "example": "« chien » et « chiot » ont des embeddings proches l'un de l'autre."
+    },
+    {
+      "term": "KV Cache",
+      "category": "Mécanismes des LLM",
+      "definition": "Les tenseurs clé/valeur d'attention mis en cache à partir des tokens précédents, ce qui permet à un modèle d'éviter de les recalculer pour chaque nouveau token, accélérant ainsi la génération.",
+      "example": "Les longues conversations réutilisent le cache au lieu de retraiter tout l'historique précédent."
+    },
+    {
+      "term": "Quantization",
+      "category": "Mécanismes des LLM",
+      "definition": "La réduction de la précision numérique des poids d'un modèle (par ex. de 16 bits à 4 bits) afin de réduire l'utilisation de la mémoire et d'accélérer l'inférence, au prix d'une certaine perte de précision.",
+      "example": "Faire fonctionner un grand modèle sur un GPU d'ordinateur portable grâce à une quantification en 4 bits."
+    },
+    {
+      "term": "Logits",
+      "category": "Mécanismes des LLM",
+      "definition": "Les scores bruts et non normalisés qu'un modèle produit pour chaque token suivant possible, avant leur conversion en probabilités.",
+      "example": "Une fonction softmax transforme les logits en une distribution de probabilité."
+    },
+    {
+      "term": "Attention",
+      "category": "Architecture Transformer",
+      "definition": "Un mécanisme qui permet à un modèle de pondérer la pertinence de chaque autre token lors du traitement d'un token donné.",
+      "example": "Dans « Le chat s'est assis parce qu'il était fatigué », l'attention relie « il » à « chat »."
+    },
+    {
+      "term": "Self-Attention",
+      "category": "Architecture Transformer",
+      "definition": "L'attention appliquée au sein d'une même séquence, permettant à chaque token de porter attention à tous les autres tokens de la même entrée.",
+      "example": "Résoudre les références pronominales dans un paragraphe."
+    },
+    {
+      "term": "Positional Encoding",
+      "category": "Architecture Transformer",
+      "definition": "Une information ajoutée aux représentations des tokens pour que le modèle connaisse l'ordre des mots, l'attention seule étant indifférente à l'ordre.",
+      "example": "Le RoPE (encodage positionnel rotatif) est utilisé dans de nombreux LLM modernes."
+    },
+    {
+      "term": "Mixture of Experts (MoE)",
+      "category": "Architecture Transformer",
+      "definition": "Une architecture où seul un sous-ensemble de sous-réseaux « experts » spécialisés s'active par token, augmentant la capacité sans coût de calcul proportionnel.",
+      "example": "Un modèle à 8 experts peut router chaque token à travers seulement 2 d'entre eux."
+    },
+    {
+      "term": "Feed-Forward Network (FFN)",
+      "category": "Architecture Transformer",
+      "definition": "La couche entièrement connectée par token à l'intérieur de chaque bloc transformer, qui suit l'attention et ajoute une capacité de traitement non linéaire.",
+      "example": "Environ les deux tiers des paramètres d'un transformer se trouvent généralement ici."
+    },
+    {
+      "term": "Layer Normalization",
+      "category": "Architecture Transformer",
+      "definition": "Une technique qui redimensionne les activations au sein d'une couche pour stabiliser et accélérer l'entraînement des réseaux profonds.",
+      "example": "Appliquée avant ou après chaque sous-bloc d'attention/FFN."
+    },
+    {
+      "term": "Zero-Shot Prompting",
+      "category": "Techniques de prompting",
+      "definition": "Demander à un modèle d'exécuter une tâche à partir des seules instructions, sans fournir d'exemple.",
+      "example": "« Traduis cette phrase en français. »"
+    },
+    {
+      "term": "Few-Shot Prompting",
+      "category": "Techniques de prompting",
+      "definition": "Fournir dans le prompt une poignée d'exemples de paires entrée/sortie pour orienter le comportement du modèle avant de lui demander d'exécuter la tâche.",
+      "example": "Trois exemples de paires question/réponse suivis d'une nouvelle question."
+    },
+    {
+      "term": "Chain-of-Thought (CoT)",
+      "category": "Techniques de prompting",
+      "definition": "Inciter un modèle à raisonner étape par étape avant de donner une réponse finale, ce qui améliore la précision sur les problèmes à plusieurs étapes.",
+      "example": "« Réfléchissons étape par étape... »"
+    },
+    {
+      "term": "ReAct",
+      "category": "Techniques de prompting",
+      "definition": "Un modèle de prompting qui entrelace le raisonnement (« Thought ») avec des actions (« Act ») comme les appels d'outils, puis observe les résultats avant de continuer.",
+      "example": "Pensée → recherche sur le web → Observation → Réponse."
+    },
+    {
+      "term": "System Prompt",
+      "category": "Techniques de prompting",
+      "definition": "Un ensemble d'instructions privilégiées placé au début d'une conversation qui façonne la personnalité, les règles et les contraintes d'un modèle pour toute la session.",
+      "example": "« Tu es un agent de support professionnel et concis. »"
+    },
+    {
+      "term": "Structured Output",
+      "category": "Techniques de prompting",
+      "definition": "Contraindre la réponse d'un modèle à un schéma défini (comme du JSON) afin que le code en aval puisse l'analyser de manière fiable.",
+      "example": "Forcer une réponse à correspondre à { \"nom\": string, \"age\": number }."
+    },
+    {
+      "term": "Retrieval-Augmented Generation (RAG)",
+      "category": "RAG et recherche documentaire",
+      "definition": "Récupérer des documents externes pertinents au moment de la requête et les injecter dans le contexte du modèle afin qu'il puisse répondre avec des informations à jour ou privées.",
+      "example": "Chercher dans le wiki d'une entreprise avant de répondre à une question interne."
+    },
+    {
+      "term": "Vector Search",
+      "category": "RAG et recherche documentaire",
+      "definition": "Trouver les documents les plus pertinents en comparant la similarité des embeddings plutôt que par correspondance exacte de mots-clés.",
+      "example": "Une requête sur « problème de voiture » correspond aussi à un document sur « panne de véhicule »."
+    },
+    {
+      "term": "Chunking",
+      "category": "RAG et recherche documentaire",
+      "definition": "Diviser de longs documents en passages plus courts avant de les indexer et de les vectoriser, car la recherche fonctionne sur des unités de la taille d'un fragment.",
+      "example": "Diviser un PDF de 50 pages en fragments de 500 tokens."
+    },
+    {
+      "term": "Reranking",
+      "category": "RAG et recherche documentaire",
+      "definition": "Une seconde passe de notation plus précise sur un ensemble initial de candidats récupérés, afin de les réordonner selon leur pertinence réelle avant qu'ils n'atteignent le modèle.",
+      "example": "Un reranker à cross-encoder réévalue les 50 meilleurs résultats de la recherche vectorielle."
+    },
+    {
+      "term": "Vector Database",
+      "category": "RAG et recherche documentaire",
+      "definition": "Un entrepôt de données optimisé pour stocker des embeddings et exécuter des recherches de similarité par plus proches voisins à grande échelle.",
+      "example": "Pinecone, Weaviate et pgvector sont tous des bases de données vectorielles."
+    },
+    {
+      "term": "Grounding",
+      "category": "RAG et recherche documentaire",
+      "definition": "Ancrer la réponse d'un modèle dans du matériel source récupéré ou fourni afin qu'il soit moins susceptible d'halluciner.",
+      "example": "Exiger que le modèle cite le passage source exact qu'il a utilisé."
+    },
+    {
+      "term": "Agent",
+      "category": "Agents et utilisation d'outils",
+      "definition": "Un système dans lequel un LLM planifie de manière autonome, appelle des outils, observe les résultats et itère vers un objectif plutôt que de produire un résultat en une seule étape.",
+      "example": "Un agent qui réserve un vol en effectuant des recherches, en comparant et en confirmant."
+    },
+    {
+      "term": "Function Calling / Tool Use",
+      "category": "Agents et utilisation d'outils",
+      "definition": "La capacité d'un modèle à émettre une requête structurée pour invoquer une fonction ou une API externe, puis à intégrer le résultat dans sa réponse.",
+      "example": "Appeler une fonction get_weather(ville) au lieu de deviner."
+    },
+    {
+      "term": "Agentic Loop",
+      "category": "Agents et utilisation d'outils",
+      "definition": "Le cycle répété de réflexion → action → observation qui permet à un agent de progresser sur une tâche à travers plusieurs étapes.",
+      "example": "Rechercher, lire le résultat, décider de la recherche suivante, recommencer."
+    },
+    {
+      "term": "Model Context Protocol (MCP)",
+      "category": "Agents et utilisation d'outils",
+      "definition": "Un standard ouvert permettant de connecter des modèles d'IA à des outils externes, des sources de données et des systèmes via une interface commune.",
+      "example": "Un serveur MCP unique exposant à la fois une base de données et un système de fichiers à tout client compatible."
+    },
+    {
+      "term": "Multi-Agent System",
+      "category": "Agents et utilisation d'outils",
+      "definition": "Plusieurs agents spécialisés (ou instances d'agents) qui se coordonnent, délèguent ou débattent pour résoudre une tâche qu'aucun ne pourrait résoudre aussi bien seul.",
+      "example": "Un agent « planificateur » qui délègue la recherche à un agent « chercheur »."
+    },
+    {
+      "term": "Eval (Evaluation)",
+      "category": "Agents et utilisation d'outils",
+      "definition": "Une suite de tests structurée utilisée pour mesurer la performance d'un modèle ou d'un agent sur une tâche, souvent utilisée pour détecter les régressions avant la mise en production.",
+      "example": "Exécuter 200 tâches enregistrées sur un nouveau prompt pour vérifier le taux de réussite."
+    },
+    {
+      "term": "Context Engineering",
+      "category": "Ingénierie du contexte",
+      "definition": "Sélectionner délibérément les informations qui entrent dans la fenêtre de contexte limitée d'un modèle, et dans quel ordre, afin d'obtenir des résultats meilleurs et moins coûteux.",
+      "example": "Élaguer l'historique de conversation non pertinent avant un nouveau tour."
+    },
+    {
+      "term": "Compaction",
+      "category": "Ingénierie du contexte",
+      "definition": "Résumer ou supprimer un contexte ancien pour libérer de l'espace dans la fenêtre de contexte à mesure qu'une conversation ou une tâche s'allonge.",
+      "example": "Remplacer 50 anciens messages par un résumé de 3 phrases."
+    },
+    {
+      "term": "Just-in-Time Retrieval",
+      "category": "Ingénierie du contexte",
+      "definition": "Récupérer une information seulement au moment où elle est nécessaire, plutôt que de tout précharger dès le départ, afin de garder un contexte léger.",
+      "example": "Consulter le contenu d'un fichier uniquement lorsqu'une tâche y fait réellement référence."
+    },
+    {
+      "term": "Agentic Memory",
+      "category": "Ingénierie du contexte",
+      "definition": "Des notes ou un état persistants qu'un agent écrit et lit d'une étape ou d'une session à l'autre, afin de ne pas avoir à redéduire les mêmes informations.",
+      "example": "Une liste de tâches courante que l'agent met à jour au fur et à mesure qu'il progresse."
+    },
+    {
+      "term": "Context Rot",
+      "category": "Ingénierie du contexte",
+      "definition": "La tendance des performances d'un modèle à se dégrader à mesure que des informations non pertinentes ou obsolètes s'accumulent dans une longue fenêtre de contexte.",
+      "example": "Un agent perdant de vue l'objectif initial après 100 appels d'outils."
+    },
+    {
+      "term": "Token Budget",
+      "category": "Ingénierie du contexte",
+      "definition": "La portion de la fenêtre de contexte délibérément allouée à un type de contenu donné (instructions, historique, documents récupérés) afin que les informations les plus importantes ne soient pas évincées.",
+      "example": "Plafonner les documents récupérés à 2 000 tokens pour que les instructions tiennent toujours."
+    },
+    {
+      "term": "Harness Engineering",
+      "category": "Ingénierie de harnais",
+      "definition": "Concevoir les outils, les permissions et les boucles de rétroaction autour d'un agent afin qu'il puisse agir efficacement et en toute sécurité dans son environnement.",
+      "example": "Décider quelles commandes shell un agent est autorisé à exécuter."
+    },
+    {
+      "term": "Tool Definition",
+      "category": "Ingénierie de harnais",
+      "definition": "Le schéma (nom, description, paramètres) qui indique à un modèle ce que fait un outil et comment l'appeler correctement.",
+      "example": "Une description bien rédigée empêche un modèle de mal utiliser un outil delete_file."
+    },
+    {
+      "term": "Permission Model",
+      "category": "Ingénierie de harnais",
+      "definition": "Les règles régissant les actions qu'un agent peut entreprendre de manière autonome par rapport à celles qui nécessitent une approbation humaine.",
+      "example": "Approuver automatiquement les lectures de fichiers mais exiger une confirmation avant un git push."
+    },
+    {
+      "term": "Feedback Loop",
+      "category": "Ingénierie de harnais",
+      "definition": "Le signal qu'un harnais donne à un agent sur le résultat de ses actions (succès, erreur, sortie) afin qu'il puisse ajuster sa prochaine étape.",
+      "example": "Renvoyer une erreur de compilation pour que l'agent puisse corriger lui-même son code."
+    },
+    {
+      "term": "Sandboxing",
+      "category": "Ingénierie de harnais",
+      "definition": "Exécuter les actions d'un agent dans un environnement isolé afin que les erreurs ou les commandes malveillantes ne puissent pas affecter les systèmes de production.",
+      "example": "Exécuter du code généré à l'intérieur d'un conteneur jetable."
+    },
+    {
+      "term": "Observability",
+      "category": "Ingénierie de harnais",
+      "definition": "Journaliser et tracer les décisions, les appels d'outils et les résultats d'un agent afin que les développeurs puissent déboguer et améliorer son comportement.",
+      "example": "Un visualiseur de traces montrant chaque appel d'outil effectué par un agent au cours d'une tâche."
+    },
+    {
+      "term": "RLHF (Reinforcement Learning from Human Feedback)",
+      "category": "Sécurité et alignement",
+      "definition": "Une technique d'entraînement qui utilise les jugements de préférence humains pour récompenser un modèle produisant des résultats jugés meilleurs par les évaluateurs, afin de l'aligner sur l'intention humaine.",
+      "example": "Des évaluateurs classent deux réponses du modèle ; le modèle est entraîné à préférer celle la mieux classée."
+    },
+    {
+      "term": "Constitutional AI",
+      "category": "Sécurité et alignement",
+      "definition": "Une approche d'alignement où un modèle critique et révise ses propres résultats par rapport à un ensemble écrit de principes, réduisant ainsi la dépendance à l'étiquetage humain pour chaque cas.",
+      "example": "Un modèle vérifiant sa propre réponse par rapport à une règle comme « éviter les instructions nuisibles »."
+    },
+    {
+      "term": "Jailbreak",
+      "category": "Sécurité et alignement",
+      "definition": "Un prompt conçu pour contourner l'entraînement de sécurité d'un modèle et l'amener à produire du contenu interdit.",
+      "example": "Déguiser une demande nuisible en « histoire fictive »."
+    },
+    {
+      "term": "Prompt Injection",
+      "category": "Sécurité et alignement",
+      "definition": "Une attaque où des instructions malveillantes sont dissimulées dans un contenu traité par un modèle (une page web, un document, un e-mail) afin de détourner son comportement.",
+      "example": "Une page web contenant du texte caché indiquant à un assistant IA de divulguer des données privées."
+    },
+    {
+      "term": "Red Teaming",
+      "category": "Sécurité et alignement",
+      "definition": "Sonder délibérément un modèle ou un système à la recherche de faiblesses, de résultats nuisibles ou de comportements exploitables avant son déploiement.",
+      "example": "Une équipe de sécurité essayant des dizaines de prompts de jailbreak avant le lancement."
+    },
+    {
+      "term": "Guardrails",
+      "category": "Sécurité et alignement",
+      "definition": "Des contrôles automatisés (filtres, classificateurs, règles) placés autour d'un modèle pour détecter ou bloquer les résultats dangereux ou non conformes à la politique.",
+      "example": "Un filtre de contenu bloquant une réponse avant qu'elle n'atteigne l'utilisateur."
+    },
+    {
+      "term": "ROI (Return on Investment)",
+      "category": "Valeur métier de l'IA et ROI",
+      "definition": "Le bénéfice mesurable (économies de coûts, chiffre d'affaires, temps gagné) qu'une initiative d'IA génère par rapport à ce qu'elle a coûté à construire et à exploiter.",
+      "example": "Un chatbot de support qui réduit le temps de traitement des tickets de 30 %."
+    },
+    {
+      "term": "TCO (Total Cost of Ownership)",
+      "category": "Valeur métier de l'IA et ROI",
+      "definition": "Le coût total d'un système d'IA sur l'ensemble de son cycle de vie, incluant le calcul, les licences, l'intégration et la maintenance, et pas seulement le prix affiché.",
+      "example": "Les coûts d'API plus le temps d'ingénierie nécessaire pour l'intégrer et le surveiller."
+    },
+    {
+      "term": "Vendor Lock-in",
+      "category": "Valeur métier de l'IA et ROI",
+      "definition": "Le risque de devenir dépendant des API ou des formats propriétaires d'un seul fournisseur d'IA, rendant tout changement ultérieur coûteux.",
+      "example": "Construire des prompts et des outils qui ne fonctionnent qu'avec les particularités spécifiques du modèle d'un seul fournisseur."
+    },
+    {
+      "term": "Pilot Program",
+      "category": "Valeur métier de l'IA et ROI",
+      "definition": "Un essai à petite échelle et limité dans le temps d'un cas d'usage IA, utilisé pour valider sa valeur avant un déploiement complet.",
+      "example": "Tester un outil de rédaction IA avec une équipe pendant un mois avant un déploiement à l'échelle de l'entreprise."
+    },
+    {
+      "term": "Human-in-the-Loop",
+      "category": "Valeur métier de l'IA et ROI",
+      "definition": "Une conception de flux de travail où une personne examine ou approuve le résultat de l'IA avant qu'il ne prenne effet, équilibrant rapidité, précision et responsabilité.",
+      "example": "Un humain approuvant des e-mails clients rédigés par l'IA avant leur envoi."
+    },
+    {
+      "term": "Change Management",
+      "category": "Valeur métier de l'IA et ROI",
+      "definition": "Le processus structuré consistant à aider une organisation à adopter un nouvel outil ou flux de travail d'IA, couvrant la formation, la communication et les incitations.",
+      "example": "Organiser des ateliers pour que le personnel fasse confiance à un nouvel assistant IA et l'adopte."
+    },
+    {
+      "term": "Copilot",
+      "category": "L'IA au travail",
+      "definition": "Un assistant IA intégré dans un flux de travail ou un outil qui suggère ou ébauche du travail qu'un humain doit examiner et valider, plutôt que d'agir de manière entièrement autonome.",
+      "example": "Un assistant de codage suggérant la ligne suivante pendant que vous tapez."
+    },
+    {
+      "term": "Prompt Library",
+      "category": "L'IA au travail",
+      "definition": "Une collection partagée et réutilisable de prompts validés qu'une organisation utilise pour obtenir des résultats cohérents d'un outil IA.",
+      "example": "Un modèle de prompt standard pour résumer des notes de réunion."
+    },
+    {
+      "term": "Data Privacy (in AI use)",
+      "category": "L'IA au travail",
+      "definition": "Des pratiques garantissant que des informations sensibles ou personnelles ne sont pas divulguées, stockées ou mémorisées de manière inappropriée par un système d'IA.",
+      "example": "Masquer les noms des clients avant d'envoyer un ticket de support à un outil de synthèse IA."
+    },
+    {
+      "term": "Shadow AI",
+      "category": "L'IA au travail",
+      "definition": "Des employés utilisant des outils d'IA à l'insu ou sans l'approbation du service informatique ou de sécurité, créant un risque non maîtrisé.",
+      "example": "Des employés collant des documents confidentiels dans un compte de chatbot personnel."
+    },
+    {
+      "term": "Workflow Automation",
+      "category": "L'IA au travail",
+      "definition": "Utiliser l'IA pour gérer de bout en bout des tâches répétitives et multi-étapes au sein d'un processus métier, réduisant le travail manuel.",
+      "example": "Un système d'IA qui trie, rédige et achemine les e-mails de support entrants."
+    },
+    {
+      "term": "Upskilling",
+      "category": "L'IA au travail",
+      "definition": "Former les employés à utiliser et superviser efficacement les outils d'IA dans le cadre de leur rôle, plutôt que d'être remplacés par eux.",
+      "example": "Enseigner à une équipe marketing la rédaction de prompts et les compétences de révision des résultats de l'IA."
+    }
+  ]
+}

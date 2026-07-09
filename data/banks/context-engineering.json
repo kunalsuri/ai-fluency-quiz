@@ -1,0 +1,112 @@
+{
+  "id": "context-engineering",
+  "topic": "Context Engineering",
+  "description": "Curating the token budget: compaction, just-in-time retrieval, agentic memory.",
+  "questions": [
+    {
+      "id": "ctx-01",
+      "difficulty": "expert",
+      "question": "What is 'context engineering'?",
+      "options": [
+        "Designing longer and increasingly detailed instruction templates for single-turn interactions",
+        "The set of strategies for curating and maintaining the optimal set of tokens in a model's context during inference",
+        "Engineering high-performance distributed caching servers and relational databases to store long conversation histories",
+        "Translating natural language user inputs into the specific source languages that the model encountered during pre-training"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "As defined in Anthropic's engineering guidance, context engineering manages everything that enters the model's limited context — system instructions, tools, retrieved data, message history — treating context as a finite resource to be curated, not just a prompt to be written.",
+      "source": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+    },
+    {
+      "id": "ctx-02",
+      "difficulty": "expert",
+      "question": "How does context engineering differ from prompt engineering?",
+      "options": [
+        "They represent identical optimization concepts, with context engineering simply serving as an enterprise marketing rebrand of traditional instructions used for chatbot applications",
+        "Prompt engineering applies exclusively to generative image, video, and audio models, while context engineering is restricted strictly to text-only user chat interfaces",
+        "Prompt engineering focuses on writing effective instructions; context engineering manages the entire evolving context (tools, history, retrieved data, memory) across an agent's many inference turns",
+        "Context engineering completely replaces the need for writing prompt instructions by dynamically constructing and injecting variable context parameters on the backend server side"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Prompt engineering optimizes the words of an instruction, which suits one-shot tasks. Agents loop over many turns and generate ever more data, so the harder question becomes which subset of all available information should occupy the context at each step — that curation is context engineering."
+    },
+    {
+      "id": "ctx-03",
+      "difficulty": "expert",
+      "question": "What phenomenon does the term 'context rot' describe?",
+      "options": [
+        "The gradual degradation of pre-trained model weights stored on low-quality storage disks over extended periods of inactivity",
+        "The risk of training data representations becoming obsolete or factually inaccurate after the model's public knowledge cutoff date",
+        "The automated pruning and deletion of old customer conversation log files from cloud servers to meet compliance standards",
+        "The decline in a model's ability to recall and utilize information effectively as the active context window size increases"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "Context rot — named in a 2025 Chroma research report and echoed in Anthropic's context-engineering guidance — is the observed decline in retrieval and reasoning quality as input length grows, even well within the advertised context window. It's why more context is not automatically better."
+    },
+    {
+      "id": "ctx-04",
+      "difficulty": "expert",
+      "question": "What is meant by a model's 'attention budget'?",
+      "options": [
+        "The financial budget allocated to compute resources for attention layers during the initial pre-training run of the model",
+        "The finite capacity a model has for attending across its context — which every added token depletes",
+        "The absolute limit of concurrent user requests and sessions that a single model instance can actively process in memory",
+        "A subscription quota system designed to limit how many prompt questions a user is permitted to submit within one hour"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Because transformer attention relates every token to every other token, effective attention gets stretched thinner as context grows. Treating attention as a budget leads to the guiding heuristic: find the smallest set of high-signal tokens that maximizes the likelihood of the desired outcome."
+    },
+    {
+      "id": "ctx-05",
+      "difficulty": "expert",
+      "question": "In long-running agents, what is 'compaction'?",
+      "options": [
+        "Compressing the neural network's weights into a lower precision quantization format to speed up initialization",
+        "Zipping and archiving historical database conversation logs before sending them to long-term cold file storage",
+        "Summarizing the conversation so far and restarting the context with that summary, freeing space while preserving key details",
+        "Programmatically stripping out redundant whitespaces and comment blocks from raw prompts to minimize token usage"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "When a conversation approaches the context limit, the agent distills it — decisions made, unresolved issues, key facts — and continues with the distilled version. Claude Code's auto-compact does exactly this as the window fills."
+    },
+    {
+      "id": "ctx-06",
+      "difficulty": "expert",
+      "question": "What is 'just-in-time' context retrieval for agents?",
+      "options": [
+        "Pre-loading and indexing every potentially relevant document into memory before the agent receives its first query",
+        "The agent loads data at runtime via tools (file paths, queries, links) exactly when needed, instead of ingesting everything up front",
+        "Streaming output text tokens back to the client interface immediately as they are generated by the model during inference",
+        "Caching and reusing the previous day's entire conversation context window to reduce startup compute latency for new runs"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Rather than stuffing all data into context up front, the agent keeps lightweight references (paths, queries, IDs) and fetches content on demand — mirroring how humans use file systems and bookmarks instead of memorizing everything."
+    },
+    {
+      "id": "ctx-07",
+      "difficulty": "expert",
+      "question": "What is 'structured note-taking' (agentic memory)?",
+      "options": [
+        "The agent regularly writes key state to persistent storage outside the context window (e.g., a NOTES.md or to-do file) and reads it back later",
+        "Applying custom style instructions that force the language model to format all its internal reasoning states and final responses as structured markdown tables",
+        "Executing automated fine-tuning runs on the language model using the user's personal notes database on a weekly offline schedule",
+        "Applying cryptographic algorithms to encrypt the raw conversation history database before storing it on cloud server instances"
+      ],
+      "correctAnswerIndex": 0,
+      "explanation": "By persisting notes outside the window, an agent maintains goals, progress, and learned details across compactions and long task horizons — memory that survives even when the context is reset."
+    },
+    {
+      "id": "ctx-08",
+      "difficulty": "expert",
+      "question": "How do sub-agent architectures help manage context?",
+      "options": [
+        "Sub-agents are forced to share a single global context window, allowing them to access the exact same history to minimize concurrent GPU memory allocation",
+        "Sub-agents execute their tasks using smaller, highly compressed model variants to optimize response latency and token costs",
+        "Sub-agents completely bypass the need for external data retrieval by memorizing the vector database during training phases",
+        "Each sub-agent handles its assigned task in a separate, isolated context window and returns only a high-level summary to the main orchestrator"
+      ],
+      "correctAnswerIndex": 3,
+      "explanation": "A sub-agent might burn tens of thousands of tokens searching and reading, but hand back only a distilled summary. The orchestrator gets the insight without inheriting the exploration's token cost — isolation that keeps the main context focused."
+    }
+  ]
+}
