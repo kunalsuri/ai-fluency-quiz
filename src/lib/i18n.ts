@@ -84,6 +84,10 @@ export const STRINGS = {
     frontierTitle: 'The Frontier',
     frontierLede: 'The papers that built this field — hand-picked, with one honest line on why each one matters.',
     frontierRead: 'Read the paper',
+    // 404
+    error404Title: 'Page not found',
+    error404Lede: 'Sorry, the page you are looking for does not exist or has been moved.',
+    error404Btn: 'Back to home',
   },
   fr: {
     siteName: 'AI Fluency',
@@ -155,6 +159,10 @@ export const STRINGS = {
     frontierTitle: 'La Frontière',
     frontierLede: 'Les articles qui ont construit ce domaine — choisis à la main, avec une ligne honnête sur l’importance de chacun.',
     frontierRead: 'Lire l’article',
+    // 404
+    error404Title: 'Page non trouvée',
+    error404Lede: 'Désolé, la page que vous recherchez n’existe pas ou a été déplacée.',
+    error404Btn: 'Retour à l’accueil',
   },
 } as const satisfies Record<Lang, Record<string, string>>;
 

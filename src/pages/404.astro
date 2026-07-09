@@ -1,0 +1,72 @@
+---
+// Copyright (c) 2026 Kunal Suri (CEA LIST). Apache-2.0.
+import Base from '../layouts/Base.astro';
+import { tr } from '../lib/i18n';
+---
+
+<Base lang="en" title={tr('en', 'error404Title')} description={tr('en', 'error404Lede')}>
+  <div class="page">
+    <section class="measure error-container">
+      <!-- English 404 Section -->
+      <div id="error-en" class="error-section">
+        <p class="kicker">404 Error</p>
+        <h1 class="error-title">{tr('en', 'error404Title')}</h1>
+        <p class="lede error-desc">{tr('en', 'error404Lede')}</p>
+        <div class="error-actions">
+          <a href="/" class="btn">{tr('en', 'error404Btn')} &rarr;</a>
+        </div>
+      </div>
+
+      <!-- French 404 Section (hidden by default, shown via client-side script) -->
+      <div id="error-fr" class="error-section" style="display: none;">
+        <p class="kicker">Erreur 404</p>
+        <h1 class="error-title">{tr('fr', 'error404Title')}</h1>
+        <p class="lede error-desc">{tr('fr', 'error404Lede')}</p>
+        <div class="error-actions">
+          <a href="/fr/" class="btn">{tr('fr', 'error404Btn')} &rarr;</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .error-container {
+    padding-block: clamp(2rem, 5vh, 4rem);
+  }
+  .error-title {
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    margin-top: 0.5rem;
+  }
+  .error-desc {
+    margin-top: 1.2rem;
+    margin-bottom: 2.2rem;
+  }
+  .error-actions {
+    display: flex;
+    gap: 1rem;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    // Detect if browser language or URL pathname indicates French
+    const path = window.location.pathname;
+    const isFrPath = path.startsWith('/fr/') || path === '/fr';
+    const prefersFr = navigator.language && navigator.language.startsWith('fr');
+    
+    const enSection = document.getElementById('error-en');
+    const frSection = document.getElementById('error-fr');
+    
+    if (enSection && frSection) {
+      if (isFrPath || (path === '/404.html' && prefersFr)) {
+        enSection.style.display = 'none';
+        frSection.style.display = 'block';
+        
+        // Update document title and language attribute to match
+        document.title = document.title.replace('Page not found', 'Page non trouvée');
+        document.documentElement.lang = 'fr';
+      }
+    }
+  })();
+</script>

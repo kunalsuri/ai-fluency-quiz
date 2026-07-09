@@ -13,11 +13,11 @@ describe('build-time data access module', () => {
   it('loads English and French manifests successfully', () => {
     const enManifest = getManifest('en');
     expect(enManifest).toBeDefined();
-    expect(enManifest.metadata.title).toBe('AI Fluency Quiz');
+    expect(enManifest.metadata!.title).toBe('AI Fluency Quiz');
 
     const frManifest = getManifest('fr');
     expect(frManifest).toBeDefined();
-    expect(frManifest.metadata.title).toBe('Évaluation de la maturité en IA');
+    expect(frManifest.metadata!.title).toBe('Évaluation de la maturité en IA');
   });
 
   it('loads English and French terminology lists', () => {
