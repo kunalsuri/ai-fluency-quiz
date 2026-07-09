@@ -1,4 +1,4 @@
-# start.ps1
+# scripts/start.ps1
 # Copyright (c) 2026 Kunal Suri (CEA LIST). Apache-2.0.
 # AI Fluency - Launcher: checks dependencies, installs, starts the Astro dev server.
 
@@ -10,6 +10,9 @@ Write-Host "==============================================" -ForegroundColor Cya
 Write-Host "             AI FLUENCY LAUNCHER              " -ForegroundColor Magenta -BackgroundColor Black
 Write-Host "==============================================" -ForegroundColor Cyan
 Write-Host ""
+
+# Ensure we are in the project root directory relative to this script
+Set-Location (Join-Path $PSScriptRoot "..")
 
 # 1. Node.js check
 $NodeCmd = Get-Command node -ErrorAction SilentlyContinue
@@ -28,7 +31,7 @@ Write-Host "[OK] npm $((npm -v).Trim())" -ForegroundColor Green
 Write-Host ""
 
 # 2. Install dependencies on first run
-if (-not (Test-Path (Join-Path $PSScriptRoot "node_modules"))) {
+if (-not (Test-Path "node_modules")) {
     Write-Host "Installing dependencies (first run)..." -ForegroundColor Gray
     npm install --no-audit --no-fund
     if ($LASTEXITCODE -ne 0) {
@@ -39,7 +42,7 @@ if (-not (Test-Path (Join-Path $PSScriptRoot "node_modules"))) {
 
 # 3. Validate the question database
 Write-Host "Validating question database..." -ForegroundColor Gray
-node (Join-Path $PSScriptRoot "scripts\validate-data.mjs")
+node scripts\validate-data.mjs
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[!!] Data validation failed - fix data/ before launching." -ForegroundColor Red
     exit 1

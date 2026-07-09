@@ -43,7 +43,7 @@ Three sections, one design, two languages (EN/FR):
 ## Quick start
 
 ```powershell
-.\start.ps1        # Windows: checks deps, installs, validates data, starts dev server
+.\scripts\start.ps1  # Windows: checks deps, installs, validates data, starts dev server
 ```
 
 or manually, on any platform:

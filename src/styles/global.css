@@ -6,7 +6,8 @@
    only — nothing stored, no toggle, no flash).
    ============================================================ */
 
-:root {
+:root,
+html[data-theme="light"] {
   /* Palette — paper & ink */
   --paper: #faf8f3;
   --paper-raised: #ffffff;
@@ -55,6 +56,23 @@
     --err: #f0917f;
     --err-wash: rgba(240, 145, 127, 0.12);
   }
+}
+
+html[data-theme="dark"] {
+  --paper: #16140f;
+  --paper-raised: #1e1b15;
+  --ink: #ece7db;
+  --ink-soft: #a9a294;
+  --ink-faint: #6f695c;
+  --rule: #2c2921;
+  --rule-strong: #ece7db;
+  --accent: #93a7ff;
+  --accent-contrast: #101223;
+  --accent-wash: rgba(147, 167, 255, 0.1);
+  --ok: #82c99a;
+  --ok-wash: rgba(130, 201, 154, 0.12);
+  --err: #f0917f;
+  --err-wash: rgba(240, 145, 127, 0.12);
 }
 
 /* ---------- Base ---------- */
@@ -204,7 +222,7 @@ hr.rule {
 
 .site-nav {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: clamp(0.9rem, 2.5vw, 1.75rem);
   font-size: 0.92rem;
 }
@@ -238,6 +256,62 @@ hr.rule {
 .lang-toggle:hover {
   border-color: var(--accent);
   color: var(--accent);
+}
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--rule);
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-faint);
+  transition: border-color var(--fast) ease, color var(--fast) ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.theme-toggle svg {
+  flex-shrink: 0;
+}
+
+/* Default icon visibility (system preference base cases) */
+.theme-toggle .sun-icon {
+  display: none;
+}
+.theme-toggle .moon-icon {
+  display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .theme-toggle .sun-icon {
+    display: block;
+  }
+  html:not([data-theme="light"]) .theme-toggle .moon-icon {
+    display: none;
+  }
+}
+
+/* Explicit data-theme visibility overrides */
+html[data-theme="light"] .theme-toggle .sun-icon {
+  display: none;
+}
+html[data-theme="light"] .theme-toggle .moon-icon {
+  display: block;
+}
+
+html[data-theme="dark"] .theme-toggle .sun-icon {
+  display: block;
+}
+html[data-theme="dark"] .theme-toggle .moon-icon {
+  display: none;
 }
 
 .site-footer {

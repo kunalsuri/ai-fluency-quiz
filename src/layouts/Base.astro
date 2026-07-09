@@ -27,6 +27,14 @@ const altPath = alternatePath(lang, path);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
+    <script is:inline>
+      (function () {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+      })();
+    </script>
     <title>{title} — {tr(lang, 'siteName')}</title>
     <link rel="alternate" hreflang={lang === 'en' ? 'fr' : 'en'} href={altPath} />
     <link
