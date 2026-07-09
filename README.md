@@ -13,6 +13,8 @@
 Ten minutes. Honest questions, real explanations, cited sources —
 and a cheat sheet generated for *your* gaps.
 
+[🌐 Live Demo](https://ai-fluency-quiz-rust.vercel.app/) · [📚 Docs](docs/)
+
 </div>
 
 <br>
