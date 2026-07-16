@@ -117,3 +117,19 @@ describe('questions (flattened across all banks)', () => {
     }
   });
 });
+
+describe('data provenance matrix', () => {
+  it('lists every current question exactly once and reports matching totals', () => {
+    const markdown = readFileSync(join(ROOT, 'data', 'data-provenance.md'), 'utf8');
+    const rows = [...markdown.matchAll(/^\| \[[ x]\] \| ([^|]+) \|/gm)];
+    const ids = rows.map((match) => match[1].trim());
+    const expectedIds = allQuestions.map((question) => question.id);
+    const verifiedCount = rows.filter((match) => match[0].startsWith('| [x] |')).length;
+
+    expect(ids).toHaveLength(expectedIds.length);
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(new Set(ids)).toEqual(new Set(expectedIds));
+    expect(markdown).toContain(`Total Questions: ${expectedIds.length}`);
+    expect(markdown).toMatch(new RegExp(`Verified Questions: ${verifiedCount} \\(`));
+  });
+});

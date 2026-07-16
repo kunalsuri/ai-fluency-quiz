@@ -235,4 +235,28 @@ describe('quiz-island UI component and state machine', () => {
     const root = document.getElementById('quiz-root')!;
     expect(root.innerHTML).toContain('No questions match this selection.');
   });
+
+  it('falls back to all difficulties when the query value is invalid', () => {
+    delete (window as any).location;
+    window.location = new URL('https://example.com/quiz?role=technical&len=quick&diff=not-a-level') as any;
+
+    mountQuiz();
+
+    const root = document.getElementById('quiz-root')!;
+    expect(root.innerHTML).toContain('What is 1+1?');
+    expect(root.innerHTML).not.toContain('No questions match this selection.');
+  });
+
+  it('reports completed-question progress accurately to assistive technology', () => {
+    mountQuiz();
+
+    const root = document.getElementById('quiz-root')!;
+    const progress = root.querySelector<HTMLElement>('[role="progressbar"]')!;
+    expect(progress.getAttribute('aria-valuemin')).toBe('0');
+    expect(progress.getAttribute('aria-valuemax')).toBe('2');
+    expect(progress.getAttribute('aria-valuenow')).toBe('0');
+
+    root.querySelector<HTMLButtonElement>('.q-option')!.click();
+    expect(progress.getAttribute('aria-valuenow')).toBe('1');
+  });
 });

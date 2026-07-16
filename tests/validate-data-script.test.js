@@ -128,7 +128,40 @@ describe('scripts/validate-data.mjs', () => {
 
     const result = runValidator(dir);
     expect(result.status).not.toBe(0);
-    expect(result.stderr).toMatch(/source must be an https URL/);
+    expect(result.stderr).toMatch(/source must be a valid https URL/);
+  });
+
+  it('fails when source has an https prefix but is not a complete URL', () => {
+    const dir = makeFixture();
+    const bank = readBank(dir, 'banks/foundations.json');
+    bank.questions[0].source = 'https://';
+    writeBank(dir, 'banks/foundations.json', bank);
+
+    const result = runValidator(dir);
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toMatch(/source must be a valid https URL/);
+  });
+
+  it('fails when a question has an invalid points override', () => {
+    const dir = makeFixture();
+    const bank = readBank(dir, 'banks/foundations.json');
+    bank.questions[0].points = 0;
+    writeBank(dir, 'banks/foundations.json', bank);
+
+    const result = runValidator(dir);
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toMatch(/points override must be a positive integer/);
+  });
+
+  it('fails when an option is not a non-empty string', () => {
+    const dir = makeFixture();
+    const bank = readBank(dir, 'banks/foundations.json');
+    bank.questions[0].options[0] = '';
+    writeBank(dir, 'banks/foundations.json', bank);
+
+    const result = runValidator(dir);
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toMatch(/every option must be a non-empty string/);
   });
 
   it('fails when a bank file has an empty questions array', () => {
@@ -184,6 +217,28 @@ describe('scripts/validate-data.mjs', () => {
     const result = runValidator(dir);
     expect(result.status).not.toBe(0);
     expect(result.stderr).toMatch(/first scoring tier must start at minPercent 0/);
+  });
+
+  it('validates the managerial scoring tiers independently', () => {
+    const dir = makeFixture();
+    const manifest = readManifest(dir);
+    manifest.managerialScoringTiers[0].minPercent = 5;
+    writeManifest(dir, manifest);
+
+    const result = runValidator(dir);
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toMatch(/first managerial scoring tier must start at minPercent 0/);
+  });
+
+  it('fails when a manifest bank role is invalid', () => {
+    const dir = makeFixture();
+    const manifest = readManifest(dir);
+    manifest.banks[0].role = 'executive';
+    writeManifest(dir, manifest);
+
+    const result = runValidator(dir);
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toMatch(/role must be 'technical' or 'managerial'/);
   });
 
   it('fails when difficultyPoints contains a non-positive value', () => {

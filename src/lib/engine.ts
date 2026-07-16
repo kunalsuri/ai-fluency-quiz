@@ -66,5 +66,11 @@ export function getTier(tiers: ScoringTier[], percentScore: number): ScoringTier
 }
 
 export function isSafeHttpUrl(url: unknown): url is string {
-  return typeof url === 'string' && /^https:\/\//i.test(url);
+  if (typeof url !== 'string') return false;
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === 'https:' && parsed.hostname.length > 0;
+  } catch {
+    return false;
+  }
 }

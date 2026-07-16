@@ -3,6 +3,7 @@
   "include": [".astro/types.d.ts", "src/**/*", "tests/**/*"],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": ["vite/client"]
   }
 }

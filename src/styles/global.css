@@ -2,8 +2,8 @@
 /* ============================================================
    AI FLUENCY — design tokens & global styles.
    One voice: ink on paper, a single accent, typography first.
-   Dark mode is the same design in negative (prefers-color-scheme
-   only — nothing stored, no toggle, no flash).
+   Dark mode is the same design in negative, following the system
+   preference by default with an optional locally persisted override.
    ============================================================ */
 
 :root,

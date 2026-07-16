@@ -8,7 +8,7 @@
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge)](LICENSE)
 [![Astro](https://img.shields.io/badge/Astro%207-static-BC52EE?style=for-the-badge&logo=astro&logoColor=white)](https://astro.build/)
-[![Vitest Tests](https://img.shields.io/badge/Vitest-203%20passed-4ab730?style=for-the-badge&logo=vitest&logoColor=white)](https://vitest.dev/)
+[![Vitest Tests](https://img.shields.io/badge/Vitest-passing-4ab730?style=for-the-badge&logo=vitest&logoColor=white)](https://vitest.dev/)
 
 Ten minutes. Honest questions, real explanations, cited sources —
 and a cheat sheet generated for *your* gaps.
@@ -33,10 +33,10 @@ Three sections, one design, two languages (EN/FR):
 
 ### Privacy by architecture
 
-- **Zero storage** — no accounts, no cookies, no `localStorage`. Quiz state lives in memory and dies with the tab.
-- **Zero tracking** — no analytics of any kind.
-- **Zero external requests** — fonts are self-hosted; question data is embedded at build time. After page load the site talks to no one.
-- Dark mode follows `prefers-color-scheme` — pure CSS, nothing persisted.
+- **No accounts or cookies** — quiz answers live only in memory and die with the tab. The optional color-theme preference is the only value stored in `localStorage`.
+- **Privacy-focused telemetry** — Vercel Web Analytics and Speed Insights collect anonymous, aggregate usage and performance data. Quiz URL query parameters are removed before telemetry is sent.
+- **No remote content dependencies** — fonts are self-hosted and question data is embedded at build time; no quiz answers are sent to a server.
+- Dark mode follows `prefers-color-scheme` by default and can be overridden with the header toggle.
 
 <br>
 
@@ -75,7 +75,7 @@ Other commands:
 ┌─ THE SHOWROOM (deployed, static, read-only) ─────────────────┐
 │  src/                                                        │
 │  ├── pages/          EN routes + fr/ mirrors                 │
-│  │   ├── index       landing — a plain HTML form, zero JS    │
+│  │   ├── index       landing — HTML form + match counter    │
 │  │   ├── quiz        the one JS island (vanilla TypeScript)  │
 │  │   ├── guide/      static cheat-sheet pages + .txt routes  │
 │  │   └── frontier    curated papers, static                  │
@@ -92,8 +92,8 @@ Other commands:
 └──────────────────────────────────────────────────────────────┘
 ```
 
-- Every content page ships **zero JavaScript** — Astro renders it all at build time from `data/`.
-- The quiz is the **only island**: a ~300-line vanilla-TypeScript state machine. Its question payload is embedded in the page at build time, so the quiz makes no fetches.
+- Every content page is statically rendered by Astro. Small scripts handle the theme toggle and anonymous Vercel telemetry; the landing page also adds a progressive match counter.
+- The quiz is the only application-style island: a vanilla-TypeScript state machine. Its question payload is embedded in the page at build time, so quiz answers require no API or database.
 - The audit workbench (`npm run audit`) needs to **write to disk** (`data/data-provenance.md`), which is exactly why it lives outside the Astro build and can never be deployed.
 
 <br>

@@ -22,6 +22,7 @@ interface State {
 }
 
 const KEYS = ['A', 'B', 'C', 'D', 'E', 'F'];
+const DIFFICULTIES: Difficulty[] = ['beginner', 'intermediate', 'advanced', 'expert'];
 
 function esc(text: string): string {
   return text
@@ -43,7 +44,10 @@ export function mountQuiz(): void {
   const params = new URLSearchParams(window.location.search);
   const role: Role = params.get('role') === 'managerial' ? 'managerial' : 'technical';
   const len = (['quick', 'standard', 'full'].includes(params.get('len') ?? '') ? params.get('len') : 'standard') as LengthPresetId;
-  const diff = (params.get('diff') ?? 'all') as Difficulty | 'all';
+  const requestedDifficulty = params.get('diff');
+  const diff: Difficulty | 'all' = DIFFICULTIES.includes(requestedDifficulty as Difficulty)
+    ? (requestedDifficulty as Difficulty)
+    : 'all';
   const roleBankIds = new Set(payload.banks.filter((b) => b.role === role).map((b) => b.id));
   const requestedTopics = params.getAll('topics').filter((t) => roleBankIds.has(t));
 
@@ -83,10 +87,12 @@ export function mountQuiz(): void {
     const { question: q, order } = current();
     const n = state.index + 1;
     const total = state.queue.length;
-    const progress = Math.round((state.index / total) * 100);
+    const completed = state.index;
+    const progress = Math.round((completed / total) * 100);
+    const progressLabel = tr('quizQuestionOf', { n, total });
 
     root!.innerHTML = `
-      <div class="q-progress" role="progressbar" aria-valuenow="${n}" aria-valuemin="1" aria-valuemax="${total}">
+      <div class="q-progress" role="progressbar" aria-label="${esc(progressLabel)}" aria-valuenow="${completed}" aria-valuemin="0" aria-valuemax="${total}">
         <span style="width:${progress}%"></span>
       </div>
       <p class="q-meta">
@@ -94,8 +100,8 @@ export function mountQuiz(): void {
         <span class="topic">${esc(q.topic)}</span>
         <span>${esc(q.difficulty)}</span>
       </p>
-      <h1 class="q-text">${esc(q.question)}</h1>
-      <div class="q-options" role="group">
+      <h1 class="q-text" id="q-text">${esc(q.question)}</h1>
+      <div class="q-options" role="group" aria-labelledby="q-text">
         ${order
           .map(
             (originalIdx, displayIdx) => `
@@ -106,7 +112,7 @@ export function mountQuiz(): void {
           )
           .join('')}
       </div>
-      <div id="q-feedback"></div>
+      <div id="q-feedback" aria-live="polite"></div>
       <p class="q-kbd-hint" style="margin-top:1.6rem;">${esc(tr('quizKbdHint'))}</p>`;
 
     root!.querySelectorAll<HTMLButtonElement>('.q-option').forEach((btn) => {
@@ -157,8 +163,10 @@ export function mountQuiz(): void {
     feedback.querySelector('#q-next')!.addEventListener('click', next);
     (feedback.querySelector('#q-next') as HTMLButtonElement).focus();
 
-    const bar = root!.querySelector<HTMLElement>('.q-progress > span');
+    const progressElement = root!.querySelector<HTMLElement>('.q-progress');
+    const bar = progressElement?.querySelector<HTMLElement>('span');
     if (bar) bar.style.width = `${Math.round(((state.index + 1) / state.queue.length) * 100)}%`;
+    progressElement?.setAttribute('aria-valuenow', String(state.index + 1));
   }
 
   function next(): void {

@@ -12,6 +12,33 @@ import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const errors = [];
 const fail = (msg) => errors.push(msg);
+const validRoles = new Set(['technical', 'managerial']);
+
+function isValidHttpsUrl(value) {
+  if (typeof value !== 'string') return false;
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && url.hostname.length > 0;
+  } catch {
+    return false;
+  }
+}
+
+function validateTiers(value, name) {
+  const list = Array.isArray(value) ? value : [];
+  const label = name === 'scoringTiers' ? 'scoring tier' : 'managerial scoring tier';
+  if (list.length < 2) fail(`manifest: need at least 2 ${name}`);
+  list.forEach((tier, i) => {
+    if (typeof tier.minPercent !== 'number' || tier.minPercent < 0 || tier.minPercent > 100) {
+      fail(`manifest: ${name}[${i}].minPercent out of range`);
+    }
+    if (!tier.status || !tier.description) fail(`manifest: ${name}[${i}] missing status/description`);
+    if (i > 0 && tier.minPercent <= list[i - 1].minPercent) {
+      fail(`manifest: ${name}[${i}].minPercent must be strictly increasing`);
+    }
+  });
+  if (list[0]?.minPercent !== 0) fail(`manifest: first ${label} must start at minPercent 0`);
+}
 
 let manifest;
 try {
@@ -31,18 +58,8 @@ for (const [name, pts] of Object.entries(manifest.difficultyPoints ?? {})) {
   if (!Number.isInteger(pts) || pts <= 0) fail(`manifest: difficultyPoints.${name} must be a positive integer`);
 }
 
-const tiers = manifest.scoringTiers ?? [];
-if (tiers.length < 2) fail('manifest: need at least 2 scoringTiers');
-tiers.forEach((tier, i) => {
-  if (typeof tier.minPercent !== 'number' || tier.minPercent < 0 || tier.minPercent > 100) {
-    fail(`manifest: scoringTiers[${i}].minPercent out of range`);
-  }
-  if (!tier.status || !tier.description) fail(`manifest: scoringTiers[${i}] missing status/description`);
-  if (i > 0 && tier.minPercent <= tiers[i - 1].minPercent) {
-    fail(`manifest: scoringTiers[${i}].minPercent must be strictly increasing`);
-  }
-});
-if (tiers[0]?.minPercent !== 0) fail('manifest: first scoring tier must start at minPercent 0');
+validateTiers(manifest.scoringTiers, 'scoringTiers');
+validateTiers(manifest.managerialScoringTiers, 'managerialScoringTiers');
 
 // --- Bank checks ---
 if (!Array.isArray(manifest.banks) || manifest.banks.length === 0) fail('manifest: banks missing or empty');
@@ -59,6 +76,9 @@ for (const entry of manifest.banks ?? []) {
   }
   if (seenBankIds.has(entry.id)) fail(`${label}: duplicate bank id`);
   seenBankIds.add(entry.id);
+  if (entry.role !== undefined && !validRoles.has(entry.role)) {
+    fail(`${label}: role must be 'technical' or 'managerial'`);
+  }
 
   // Constrain bank paths to data/banks/ — rejects absolute paths and traversal
   if (!/^banks\/[a-z0-9-]+\.json$/.test(entry.file)) {
@@ -91,13 +111,19 @@ for (const entry of manifest.banks ?? []) {
     if (typeof q.question !== 'string' || q.question.trim().length < 10) fail(`${ql}: question text too short`);
     if (!Array.isArray(q.options) || q.options.length < 3) fail(`${ql}: needs at least 3 options`);
     else {
+      if (q.options.some((option) => typeof option !== 'string' || option.trim().length === 0)) {
+        fail(`${ql}: every option must be a non-empty string`);
+      }
       if (new Set(q.options).size !== q.options.length) fail(`${ql}: duplicate options`);
       if (!Number.isInteger(q.correctAnswerIndex) || q.correctAnswerIndex < 0 || q.correctAnswerIndex >= q.options.length) {
         fail(`${ql}: correctAnswerIndex out of range`);
       }
     }
     if (typeof q.explanation !== 'string' || q.explanation.trim().length < 20) fail(`${ql}: explanation missing or too short`);
-    if (q.source !== undefined && !/^https:\/\//.test(q.source)) fail(`${ql}: source must be an https URL`);
+    if (q.points !== undefined && (!Number.isInteger(q.points) || q.points <= 0)) {
+      fail(`${ql}: points override must be a positive integer`);
+    }
+    if (q.source !== undefined && !isValidHttpsUrl(q.source)) fail(`${ql}: source must be a valid https URL`);
   });
 
   totalQuestions += bank.questions.length;

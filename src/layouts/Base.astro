@@ -6,6 +6,8 @@ import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 import { alternatePath, tr } from '../lib/i18n';
 import type { Lang } from '../lib/types';
 
@@ -29,9 +31,13 @@ const altPath = alternatePath(lang, path);
     <meta name="color-scheme" content="light dark" />
     <script is:inline>
       (function () {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-          document.documentElement.setAttribute('data-theme', savedTheme);
+        try {
+          const savedTheme = localStorage.getItem('theme');
+          if (savedTheme === 'light' || savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+          }
+        } catch {
+          // Keep the system color-scheme preference when storage is unavailable.
         }
       })();
     </script>
@@ -43,6 +49,17 @@ const altPath = alternatePath(lang, path);
         `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#2140C7"/><text x="16" y="23" font-family="Georgia,serif" font-style="italic" font-size="20" fill="#FAF8F3" text-anchor="middle">ai</text></svg>`,
       )}`}
     />
+    <script is:inline>
+      (function () {
+        const withoutQuery = function (event) {
+          return { ...event, url: String(event.url).replace(/[?#].*$/, '') };
+        };
+        window.webAnalyticsBeforeSend = withoutQuery;
+        window.speedInsightsBeforeSend = withoutQuery;
+      })();
+    </script>
+    <Analytics />
+    <SpeedInsights />
   </head>
   <body>
     <Header lang={lang} />

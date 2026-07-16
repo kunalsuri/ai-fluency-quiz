@@ -15,7 +15,9 @@ export const STRINGS = {
     navAssessment: 'Assessment',
     navGuide: 'Cheat Sheets',
     navFrontier: 'Frontier',
-    footerPrivacy: 'No cookies. No tracking. Nothing stored, nothing sent.',
+    navMain: 'Main navigation',
+    themeToggle: 'Toggle color theme',
+    footerPrivacy: 'No cookies. Anonymous usage and performance metrics via Vercel. Quiz answers stay in this tab.',
     footerSource: 'Source on GitHub',
     // Landing
     heroTitle: 'How AI-fluent are you?',
@@ -95,7 +97,9 @@ export const STRINGS = {
     navAssessment: 'Évaluation',
     navGuide: 'Fiches',
     navFrontier: 'Frontière',
-    footerPrivacy: 'Pas de cookies. Pas de suivi. Rien de stocké, rien d’envoyé.',
+    navMain: 'Navigation principale',
+    themeToggle: 'Changer le thème de couleur',
+    footerPrivacy: 'Pas de cookies. Mesures anonymes d’usage et de performance via Vercel. Vos réponses restent dans cet onglet.',
     footerSource: 'Code source sur GitHub',
     heroTitle: 'Où en êtes-vous avec l’IA ?',
     heroLede:

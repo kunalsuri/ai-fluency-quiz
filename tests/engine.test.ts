@@ -102,6 +102,8 @@ describe('isSafeHttpUrl', () => {
     expect(isSafeHttpUrl('https://arxiv.org/abs/1706.03762')).toBe(true);
     expect(isSafeHttpUrl('http://example.com')).toBe(false);
     expect(isSafeHttpUrl('javascript:alert(1)')).toBe(false);
+    expect(isSafeHttpUrl('https://')).toBe(false);
+    expect(isSafeHttpUrl('https:// example.com')).toBe(false);
     expect(isSafeHttpUrl(undefined)).toBe(false);
   });
 });
