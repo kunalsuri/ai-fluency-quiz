@@ -22,12 +22,12 @@
       "question": "What is a 'vision-language model' (VLM)?",
       "options": [
         "A text-only model fine-tuned on descriptions of visual content written by human annotators",
-        "A model that can both understand and describe images, combining image encoding with a language model decoder",
+        "A model that connects visual and linguistic information to perform tasks such as captioning or visual question answering",
         "A model deployed inside augmented-reality glasses to render visual overlays in real time",
         "A model that converts language text into technical 3D scene-graph representations for computer graphics"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "VLMs pair an image encoder (such as a Vision Transformer or CNN) with a language model so the system can answer questions about images, caption them, or reason over visual content."
+      "explanation": "Vision-language models learn relationships between visual and language representations so they can handle tasks such as image captioning, visual question answering, and multimodal reasoning. Some use distinct encoders and language components; others are trained more jointly, so one component layout is not part of the definition."
     },
     {
       "id": "mm-03",
@@ -93,7 +93,7 @@
         "A hardware accelerator chip optimized to run image-processing attention kernels at lower latency"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "ViT (Dosovitskiy et al., 2020) treats an image as a sequence of non-overlapping patches, linearly projects each patch into an embedding, and feeds the sequence to a standard Transformer encoder. It matched CNN performance at scale and is now the dominant image backbone in VLMs.",
+      "explanation": "ViT (Dosovitskiy et al., 2020) treats an image as a sequence of non-overlapping patches, linearly projects each patch into an embedding, and feeds the sequence to a Transformer encoder. ViT and related architectures are widely used as visual backbones, but not every VLM uses the same backbone.",
       "source": "https://arxiv.org/abs/2010.11929"
     },
     {
@@ -125,15 +125,16 @@
     {
       "id": "mm-10",
       "difficulty": "expert",
-      "question": "In native multimodal models like GPT-4o, how does early-fusion multimodality differ from the pipeline (late-fusion) approach?",
+      "question": "What publicly documented design change distinguished GPT-4o from the earlier ChatGPT Voice Mode pipeline?",
       "options": [
-        "Early-fusion decodes each modality into text tokens first, then passes only the text to a single frozen LLM backbone",
-        "Late-fusion processes all modalities jointly from the very first layer using shared attention, while early-fusion chains specialized single-modal models in sequence",
-        "Early-fusion jointly encodes all modalities within the same transformer backbone from the start, allowing cross-modal attention at every layer, whereas pipeline approaches process modalities with separate specialized models and concatenate features only at a late stage",
-        "Early-fusion and late-fusion are interchangeable terms for the same architecture used to describe whether the image encoder precedes or follows the text encoder"
+        "GPT-4o converted every audio and image input to text before passing it to the unchanged GPT-4 model",
+        "GPT-4o used a separate speech recognizer, text model, and text-to-speech model, just with lower network latency",
+        "GPT-4o was trained end-to-end across text, vision, and audio in one model, whereas the earlier voice experience chained three separate models",
+        "GPT-4o's published architecture guaranteed shared attention weights across every modality at every transformer layer"
       ],
       "correctAnswerIndex": 2,
-      "explanation": "Pipeline ('late-fusion') systems run a dedicated image encoder, a dedicated ASR model, etc., and feed their outputs to an LLM; each model is pre-trained separately. Native early-fusion models share weights and attention across modalities from the beginning, enabling richer cross-modal reasoning but requiring more complex joint training."
+      "explanation": "OpenAI documented GPT-4o as one model trained end-to-end across text, vision, and audio, with the same neural network processing all inputs and outputs. Earlier Voice Mode used a three-model speech-to-text, language-model, and text-to-speech pipeline. OpenAI's announcement did not publish enough internal detail to claim a particular fusion mechanism at every layer.",
+      "source": "https://openai.com/index/hello-gpt-4o/"
     }
   ]
 }

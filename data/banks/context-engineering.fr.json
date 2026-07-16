@@ -41,7 +41,8 @@
         "Le déclin de la capacité d'un modèle à rappeler et à utiliser efficacement l'information à mesure que la taille de la fenêtre de contexte active augmente"
       ],
       "correctAnswerIndex": 3,
-      "explanation": "Le « context rot » — nommé dans un rapport de recherche de Chroma en 2025 et repris dans les recommandations d'Anthropic sur l'ingénierie du contexte — désigne la baisse observée de la qualité de récupération et de raisonnement à mesure que la longueur d'entrée augmente, même bien en deçà de la fenêtre de contexte annoncée. C'est pourquoi davantage de contexte n'est pas automatiquement meilleur."
+      "explanation": "Le « context rot » — étudié dans le rapport de Chroma de juillet 2025 et abordé dans les recommandations d'Anthropic — désigne une récupération ou un raisonnement de moins en moins fiable à mesure que le contexte s'allonge, y compris à l'intérieur de la fenêtre annoncée. Davantage de contexte n'est donc pas automatiquement meilleur.",
+      "source": "https://www.trychroma.com/research/context-rot"
     },
     {
       "id": "ctx-04",
@@ -49,12 +50,13 @@
       "question": "Qu'entend-on par le « budget d'attention » d'un modèle ?",
       "options": [
         "Le budget financier alloué aux ressources de calcul pour les couches d'attention pendant l'entraînement initial du modèle",
-        "La capacité finie qu'un modèle possède pour porter son attention sur l'ensemble de son contexte — capacité que chaque token ajouté entame",
+        "Une métaphore pratique de la capacité limitée du modèle à exploiter fiablement un contexte croissant, qui incite à sélectionner les tokens avec soin",
         "La limite absolue de requêtes et de sessions utilisateur simultanées qu'une seule instance de modèle peut traiter activement en mémoire",
         "Un système de quota d'abonnement conçu pour limiter le nombre de questions qu'un utilisateur peut soumettre en une heure"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "Comme l'attention des transformeurs relie chaque token à tous les autres, l'attention effective s'étire de plus en plus finement à mesure que le contexte grandit. Considérer l'attention comme un budget mène à l'heuristique directrice suivante : trouver le plus petit ensemble de tokens à haut signal qui maximise la probabilité d'obtenir le résultat souhaité."
+      "explanation": "Anthropic emploie « budget d'attention » comme métaphore d'ingénierie : quand le contexte grandit, les modèles peuvent perdre le fil ou utiliser l'information moins fiablement. Il ne s'agit pas d'un compteur littéral dans le modèle. L'heuristique pratique consiste à fournir le plus petit ensemble de tokens à fort signal susceptible de produire le résultat voulu.",
+      "source": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
     },
     {
       "id": "ctx-05",

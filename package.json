@@ -12,6 +12,7 @@
     "test": "node scripts/run-tests.mjs",
     "test:watch": "vitest",
     "validate-data": "node scripts/validate-data.mjs",
+    "analyze-question-quality": "node scripts/analyze-question-quality.mjs",
     "generate-provenance": "node scripts/generate-provenance.mjs",
     "audit": "node tools/audit-server.mjs"
   },

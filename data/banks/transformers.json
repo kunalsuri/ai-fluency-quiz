@@ -61,13 +61,13 @@
       "difficulty": "advanced",
       "question": "Why do Transformers need positional encodings (or mechanisms like RoPE)?",
       "options": [
-        "Because self-attention by itself is order-agnostic, meaning the model has no inherent way to perceive token sequence order",
+        "Because content-based self-attention alone does not encode each token's absolute or relative position in the sequence",
         "To identify and log the geographical GPS coordinates or server timezone parameters where the prompt text was originally compiled",
         "To append structural weights that instruct the self-attention layer which tokens are most important",
         "To implement compression matrices designed to pack long token sequences into shorter activation vectors"
       ],
       "correctAnswerIndex": 0,
-      "explanation": "Attention treats input as a set: without positional information, 'dog bites man' and 'man bites dog' would look identical. Positional encodings (sinusoidal, learned, or rotary/RoPE) inject token order."
+      "explanation": "Standard content-based self-attention does not identify token positions on its own. Positional embeddings or mechanisms such as RoPE add absolute or relative order information. A causal mask supplies a direction constraint, but it is not a complete substitute for positional information."
     },
     {
       "id": "tfm-06",

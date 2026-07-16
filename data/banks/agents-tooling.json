@@ -86,15 +86,16 @@
     {
       "id": "agt-07",
       "difficulty": "advanced",
-      "question": "What is the 'LLM-as-judge' technique?",
+      "question": "Why should an LLM-as-judge evaluator be calibrated against relevant human judgments?",
       "options": [
-        "Applying a fine-tuned legal model to review case files and suggest rulings in small-claims court jurisdictions",
-        "Configuring the generating model to run a self-correction pass and grade its own response quality before outputting",
-        "Using an LLM, guided by a rubric, to evaluate the quality of outputs (often another model's) at scale",
-        "Executing random sampling strategies to select generated responses for manual, high-cost human evaluation"
+        "To reduce evaluation latency by choosing a smaller judge model with the same generation budget",
+        "To make score scales comparable by requiring the judge to use identical wording on each evaluation",
+        "Because judge biases can make its scores diverge from the human judgments the evaluation is meant to approximate",
+        "To estimate the evaluated model's training-data cutoff from the pattern of scores assigned by the judge"
       ],
       "correctAnswerIndex": 2,
-      "explanation": "LLM-as-judge uses a model with a scoring rubric to grade outputs, enabling large-scale automated evaluation. It's cheaper than human review but has known biases (e.g., position and verbosity effects), so it's typically validated against human judgments."
+      "explanation": "LLM judges can scale rubric-based evaluation, but their scores depend on the judge, prompt, answer order, verbosity, and relationship to the evaluated model. Calibration against human judgments from the actual task and population tests whether the automated score is a useful proxy rather than assuming that it is.",
+      "source": "https://arxiv.org/abs/2306.05685"
     },
     {
       "id": "agt-08",

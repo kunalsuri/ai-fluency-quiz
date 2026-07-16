@@ -60,15 +60,16 @@
     {
       "id": "saf-05",
       "difficulty": "advanced",
-      "question": "What is the key difference between a jailbreak and a prompt injection attack?",
+      "question": "How are 'jailbreak' and 'prompt injection' commonly distinguished in LLM security discussions?",
       "options": [
         "They are two interchangeable names used by security analysts for exactly the same attack technique, with identical mechanisms and goals in practice",
         "Jailbreak techniques exclusively target image generation models, whereas prompt injection attacks exclusively target text-based language models",
         "Jailbreak attacks can only be executed successfully against open-weights model families hosted inside private hardware clouds, whereas prompt injections target commercial APIs",
-        "A jailbreak is a user trying to bypass the model's own safety rules; prompt injection hides attacker instructions in third-party content to hijack an application acting on a user's behalf"
+        "A jailbreak typically aims to bypass model safety controls, while indirect prompt injection uses attacker-controlled external content to alter an application's behavior"
       ],
       "correctAnswerIndex": 3,
-      "explanation": "In a jailbreak, the attacker is the user, and the target is the model's safety training. In prompt injection, the victim is often an unwitting user whose AI application consumes attacker-controlled content (a webpage, email, or document) carrying hidden instructions."
+      "explanation": "The categories overlap rather than forming a hard boundary: OWASP describes jailbreaking as a form of prompt injection. In common usage, 'jailbreak' emphasizes bypassing model safety controls, while 'indirect prompt injection' emphasizes untrusted external content affecting an LLM application.",
+      "source": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
     },
     {
       "id": "saf-06",

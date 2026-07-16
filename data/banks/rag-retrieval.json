@@ -24,11 +24,11 @@
       "options": [
         "It significantly accelerates inference speeds and response times by caching and indexing generated answers inside local memory buffers",
         "It dynamically compresses and reduces the total quantity of input tokens the model is required to process inside the context window",
-        "It gives the model access to fresh or private knowledge without retraining, and reduces hallucination by grounding answers",
+        "It gives the model access to fresh or private knowledge without retraining and can ground answers in retrieved evidence",
         "It completely removes the architectural need for using a language model by routing all user query inputs directly to a database search"
       ],
       "correctAnswerIndex": 2,
-      "explanation": "Model weights are frozen at the knowledge cutoff and can't contain your private data. RAG supplies current, domain-specific evidence at query time and lets answers cite retrievable sources."
+      "explanation": "RAG supplies current or domain-specific evidence at query time and can enable citations without retraining the model. Relevant, trustworthy retrieval can reduce unsupported answers, but poor retrieval or misuse of evidence can still produce hallucinations."
     },
     {
       "id": "rag-03",

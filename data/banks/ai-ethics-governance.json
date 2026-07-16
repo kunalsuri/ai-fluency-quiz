@@ -36,12 +36,13 @@
       "question": "Which of the following is an example of 'disparate impact' in a machine-learning model?",
       "options": [
         "A model produces different-length answers depending on whether the user asks a short or long question",
-        "A loan-approval model is equally accurate on average but has a significantly higher error rate for minority applicants",
+        "A facially neutral loan policy applies one score threshold to everyone but disproportionately denies applicants from a protected group",
         "A model that has been fine-tuned on domain-specific data performs worse on general-knowledge questions",
         "A text classifier that is more confident when the input language matches its primary training language"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "Disparate impact occurs when an apparently neutral model produces outcomes that disproportionately disadvantage a protected group. Aggregate accuracy can mask systematic under-performance on sub-groups — a core concern in fairness audits."
+      "explanation": "Disparate impact concerns a facially neutral policy or practice that disproportionately harms a protected group. Unequal error rates can be evidence in a fairness review, but they are not by themselves the definition of disparate impact.",
+      "source": "https://airc.nist.gov/airmf-resources/playbook/govern/"
     },
     {
       "id": "eth-04",
@@ -54,7 +55,8 @@
         "Converting a model's weights into human-readable source code that mirrors its exact decision logic"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "Explainability covers techniques — feature attribution, saliency maps, chain-of-thought traces, counterfactual examples — that reveal which inputs or reasoning steps drove an output. Regulators increasingly require it for high-stakes applications like credit and healthcare."
+      "explanation": "Explainability uses evidence such as feature attribution, counterfactual examples, interpretable components, and model documentation to help people understand a result. No single technique guarantees a faithful causal account; in particular, generated chain-of-thought can sound plausible while misrepresenting what drove a prediction.",
+      "source": "https://arxiv.org/abs/2305.04388"
     },
     {
       "id": "eth-05",
@@ -72,29 +74,30 @@
     {
       "id": "eth-06",
       "difficulty": "intermediate",
-      "question": "What is AI 'watermarking'?",
+      "question": "What is the purpose of AI-content watermarking?",
       "options": [
-        "Adding visible copyright text overlaid on AI-generated images for display in published media",
-        "Embedding imperceptible statistical patterns into AI-generated content so it can be later detected as machine-generated",
+        "Encrypting generated content so only the model provider can display or decode it",
+        "Adding a detectable signal, visible or imperceptible, that can help establish the content's origin or generation history",
         "Training a model on content that has been degraded with noise to make it more robust to adversarial attacks",
         "A legal trademark registration process that gives AI companies exclusive rights over generated content"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "Watermarking steers a model's generation (e.g., biasing token sampling with a secret key) or embeds imperceptible signals in images so that downstream detectors can verify AI provenance. The EU AI Act requires watermarking of synthetic media, and OpenAI and Google have published watermarking techniques."
+      "explanation": "A watermark adds a signal that can help identify provenance; implementations may be visible or hidden and can be embedded during or after generation. Article 50 of the EU AI Act requires in-scope synthetic outputs to be marked in a machine-readable format and detectable as artificially generated or manipulated, subject to stated feasibility limits and exceptions; it does not prescribe watermarking as the only implementation.",
+      "source": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj?locale=en"
     },
     {
       "id": "eth-07",
       "difficulty": "advanced",
-      "question": "Why is it mathematically impossible to simultaneously satisfy demographic parity, equalized odds, and calibration in a model whose base rates differ across groups?",
+      "question": "What does the 2016 Kleinberg–Mullainathan–Raghavan result say about fair risk scores across groups?",
       "options": [
-        "It requires exponentially more training data per group than is typically available in commercial datasets",
-        "Choquet and Hardt et al. showed that when base rates differ, satisfying any two of these criteria forces a violation of the third, except in degenerate cases",
-        "Neural network optimizers can only minimize one loss function objective at a time, making multi-objective fairness computationally intractable",
-        "Privacy laws prohibit accessing the protected-attribute labels needed to compute more than one fairness metric simultaneously"
+        "All common group-fairness criteria become equivalent once each group has the same sample size",
+        "Except in constrained special cases, a risk score cannot simultaneously be calibrated within groups and satisfy balance for both the positive and negative classes",
+        "The incompatibility is caused only by neural networks being unable to optimize more than one loss function",
+        "Calibration is impossible for any probabilistic model, even when groups have identical outcome distributions"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "Choquet (2005) and Hardt et al. (2016) proved that when base rates differ across groups, the three common fairness criteria are mutually incompatible. This 'impossibility result' means practitioners must make an explicit, value-laden choice about which criterion to optimize — it cannot be deferred to the algorithm.",
-      "source": "https://arxiv.org/abs/1610.02413"
+      "explanation": "Kleinberg, Mullainathan, and Raghavan formalized calibration within groups plus balance for the positive and negative classes and proved that all three cannot generally hold at once, except in highly constrained cases. The result is about those specific risk-score criteria; it should not be casually restated as a theorem about every possible trio of fairness definitions.",
+      "source": "https://arxiv.org/abs/1609.05807"
     },
     {
       "id": "eth-08",
@@ -127,15 +130,16 @@
     {
       "id": "eth-10",
       "difficulty": "expert",
-      "question": "What is the 'alignment tax' and how does it relate to commercial deployment decisions for frontier AI labs?",
+      "question": "What does the term 'alignment tax' mean in AI alignment research?",
       "options": [
         "A government levy charged per API call for models that have not completed a third-party safety audit",
-        "The observed performance degradation on capability benchmarks that can occur when safety fine-tuning — RLHF, Constitutional AI, or refusals — reduces the model's raw task performance",
+        "A potential loss of performance on valued tasks caused by an alignment method, which can discourage adoption of that method",
         "The extra engineering cost incurred when teams must rewrite prompts after a safety update changes model behavior",
         "A royalty fee paid to the original dataset creators when a model is deployed commercially after safety fine-tuning"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "The 'alignment tax' refers to the empirical finding that aligning a model (adding helpfulness and harmlessness training) can reduce its scores on raw capability evals. Labs must balance this trade-off: over-refusing reduces utility; under-aligning increases harm risk. Recent work (e.g., DPO, CAI) aims to shrink the tax while maintaining safety."
+      "explanation": "An alignment tax is a possible capability or utility cost introduced by an alignment technique. It is not inevitable or a single universal number: InstructGPT work reported some task regressions, mitigated many of them by mixing pre-training data into RL fine-tuning, and also found gains on other measures. The deployment concern is that a high tax can create incentives not to adopt a safer method.",
+      "source": "https://openai.com/index/instruction-following/"
     }
   ]
 }

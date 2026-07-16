@@ -9,12 +9,12 @@
       "question": "What is the primary operational benefit of a 'Human-in-the-Loop' (HITL) workflow in enterprise AI applications?",
       "options": [
         "It accelerates the end-to-end user experience by streamlining inference response times down to sub-millisecond cycles",
-        "It acts as a safety and quality gate, ensuring critical AI outputs are reviewed by a human expert before reaching clients",
+        "It provides a safety and quality checkpoint by allowing designated people to review critical AI outputs before action or release",
         "It completely eliminates the operational dependency on external cloud computing systems and local virtualization hosts",
         "It guarantees that the active language model will execute instructions locally and never consume commercial API tokens"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "HITL combines AI speed/scale with human judgment, minimizing risk in high-stakes fields like legal drafting, clinical guidance, and customer communication."
+      "explanation": "HITL adds human judgment at defined decision points and can reduce risk in high-stakes workflows. Its value depends on reviewer competence, sufficient time and information, clear authority, and a process that does not encourage rubber-stamping; human presence alone does not guarantee correctness."
     },
     {
       "id": "mapp-02",
@@ -48,12 +48,13 @@
       "question": "When integrating external LLM APIs, what is a best practice for managing customer data privacy?",
       "options": [
         "Uploading complete, unencrypted customer database tables directly to the third-party model provider's training queue",
-        "Anonymizing or redacting Personally Identifiable Information (PII) locally before sending payloads, and signing data processing agreements (DPAs)",
+        "Minimizing the data sent, redacting or pseudonymizing sensitive fields where appropriate, and applying the required vendor contracts and safeguards",
         "Configuring the API middleware to restrict requests to textless queries that do not require any input data payloads to be transmitted",
         "Relying on the external language model's built-in neural filters to automatically recognize and delete PII without custom configurations"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "To comply with GDPR, HIPAA, and CCPA, organizations must sanitize inputs locally (e.g., using PII scrubbers) and establish DPAs ensuring the vendor doesn't use the data for model training."
+      "explanation": "Start with purpose limitation and data minimization, then apply redaction, pseudonymization, access controls, and the contract required for the data and jurisdiction. Review retention, secondary use or training, security, deletion, and data-location terms. A generic DPA or blanket local anonymization is not universally sufficient.",
+      "source": "https://eur-lex.europa.eu/eli/reg/2016/679/"
     },
     {
       "id": "mapp-05",
@@ -79,7 +80,7 @@
         "Temporarily disabling system firewalls and security middleware layers to prevent connection dropouts during tool execution steps"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "Giving autonomous agents write access to critical databases is a massive security and reliability hazard. Restricting database access to read-only views and inserting human validation gates for mutating actions (writes, deletions, transaction triggers) prevents catastrophic failures."
+      "explanation": "Unrestricted agent write access to critical databases creates serious security and reliability risk. Least-privilege credentials, read-only views by default, scoped transactions, validation, audit logs, backups, and approval gates for high-impact mutations reduce the likelihood and impact of failures; no single control prevents every incident."
     },
     {
       "id": "mapp-07",
@@ -100,12 +101,13 @@
       "question": "What is a primary licensing consideration when a business uses open-weights models like Llama 3 for commercial products?",
       "options": [
         "Llama 3 is released under a permissive Apache 2.0 open-weights license and is completely free for all corporate entities with no active usage restrictions",
-        "Meta's Llama 3 license is free for commercial use up to 700 million monthly active users, above which a license must be requested from Meta",
+        "Meta Llama 3 uses a custom community license with attribution and use conditions; organizations meeting its very-large-user threshold must request a separate license",
         "Llama 3 is strictly restricted to academic research purposes and its deployment in commercial business operations is illegal worldwide",
         "Enterprise compliance policies dictate that open-weights model families are prohibited from being deployed on public or hybrid cloud server platforms"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "While open-weights models are highly accessible, many have custom commercial agreements or usage limitations (such as Llama's 700M monthly active user threshold) that enterprises must review."
+      "explanation": "The Meta Llama 3 Community License is not Apache 2.0. It grants commercial rights subject to license and acceptable-use conditions, including attribution requirements. Its additional commercial term applies when, on the model's release date, the licensee's or affiliates' products and services had more than 700 million monthly active users in the preceding month; those organizations must request a license from Meta.",
+      "source": "https://github.com/meta-llama/llama-models/blob/main/models/llama3/LICENSE"
     }
   ]
 }

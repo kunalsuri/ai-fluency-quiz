@@ -64,6 +64,7 @@ Other commands:
 | `npm run build` | Validate data, then build the static site into `dist/` |
 | `npm test` | Run the Vitest suite (data integrity, FR parity, engine, field guide) |
 | `npm run validate-data` | Validate `data/` structure, IDs, answers, citations |
+| `npm run analyze-question-quality` | Report answer-length, wording-cue, duplicate, and citation indicators |
 | `npm run audit` | Start the **local-only** audit workbench (human data verification) |
 | `npm run generate-provenance` | Regenerate `data/data-provenance.md` |
 

@@ -117,25 +117,26 @@
       "question": "Qu'est-ce qu'une attaque par « injection de prompt » ?",
       "options": [
         "L'injection de syntaxe SQL malveillante et de commandes de base de données via une interface de chat publique pour supprimer des tables ou exfiltrer des données privées de bases de données backend",
-        "Des instructions adverses intégrées dans des données traitées (comme des pages web ou des e-mails) qui outrepassent les system prompts et détournent le comportement du modèle",
+        "Des instructions conçues dans le prompt d'un utilisateur ou dans un contenu externe qui amènent une application LLM à se comporter de façon imprévue",
         "L'exécution de pics de requêtes de déni de service automatisés pour surcharger les serveurs d'API d'inférence du modèle hébergé avec des millions d'entrées de prompt simultanées",
         "Le piratage de l'infrastructure d'hébergement du modèle afin d'injecter dynamiquement des poids de paramètres personnalisés et de modifier les connexions neuronales du modèle pendant les sessions utilisateur actives"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "L'injection de prompt intègre des instructions adverses dans des données que le modèle lit — documents, pages web, résultats d'outils — l'amenant à suivre les instructions de l'attaquant plutôt que celles de l'utilisateur. C'est un risque classé parmi les premiers du OWASP Top 10 pour les applications LLM."
+      "explanation": "L'injection de prompt manipule un LLM au moyen d'instructions qu'il traite. L'injection directe vient de l'entrée utilisateur ; l'injection indirecte arrive via un contenu externe tel qu'un document, une page web, un e-mail ou un résultat d'outil. L'impact dépend fortement des permissions et des frontières de confiance de l'application.",
+      "source": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
     },
     {
       "id": "pmt-10",
       "difficulty": "advanced",
-      "question": "Dans les modes de raisonnement étendu/long (modèles « thinking »), de quoi le modèle dispose-t-il d'un budget ?",
+      "question": "Dans les modes de raisonnement étendu, que contrôle généralement un « budget de raisonnement » ?",
       "options": [
         "De cycles d'entraînement hors ligne et de boucles de fine-tuning de validation supplémentaires avant de renvoyer sa réponse textuelle finale à l'utilisateur",
-        "De tokens de sortie supplémentaires qu'il peut consacrer à des étapes de raisonnement internes avant de s'engager sur sa réponse finale visible",
+        "Un effort de raisonnement supplémentaire à l'inférence, souvent comptabilisé en tokens de raisonnement ou en calcul avant la réponse finale",
         "De l'activation dynamique de couches neuronales dormantes dans les réseaux Mixture-of-Experts uniquement pour les requêtes complexes",
         "De la configuration d'un délai d'expiration de réponse réseau plus long sur la passerelle API client afin d'éviter les interruptions de connexion de session"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "Les modèles de raisonnement (comme la série o d'OpenAI et le « extended thinking » de Claude) allouent un budget de tokens de raisonnement générés au moment de l'inférence avant la réponse finale — dépensant davantage de calcul au moment de l'inférence pour améliorer les résultats sur des problèmes difficiles."
+      "explanation": "Un budget de raisonnement contrôle le calcul supplémentaire utilisé au moment de l'inférence avant ou pendant la production de la réponse finale. Les fournisseurs peuvent l'exposer sous forme de tokens de raisonnement, de niveau d'effort ou de budget de tokens ; le raisonnement intermédiaire n'est pas nécessairement visible."
     }
   ]
 }

@@ -117,25 +117,26 @@
       "question": "What is a 'prompt injection' attack?",
       "options": [
         "Injecting malicious SQL syntax and database commands through a public chat interface to drop tables or exfiltrate private records from backend databases",
-        "Adversarial instructions embedded within processed data (such as web pages or emails) that override system prompts and hijack model behavior",
+        "Crafted instructions in a user's prompt or in external content that cause an LLM application to behave in unintended ways",
         "Executing automated denial-of-service query spikes to overload the hosted model's inference API servers with millions of concurrent prompt inputs",
         "Hacking the model's hosting infrastructure to dynamically inject custom parameter weights and modify model neural connections during active user sessions"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "Prompt injection embeds adversarial instructions in data the model reads — documents, web pages, tool results — causing it to follow the attacker's instructions instead of the user's. It is a top-ranked risk in the OWASP Top 10 for LLM applications."
+      "explanation": "Prompt injection manipulates an LLM through instructions it processes. Direct injection comes from the user's input; indirect injection arrives through external content such as documents, web pages, emails, or tool results. The impact depends heavily on the application's permissions and trust boundaries.",
+      "source": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
     },
     {
       "id": "pmt-10",
       "difficulty": "advanced",
-      "question": "In extended/long reasoning modes ('thinking' models), what is the model given a budget of?",
+      "question": "In extended reasoning modes, what does a 'reasoning budget' usually control?",
       "options": [
         "Extra offline training runs and validation fine-tuning loops before returning its final text response to the user",
-        "Additional output tokens that it may spend on internal reasoning steps before committing to its final visible answer",
+        "Additional inference-time reasoning effort, often metered as reasoning tokens or compute before the final answer",
         "Dynamically activating dormant neural layers in Mixture-of-Experts networks only for complex queries",
         "Configuring a longer network response timeout limit on the client API gateway to prevent session connection drops"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "Reasoning models (such as OpenAI's o-series and Claude's extended thinking) allocate a test-time budget of reasoning tokens generated before the final answer — spending more inference-time compute to improve results on hard problems."
+      "explanation": "A reasoning budget controls extra test-time computation used before or while producing the final answer. Providers may expose this as reasoning tokens, an effort level, or a token budget; the intermediate reasoning is not necessarily visible to the user."
     }
   ]
 }

@@ -32,7 +32,7 @@
     {
       "id": "hns-03",
       "difficulty": "expert",
-      "question": "Qui est crédité d'avoir popularisé le terme « ingénierie de harnais » (harness engineering) début 2026 ?",
+      "question": "Qui a utilisé l'expression « harness engineering » dans l'essai « My AI Adoption Journey » du 5 février 2026 ?",
       "options": [
         "Mitchell Hashimoto (créateur de Terraform et Ghostty), dans son essai de février 2026 « My AI Adoption Journey »",
         "Les chercheurs et ingénieurs de Google Brain qui ont rédigé l'article fondateur original sur le Transformer",
@@ -40,7 +40,7 @@
         "Le groupe conjoint de développeurs d'Anthropic et d'organisations partenaires qui ont rédigé et lancé les spécifications du Model Context Protocol (MCP)"
       ],
       "correctAnswerIndex": 0,
-      "explanation": "L'essai de Hashimoto de février 2026 a nommé la pratique qu'il avait développée avec les agents de codage : « chaque fois que vous constatez qu'un agent fait une erreur, vous prenez le temps de concevoir une solution telle que l'agent ne refasse plus jamais cette erreur ». Constatant qu'aucun terme standard n'existait encore dans l'industrie, il a commencé à appeler cela « harness engineering », et le concept s'est rapidement diffusé dans les écrits sur l'ingénierie des agents dans les semaines qui ont suivi.",
+      "explanation": "Mitchell Hashimoto a utilisé « harness engineering » pour désigner l'amélioration des outils, boucles de retour, contrôles et environnements autour d'un agent de codage afin d'éliminer les erreurs récurrentes. La source établit son emploi de l'expression ; la question ne prétend ni une paternité exclusive ni mesurer sa diffusion.",
       "source": "https://mitchellh.com/writing/my-ai-adoption-journey"
     },
     {

@@ -32,20 +32,20 @@
     {
       "id": "mval-03",
       "difficulty": "advanced",
-      "question": "Which of the following is typically the largest contributor to the Total Cost of Ownership (TCO) for a production-grade AI agent?",
+      "question": "Which cost set belongs in a realistic Total Cost of Ownership (TCO) analysis for a production AI agent?",
       "options": [
-        "The initial developer onboarding, workspace configuration, and local GPU workstation hardware upgrades",
-        "Ongoing maintenance, validation/evaluations, prompt drift correction, and context token costs",
-        "The regulatory and administrative costs of purchasing secure custom web domains for individual utility agents",
-        "Executing custom pre-training procedures on foundation base models from scratch on a strict monthly schedule"
+        "Up-front prototyping and onboarding, excluding costs incurred after the production launch",
+        "Both up-front build costs and the recurring costs required to operate, evaluate, secure, govern, and oversee the complete system",
+        "Model/API charges and cloud infrastructure, excluding staff, evaluation, governance, and incident response",
+        "Custom pre-training and data acquisition, even when the deployed system uses an existing model through an API"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "While initial development is visible, the continuous engineering required for evals, handling prompt drift, vector database management, and context token usage makes up the bulk of an agent's lifetime operational cost."
+      "explanation": "TCO should include both acquisition/build costs and the recurring resources needed to operate the complete system. The largest category varies by architecture, scale, risk, and workflow, so no single cost component is universally dominant."
     },
     {
       "id": "mval-04",
       "difficulty": "intermediate",
-      "question": "According to enterprise studies (such as McKinsey's state of AI reports), what is the most common operational barrier when scaling Generative AI pilots to production?",
+      "question": "Which combination reflects recurring challenges reported when organizations scale generative AI beyond pilots?",
       "options": [
         "A total shortage of modern, commercially viable pre-trained transformer base models on open-source registries",
         "Data quality/governance issues, lack of clear business cases, and organizational change management",
@@ -53,7 +53,8 @@
         "The fundamental mathematical limitations preventing current language models from generating valid programming syntax"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "Scaling AI is rarely just a technical problem; it requires clean, accessible data pipelines, clear business case alignment, and training programs to manage organizational change."
+      "explanation": "Enterprise surveys report multiple interacting challenges rather than one universal blocker. McKinsey's 2024 survey highlighted data difficulties among gen-AI high performers, while its 2025 survey emphasized workflow redesign, governance, KPIs, training, and adoption practices associated with value at scale.",
+      "source": "https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-how-organizations-are-rewiring-to-capture-value"
     },
     {
       "id": "mval-05",
@@ -66,33 +67,35 @@
         "Manage"
       ],
       "correctAnswerIndex": 2,
-      "explanation": "The 'Govern' function in the NIST AI RMF is cross-cutting. It establishes the culture, policies, processes, and structures that enable an organization to map, measure, and manage AI risks effectively."
+      "explanation": "The 'Govern' function in the NIST AI RMF is cross-cutting. It establishes the culture, policies, processes, and structures that enable an organization to map, measure, and manage AI risks effectively.",
+      "source": "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/"
     },
     {
       "id": "mval-06",
       "difficulty": "expert",
       "question": "How does the cost structure change when transitioning from a public API endpoint (e.g. pay-per-token) to hosting an open-weights model on dedicated cloud GPUs?",
       "options": [
-        "It shifts from a variable usage-based operational cost (OpEx) to a fixed, capacity-based cost that requires high utilization to be cost-effective",
+        "It shifts from primarily per-use pricing toward capacity-based infrastructure costs, making utilization and operations more important to unit economics",
         "It shifts from a high capital expenditure (CapEx) software model to a completely free, open-weights licensing structure with zero recurring developer fees",
         "It eliminates all recurring operational hosting costs and compute charges through distributed peer-to-peer developer workstations",
         "It transforms all internal engineering salaries and testing expenses directly into public relations and business marketing budgets"
       ],
       "correctAnswerIndex": 0,
-      "explanation": "Dedicated hosting swaps variable token pricing for fixed hourly VM/GPU costs. This shifts the financial model from variable OpEx to fixed capacity, making it cost-efficient only if the organization maintains high, steady query volumes."
+      "explanation": "A public API often prices marginal usage by tokens or requests. Dedicated hosting commonly bills provisioned GPU capacity by time, so idle capacity, utilization, scaling, staffing, and reliability affect cost per request. Both approaches can be operating expenses, and neither is automatically cheaper."
     },
     {
       "id": "mval-07",
       "difficulty": "beginner",
       "question": "Which of the following frameworks is most suitable for evaluating the multidimensional productivity impact of AI assistants on developers?",
       "options": [
-        "The SPACE framework (Satisfaction, Performance, Activity, Communication, Efficiency)",
+        "The SPACE framework (Satisfaction and well-being, Performance, Activity, Communication and collaboration, Efficiency and flow)",
         "Quantitative measurement of code contributions using raw, aggregated line-of-code counting",
         "Tracking operational output by recording the average number of emails sent per developer daily",
         "Applying traditional sequential milestones from the waterfall model of software development"
       ],
       "correctAnswerIndex": 0,
-      "explanation": "The SPACE framework captures multiple dimensions of developer productivity (satisfaction, collaboration, efficiency), avoiding the pitfalls of single-metric tracking like commit count or lines of code."
+      "explanation": "SPACE treats developer productivity as multidimensional: Satisfaction and well-being, Performance, Activity, Communication and collaboration, and Efficiency and flow. It discourages treating any single activity metric, such as lines of code, as productivity by itself.",
+      "source": "https://www.microsoft.com/en-us/research/publication/the-space-of-developer-productivity-theres-more-to-it-than-you-think/"
     },
     {
       "id": "mval-08",
@@ -100,12 +103,13 @@
       "question": "What does the ISO/IEC 42001 standard establish for organizations?",
       "options": [
         "A hardware installation standard specifying shielding, data transmission rates, and grounding requirements for Category 8 copper network cables",
-        "A global certification framework specifying requirements for establishing and auditing Artificial Intelligence Management Systems (AIMS)",
+        "An international standard specifying requirements for establishing, implementing, maintaining, and improving an AI management system",
         "A compliance protocol defining consent management guidelines, data processing rules, and mandatory privacy cookie banner templates in Europe",
         "A comprehensive international guidelines document detailing optimal physical workspace layouts and desk setups for modern office ergonomics"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "ISO/IEC 42001 is the international standard that specifies requirements for establishing, implementing, maintaining, and continually improving an Artificial Intelligence Management System (AIMS) within organizations."
+      "explanation": "ISO/IEC 42001 specifies requirements for an AI management system. An organization may choose independent certification to demonstrate conformity, but certification is optional and is not itself what the standard 'establishes.'",
+      "source": "https://www.iso.org/home/insights-news/resources/iso-42001-explained-what-it-is.html"
     }
   ]
 }

@@ -32,7 +32,7 @@
     {
       "id": "hns-03",
       "difficulty": "expert",
-      "question": "Who is credited with popularizing the term 'harness engineering' in early 2026?",
+      "question": "Who used the label 'harness engineering' in the February 5, 2026 essay 'My AI Adoption Journey'?",
       "options": [
         "Mitchell Hashimoto (creator of Terraform and Ghostty), in his February 2026 essay 'My AI Adoption Journey'",
         "The research scientists and engineers at Google Brain who authored the original landmark Transformer paper",
@@ -40,7 +40,7 @@
         "The joint developer group at Anthropic and partner organizations who authored and launched the Model Context Protocol (MCP) specifications"
       ],
       "correctAnswerIndex": 0,
-      "explanation": "Hashimoto's February 2026 essay named the practice he'd developed with coding agents: 'anytime you find an agent makes a mistake, you take the time to engineer a solution such that the agent never makes that mistake again.' Noting that no industry-standard term existed yet, he took to calling it 'harness engineering', and the framing spread quickly through agent-engineering writing in the weeks that followed.",
+      "explanation": "Mitchell Hashimoto used 'harness engineering' for the practice of improving the tools, feedback loops, checks, and environment around a coding agent so recurring mistakes are engineered out of the workflow. The source supports his use of the label; this question does not claim exclusive coinage or measure how widely it spread.",
       "source": "https://mitchellh.com/writing/my-ai-adoption-journey"
     },
     {

@@ -86,15 +86,16 @@
     {
       "id": "agt-07",
       "difficulty": "advanced",
-      "question": "Qu'est-ce que la technique « LLM-as-judge » ?",
+      "question": "Pourquoi faut-il étalonner un évaluateur « LLM-as-judge » par rapport à des jugements humains pertinents ?",
       "options": [
-        "L'application d'un modèle juridique affiné pour examiner des dossiers et suggérer des jugements dans les juridictions de petites créances",
-        "Le fait de configurer le modèle générateur pour qu'il effectue une passe d'autocorrection et note la qualité de sa propre réponse avant de la produire",
-        "L'utilisation d'un LLM, guidé par une grille d'évaluation, pour évaluer à grande échelle la qualité des réponses (souvent celles d'un autre modèle)",
-        "L'exécution de stratégies d'échantillonnage aléatoire pour sélectionner les réponses générées en vue d'une évaluation humaine manuelle et coûteuse"
+        "Pour réduire la latence d'évaluation en choisissant un modèle juge plus petit avec le même budget de génération",
+        "Pour rendre les échelles comparables en imposant au juge une formulation identique à chaque évaluation",
+        "Parce que les biais du juge peuvent écarter ses scores des jugements humains que l'évaluation cherche à approximer",
+        "Pour estimer la date limite des données d'entraînement du modèle évalué à partir des scores attribués par le juge"
       ],
       "correctAnswerIndex": 2,
-      "explanation": "La technique LLM-as-judge utilise un modèle doté d'une grille de notation pour évaluer des réponses, permettant une évaluation automatisée à grande échelle. C'est moins coûteux que la révision humaine mais cela présente des biais connus (par exemple, les effets de position et de verbosité), c'est pourquoi elle est généralement validée par rapport à des jugements humains."
+      "explanation": "Les juges LLM peuvent étendre l'évaluation fondée sur une grille, mais leurs scores dépendent du juge, du prompt, de l'ordre des réponses, de la verbosité et du lien avec le modèle évalué. Un étalonnage sur des jugements humains issus de la tâche et de la population réelles vérifie que le score automatique est un proxy utile au lieu de le supposer.",
+      "source": "https://arxiv.org/abs/2306.05685"
     },
     {
       "id": "agt-08",

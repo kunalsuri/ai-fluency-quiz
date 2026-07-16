@@ -22,12 +22,12 @@
       "question": "What does 'PEFT' stand for, and why is it useful?",
       "options": [
         "Post-Evaluation Fine-Tuning — adding extra training after benchmarking to fix low-scoring questions",
-        "Parameter-Efficient Fine-Tuning — updating only a small fraction of parameters so fine-tuning is cheap and avoids catastrophic forgetting",
+        "Parameter-Efficient Fine-Tuning — training a small set of parameters while keeping most base-model weights frozen to reduce memory and compute",
         "Probabilistic Ensemble Fine-Tuning — combining multiple model checkpoints to reduce variance on downstream tasks",
         "Pre-Encoded Feature Transfer — re-using early-layer feature maps across different model families without retraining"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "PEFT methods (LoRA, prefix tuning, adapters) add or modify a tiny number of trainable parameters while keeping the bulk of the pre-trained weights frozen. This drastically reduces GPU memory and compute requirements and lets multiple fine-tuned variants share one base model."
+      "explanation": "PEFT methods such as LoRA, prefix tuning, and adapters train a relatively small parameter set while leaving most pre-trained weights frozen. This reduces memory and compute and can help preserve base behavior, but it does not guarantee that catastrophic forgetting or task interference cannot occur."
     },
     {
       "id": "ft-03",
@@ -40,7 +40,7 @@
         "A sampling algorithm that restricts generation to a low-rank vocabulary subset to reduce hallucination"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "LoRA (Hu et al., 2021) freezes the original weight matrix W and learns two small matrices A and B such that the fine-tuning update is ΔW = BA (a low-rank product). At inference, BA can be merged into W with zero overhead. QLoRA extends it with 4-bit quantization for even lower memory.",
+      "explanation": "LoRA (Hu et al., 2021) freezes the original weight matrix W and learns two small matrices A and B such that the fine-tuning update is ΔW = BA (a low-rank product). The update can be merged into W for inference without a separate adapter path. QLoRA combines LoRA with a frozen 4-bit quantized base model to lower training memory further.",
       "source": "https://arxiv.org/abs/2106.09685"
     },
     {
@@ -75,12 +75,12 @@
       "question": "What is DPO (Direct Preference Optimization), and how does it differ from PPO-based RLHF?",
       "options": [
         "DPO is a pre-training objective that directly optimizes for human preference data without any supervised fine-tuning phase",
-        "DPO reformulates the RLHF objective so the language model itself implicitly acts as its own reward model, removing the need for a separate reward model and a reinforcement-learning optimizer",
+        "DPO directly optimizes chosen-versus-rejected response pairs with a classification-style objective, avoiding a separately trained reward model and an RL loop",
         "DPO fine-tunes only the decoder layers while PPO fine-tunes all layers, making DPO faster but less effective",
         "DPO and PPO are two interchangeable names for the same algorithm — one used by academic researchers and the other by industry practitioners"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "DPO (Rafailov et al., 2023) shows the RLHF objective can be optimized directly as a classification loss over (chosen, rejected) pairs without training a reward model or running an RL loop. It is simpler, more stable, and widely adopted in open-source fine-tuning pipelines.",
+      "explanation": "DPO (Rafailov et al., 2023) reparameterizes the preference-optimization problem so a policy can be trained directly on chosen and rejected response pairs relative to a reference model. It removes the explicit reward-model fitting and reinforcement-learning stages used in common PPO-based RLHF pipelines.",
       "source": "https://arxiv.org/abs/2305.18290"
     },
     {
@@ -107,7 +107,7 @@
         "A variant of LoRA that constrains rank to powers of two so weight matrices can be stored in quarter-precision integers"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "QLoRA (Dettmers et al., 2023) quantizes the frozen base model to 4-bit NF4 format, adds LoRA adapters at full precision, and uses double quantization and paged optimizers to fit large-model fine-tuning on a single consumer GPU. It democratized fine-tuning of 7B–70B models.",
+      "explanation": "QLoRA (Dettmers et al., 2023) backpropagates through a frozen 4-bit quantized base model into LoRA adapters and adds memory-saving techniques such as NF4, double quantization, and paged optimizers. The paper demonstrated fine-tuning a 65B model on one 48 GB GPU; that hardware claim should not be generalized to every 7B–70B setup or every consumer GPU.",
       "source": "https://arxiv.org/abs/2305.14314"
     },
     {
@@ -131,11 +131,12 @@
       "options": [
         "Merging the training datasets of two models and retraining from scratch to produce a combined model",
         "Averaging the logits of two separately running models at inference time so predictions reflect both models' distributions",
-        "Combining the weight tensors of two or more fine-tuned models — e.g., via spherical interpolation or sign-based merging — to obtain a single model that inherits capabilities from each parent without any additional training or inference overhead",
+        "Combining compatible model weights — for example with interpolation or conflict-aware merging — to produce one model that can blend parent behaviors without running all parents at inference",
         "Splitting a large model into two halves that each handle different parts of a task and communicate via a learned routing layer"
       ],
       "correctAnswerIndex": 2,
-      "explanation": "Model merging operates directly in weight space: techniques like SLERP (spherical linear interpolation) or TIES (resolving sign conflicts before averaging) blend two fine-tuned checkpoints into one. The merged model inherits complementary skills with zero extra inference cost — unlike ensembling which requires running multiple models. It is widely used in the open-source community (e.g., Hugging Face mergekit)."
+      "explanation": "Model merging combines compatible checkpoints in weight space; SLERP interpolates weights, while TIES-style methods try to reduce interference between task updates. The result is one model rather than an inference-time ensemble, but successful capability transfer is not guaranteed: merges require evaluation and can lose or interfere with parent behaviors.",
+      "source": "https://arxiv.org/abs/2306.01708"
     }
   ]
 }

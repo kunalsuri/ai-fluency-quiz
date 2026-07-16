@@ -60,15 +60,16 @@
     {
       "id": "saf-05",
       "difficulty": "advanced",
-      "question": "Quelle est la différence clé entre un jailbreak et une attaque par injection de prompt ?",
+      "question": "Comment distingue-t-on généralement « jailbreak » et « injection de prompt » dans les discussions sur la sécurité des LLM ?",
       "options": [
         "Ce sont deux noms interchangeables utilisés par les analystes en sécurité pour désigner exactement la même technique d'attaque, avec des mécanismes et des objectifs identiques en pratique",
         "Les techniques de jailbreak ciblent exclusivement les modèles de génération d'images, tandis que les attaques par injection de prompt ciblent exclusivement les modèles de langage textuels",
         "Les attaques par jailbreak ne peuvent être exécutées avec succès que contre des familles de modèles à poids ouverts hébergées dans des clouds matériels privés, tandis que les injections de prompt ciblent les API commerciales",
-        "Un jailbreak est le fait d'un utilisateur qui tente de contourner les propres règles de sécurité du modèle ; l'injection de prompt cache des instructions d'attaquant dans du contenu tiers pour détourner une application agissant au nom d'un utilisateur"
+        "Un jailbreak vise généralement à contourner les contrôles de sécurité du modèle, tandis qu'une injection indirecte utilise un contenu externe contrôlé par l'attaquant pour modifier le comportement d'une application"
       ],
       "correctAnswerIndex": 3,
-      "explanation": "Dans un jailbreak, l'attaquant est l'utilisateur, et la cible est l'entraînement de sécurité du modèle. Dans l'injection de prompt, la victime est souvent un utilisateur non averti dont l'application d'IA consomme du contenu contrôlé par l'attaquant (une page web, un e-mail ou un document) portant des instructions cachées."
+      "explanation": "Les catégories se chevauchent au lieu de former une frontière stricte : OWASP décrit le jailbreak comme une forme d'injection de prompt. Dans l'usage courant, « jailbreak » met l'accent sur le contournement des contrôles de sécurité, tandis que « injection indirecte » met l'accent sur un contenu externe non fiable qui influence une application LLM.",
+      "source": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
     },
     {
       "id": "saf-06",

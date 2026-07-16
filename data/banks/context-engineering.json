@@ -41,7 +41,8 @@
         "The decline in a model's ability to recall and utilize information effectively as the active context window size increases"
       ],
       "correctAnswerIndex": 3,
-      "explanation": "Context rot — named in a 2025 Chroma research report and echoed in Anthropic's context-engineering guidance — is the observed decline in retrieval and reasoning quality as input length grows, even well within the advertised context window. It's why more context is not automatically better."
+      "explanation": "Context rot — studied in Chroma's July 2025 report and discussed in Anthropic's context-engineering guidance — describes increasingly unreliable retrieval or reasoning as context length grows, including within the advertised context window. More context is therefore not automatically better.",
+      "source": "https://www.trychroma.com/research/context-rot"
     },
     {
       "id": "ctx-04",
@@ -49,12 +50,13 @@
       "question": "What is meant by a model's 'attention budget'?",
       "options": [
         "The financial budget allocated to compute resources for attention layers during the initial pre-training run of the model",
-        "The finite capacity a model has for attending across its context — which every added token depletes",
+        "A practical metaphor for the model's limited ability to use a growing context reliably, motivating careful token selection",
         "The absolute limit of concurrent user requests and sessions that a single model instance can actively process in memory",
         "A subscription quota system designed to limit how many prompt questions a user is permitted to submit within one hour"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "Because transformer attention relates every token to every other token, effective attention gets stretched thinner as context grows. Treating attention as a budget leads to the guiding heuristic: find the smallest set of high-signal tokens that maximizes the likelihood of the desired outcome."
+      "explanation": "Anthropic uses 'attention budget' as an engineering metaphor: as context grows, models can lose focus or use information less reliably. It is not a literal counter inside the model. The practical heuristic is to provide the smallest set of high-signal tokens likely to support the desired result.",
+      "source": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
     },
     {
       "id": "ctx-05",

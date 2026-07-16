@@ -75,11 +75,11 @@
       "options": [
         "The threshold capacity limiting the total number of facts the model can store",
         "The specific condition or end token where the model ceases to generate text",
-        "The specific date limit after which events are not represented in the model's training datasets",
+        "An approximate point through which the model's pre-training data substantially represent events and information",
         "A safety filter configuration designed to redact copyrighted text snippets"
       ],
       "correctAnswerIndex": 2,
-      "explanation": "The knowledge cutoff is the approximate end date of the training data. Without external tools like web search, the model has no reliable knowledge of events after that date."
+      "explanation": "A knowledge cutoff summarizes the approximate recency of a model's pre-training knowledge. It is not a hard guarantee that every earlier event is known or that no later information entered through fine-tuning, system updates, the prompt, retrieval, or tools."
     },
     {
       "id": "mech-07",

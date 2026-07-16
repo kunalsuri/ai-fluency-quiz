@@ -55,7 +55,7 @@
         "Running the same prompt through multiple model versions and selecting the response with the highest cross-entropy score"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "LLM-as-judge (Zheng et al., 2023, MT-Bench) uses a strong model (e.g., GPT-4) to rate or pairwise-rank responses on open-ended tasks. It scales human-quality assessment cheaply, but introduces positional bias, verbosity bias, and self-preference that must be managed.",
+      "explanation": "LLM-as-judge (Zheng et al., 2023, MT-Bench) uses a capable model to rate or pairwise-rank open-ended responses. It can scale evaluation more cheaply than repeated human review, but it does not automatically reproduce human-quality judgment; position, verbosity, self-preference, and rubric effects must be measured against relevant human judgments.",
       "source": "https://arxiv.org/abs/2306.05685"
     },
     {
@@ -82,7 +82,8 @@
         "The number of human-written test cases that a model's output passes, averaged across k benchmark problems"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "pass@k estimates 'does the model know how to solve this?' by sampling k solutions and checking whether any pass the test suite. It is estimated efficiently without running k² tests (Chen et al., 2021). pass@1 measures whether the first sample passes; pass@100 measures whether any of 100 samples pass."
+      "explanation": "For each problem, pass@k asks whether at least one of k sampled programs passes the tests. HumanEval samples n programs, executes the tests to count c correct programs, and uses a combinatorial estimator for the probability that a size-k selection contains a correct one; there is no k-squared testing claim.",
+      "source": "https://arxiv.org/abs/2107.03374"
     },
     {
       "id": "evl-07",
@@ -100,15 +101,16 @@
     {
       "id": "evl-08",
       "difficulty": "advanced",
-      "question": "What is 'Elo rating' in the context of model evaluation platforms like LMSYS Chatbot Arena?",
+      "question": "What role did Elo-style rating play in early Chatbot Arena model evaluation?",
       "options": [
         "A fixed numeric score assigned by domain experts after reviewing a standardized set of 100 model outputs",
-        "A ranking system borrowed from chess where each pairwise human-preference vote updates the relative scores of the two competing models",
+        "A chess-inspired method for aggregating many pairwise human-preference votes into relative model ratings",
         "A metric from information theory measuring how closely a model's output distribution matches the reference answer distribution",
         "A cost-per-token pricing index that normalizes model capability against API pricing across different providers"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "Chatbot Arena presents two anonymous model responses to a real user prompt; the user picks the better one. The outcome updates each model's Elo score using the same formula as chess ratings. Over millions of votes, this produces a crowd-sourced capability ranking that is harder to game than static benchmarks."
+      "explanation": "Chatbot Arena collects anonymous pairwise preferences and historically summarized them with Elo-style relative ratings. Such ratings aggregate the sampled users, prompts, and votes; they are not an objective, task-independent measure of capability, and a platform's statistical ranking method can evolve.",
+      "source": "https://arxiv.org/abs/2403.04132"
     },
     {
       "id": "evl-09",
@@ -121,17 +123,17 @@
         "Benchmark leaderboards are unreliable because evaluators disagree on what constitutes a correct answer for open-ended tasks"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "Goodhart's Law ('when a measure becomes a target, it ceases to be a good measure') is endemic in ML evaluation. Labs that optimize directly for MMLU, HumanEval, or Chatbot Arena Elo inevitably inflate those scores without proportional gains in real-world capability, eroding the diagnostic value of the benchmark."
+      "explanation": "Goodhart's Law warns that optimizing directly for a proxy can make it less informative. Training, filtering, or prompt selection aimed at a benchmark can inflate its score without a proportional gain in the broader capability the benchmark was intended to represent; the distortion is a risk, not an inevitable outcome in every case."
     },
     {
       "id": "evl-10",
       "difficulty": "expert",
       "question": "In production LLM systems, what distinguishes an 'online' eval from an 'offline' eval?",
       "options": [
-        "Offline evals run in the cloud while online evals run on on-premise hardware closer to the user",
-        "Online evals measure a model's ability to browse the internet; offline evals measure performance on static datasets",
-        "Offline evals run on curated held-out datasets before deployment to gate releases; online evals instrument live production traffic — sampling real user interactions — to detect quality or safety regressions post-deployment",
-        "Online evals use LLM-as-judge scoring while offline evals rely exclusively on exact-match or unit-test metrics"
+        "Offline evals run without network access, while online evals require an internet-hosted model",
+        "Offline evals score text-only tasks, while online evals are reserved for browsing and tool-use tasks",
+        "Offline evals use curated or replayed data to gate changes; online evals measure sampled live interactions and production outcomes",
+        "Offline evals use automated metrics, while online evals use human reviewers without automated monitoring"
       ],
       "correctAnswerIndex": 2,
       "explanation": "Offline evals (pre-deployment) catch known failure modes against fixed golden sets. Online evals (post-deployment) catch distribution shift, unexpected user behaviors, and silent regressions that no static dataset predicted. A mature eval strategy uses both: offline to gate releases and online to monitor production continuously."

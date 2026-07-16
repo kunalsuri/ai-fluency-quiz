@@ -75,11 +75,11 @@
       "options": [
         "Le seuil limitant le nombre total de faits que le modèle peut stocker",
         "La condition ou le token de fin spécifique où le modèle cesse de générer du texte",
-        "La date limite spécifique au-delà de laquelle les événements ne sont pas représentés dans les données d'entraînement du modèle",
+        "Un point approximatif jusqu'auquel les données de pré-entraînement du modèle représentent substantiellement les événements et les informations",
         "Un filtre de sécurité conçu pour caviarder les extraits de texte protégés par des droits d'auteur"
       ],
       "correctAnswerIndex": 2,
-      "explanation": "La date limite de connaissances est la date de fin approximative des données d'entraînement. Sans outils externes comme la recherche web, le modèle n'a aucune connaissance fiable des événements postérieurs à cette date."
+      "explanation": "La date limite de connaissances résume la récence approximative des connaissances issues du pré-entraînement. Elle ne garantit ni que chaque événement antérieur est connu, ni qu'aucune information ultérieure n'a été ajoutée par affinage, mise à jour système, contexte fourni, récupération ou outils."
     },
     {
       "id": "mech-07",

@@ -24,11 +24,11 @@
       "options": [
         "Il accélère considérablement les vitesses d'inférence et les temps de réponse en mettant en cache et en indexant les réponses générées dans des tampons de mémoire locale",
         "Il compresse dynamiquement et réduit la quantité totale de tokens d'entrée que le modèle doit traiter dans la fenêtre de contexte",
-        "Il donne au modèle accès à des connaissances fraîches ou privées sans réentraînement, et réduit les hallucinations en ancrant les réponses",
+        "Il donne au modèle accès à des connaissances récentes ou privées sans réentraînement et peut ancrer les réponses dans des éléments récupérés",
         "Il supprime complètement le besoin architectural d'utiliser un modèle de langage en acheminant toutes les requêtes utilisateur directement vers une recherche en base de données"
       ],
       "correctAnswerIndex": 2,
-      "explanation": "Les poids du modèle sont figés à la date limite de connaissance et ne peuvent pas contenir vos données privées. Le RAG fournit des éléments de preuve actuels et spécifiques à un domaine au moment de la requête et permet aux réponses de citer des sources récupérables."
+      "explanation": "Le RAG fournit au moment de la requête des éléments actuels ou propres au domaine et peut permettre de les citer sans réentraîner le modèle. Une récupération pertinente et fiable peut réduire les réponses non étayées, mais une mauvaise récupération ou une utilisation erronée des preuves peut encore produire des hallucinations."
     },
     {
       "id": "rag-03",

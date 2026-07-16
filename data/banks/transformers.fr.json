@@ -61,13 +61,13 @@
       "difficulty": "advanced",
       "question": "Pourquoi les Transformers ont-ils besoin d'encodages positionnels (ou de mécanismes comme RoPE) ?",
       "options": [
-        "Parce que l'auto-attention en elle-même est indifférente à l'ordre, ce qui signifie que le modèle n'a aucun moyen inhérent de percevoir l'ordre séquentiel des tokens",
+        "Parce que l'auto-attention fondée sur le contenu n'encode pas, à elle seule, la position absolue ou relative de chaque token dans la séquence",
         "Pour identifier et enregistrer les coordonnées GPS géographiques ou les paramètres de fuseau horaire du serveur où le texte de l'invite a été initialement compilé",
         "Pour ajouter des poids structurels indiquant à la couche d'auto-attention quels tokens sont les plus importants",
         "Pour implémenter des matrices de compression conçues pour tasser de longues séquences de tokens dans des vecteurs d'activation plus courts"
       ],
       "correctAnswerIndex": 0,
-      "explanation": "L'attention traite l'entrée comme un ensemble : sans information positionnelle, « le chien mord l'homme » et « l'homme mord le chien » sembleraient identiques. Les encodages positionnels (sinusoïdaux, appris, ou rotatifs/RoPE) injectent l'ordre des tokens."
+      "explanation": "L'auto-attention standard fondée sur le contenu n'identifie pas seule la position des tokens. Les plongements positionnels ou des mécanismes comme RoPE ajoutent l'ordre absolu ou relatif. Un masque causal impose une direction, mais ne remplace pas entièrement l'information positionnelle."
     },
     {
       "id": "tfm-06",

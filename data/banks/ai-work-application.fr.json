@@ -9,12 +9,12 @@
       "question": "Quel est le principal avantage opérationnel d'un flux de travail « Human-in-the-Loop » (HITL) dans les applications d'IA en entreprise ?",
       "options": [
         "Il accélère l'expérience utilisateur de bout en bout en réduisant les temps de réponse d'inférence à des cycles inférieurs à la milliseconde",
-        "Il agit comme un filtre de sécurité et de qualité, garantissant que les résultats critiques de l'IA sont examinés par un expert humain avant d'atteindre les clients",
+        "Il fournit un point de contrôle de sécurité et de qualité en permettant à des personnes désignées d'examiner les résultats critiques avant action ou diffusion",
         "Il élimine complètement la dépendance opérationnelle vis-à-vis des systèmes de cloud computing externes et des hôtes de virtualisation locaux",
         "Il garantit que le modèle de langage actif exécutera les instructions localement et ne consommera jamais de tokens d'API commerciaux"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "Le HITL combine la rapidité et l'échelle de l'IA avec le jugement humain, minimisant les risques dans des domaines à fort enjeu comme la rédaction juridique, les recommandations cliniques et la communication client."
+      "explanation": "Le HITL ajoute un jugement humain à des points de décision définis et peut réduire le risque dans les flux à fort enjeu. Sa valeur dépend de la compétence des réviseurs, du temps et des informations disponibles, d'une autorité claire et d'un processus qui évite la validation automatique ; la seule présence humaine ne garantit pas la justesse."
     },
     {
       "id": "mapp-02",
@@ -48,12 +48,13 @@
       "question": "Lors de l'intégration d'API LLM externes, quelle est une bonne pratique pour protéger la confidentialité des données clients ?",
       "options": [
         "Téléverser des tables complètes et non chiffrées de la base de données clients directement dans la file d'entraînement du fournisseur de modèle tiers",
-        "Anonymiser ou masquer les informations personnelles identifiables (PII) localement avant l'envoi des charges utiles, et signer des accords de traitement des données (DPA)",
+        "Minimiser les données envoyées, masquer ou pseudonymiser les champs sensibles lorsque cela convient, et appliquer les contrats et garanties requis pour le fournisseur",
         "Configurer le middleware de l'API pour restreindre les requêtes à des requêtes sans texte ne nécessitant aucune donnée d'entrée à transmettre",
         "S'appuyer sur les filtres neuronaux intégrés du modèle de langage externe pour reconnaître et supprimer automatiquement les PII sans configuration personnalisée"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "Pour respecter le RGPD, le HIPAA et le CCPA, les organisations doivent assainir les données en entrée localement (par exemple à l'aide d'outils de nettoyage des PII) et établir des DPA garantissant que le fournisseur n'utilise pas les données pour entraîner ses modèles."
+      "explanation": "Il faut commencer par la limitation des finalités et la minimisation des données, puis appliquer masquage, pseudonymisation, contrôles d'accès et contrat requis selon les données et la juridiction. Il convient de vérifier la conservation, l'usage secondaire ou l'entraînement, la sécurité, la suppression et la localisation. Un DPA générique ou une anonymisation locale systématique ne suffit pas dans tous les cas.",
+      "source": "https://eur-lex.europa.eu/eli/reg/2016/679/"
     },
     {
       "id": "mapp-05",
@@ -79,7 +80,7 @@
         "Désactiver temporairement les pare-feux système et les couches de middleware de sécurité pour éviter les interruptions de connexion pendant les étapes d'exécution des outils"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "Accorder à des agents autonomes un accès en écriture à des bases de données critiques constitue un risque majeur en matière de sécurité et de fiabilité. Restreindre l'accès aux bases de données à des vues en lecture seule et insérer des points de validation humaine pour les actions modifiant les données (écritures, suppressions, déclencheurs de transaction) permet d'éviter des échecs catastrophiques."
+      "explanation": "Un accès en écriture non restreint aux bases critiques crée un risque sérieux pour la sécurité et la fiabilité. Des identifiants au moindre privilège, des vues en lecture seule par défaut, des transactions limitées, la validation, les journaux d'audit, les sauvegardes et des approbations pour les mutations à fort impact réduisent la probabilité et l'impact des défaillances ; aucun contrôle unique ne prévient tous les incidents."
     },
     {
       "id": "mapp-07",
@@ -100,12 +101,13 @@
       "question": "Quelle est une considération de licence importante lorsqu'une entreprise utilise des modèles à poids ouverts comme Llama 3 pour des produits commerciaux ?",
       "options": [
         "Llama 3 est publié sous une licence à poids ouverts permissive Apache 2.0 et est entièrement gratuit pour toutes les entités commerciales, sans aucune restriction d'utilisation active",
-        "La licence Llama 3 de Meta est gratuite pour un usage commercial jusqu'à 700 millions d'utilisateurs actifs mensuels, au-delà desquels une licence doit être demandée à Meta",
+        "Meta Llama 3 utilise une licence communautaire personnalisée avec des conditions d'attribution et d'usage ; les organisations qui atteignent son seuil de très grande audience doivent demander une licence distincte",
         "Llama 3 est strictement réservé à des fins de recherche académique et son déploiement dans des opérations commerciales est illégal dans le monde entier",
         "Les politiques de conformité d'entreprise dictent que les familles de modèles à poids ouverts sont interdites de déploiement sur des plateformes de serveurs cloud publics ou hybrides"
       ],
       "correctAnswerIndex": 1,
-      "explanation": "Bien que les modèles à poids ouverts soient très accessibles, beaucoup sont soumis à des accords commerciaux personnalisés ou à des limitations d'utilisation (comme le seuil de 700 millions d'utilisateurs actifs mensuels de Llama) que les entreprises doivent examiner."
+      "explanation": "La licence communautaire Meta Llama 3 n'est pas Apache 2.0. Elle accorde des droits commerciaux sous réserve de la licence et de la politique d'utilisation, notamment des obligations d'attribution. Sa clause commerciale supplémentaire s'applique lorsque, à la date de sortie du modèle, les produits et services du titulaire ou de ses affiliés dépassaient 700 millions d'utilisateurs actifs mensuels le mois précédent ; ces organisations doivent demander une licence à Meta.",
+      "source": "https://github.com/meta-llama/llama-models/blob/main/models/llama3/LICENSE"
     }
   ]
 }
