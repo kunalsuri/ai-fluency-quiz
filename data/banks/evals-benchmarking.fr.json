@@ -1,0 +1,142 @@
+{
+  "id": "evals-benchmarking",
+  "topic": "Évaluations et benchmarking",
+  "description": "MMLU, HumanEval, LLM-as-judge, suites de régression et pratiques d'évaluation en production.",
+  "questions": [
+    {
+      "id": "evl-01",
+      "difficulty": "beginner",
+      "question": "Quel est l'objectif d'une « évaluation » (eval) pour un modèle de langage ?",
+      "options": [
+        "Estimer le coût d'exécution du modèle en production à partir de métriques d'utilisation de tokens",
+        "Mesurer les capacités, la précision ou le comportement du modèle sur un ensemble défini de tâches ou de prompts",
+        "Compresser les poids du modèle dans un format plus petit et plus rapide pour le déploiement",
+        "Examiner et approuver le system prompt du modèle pour vérifier sa conformité aux politiques internes de contenu"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Les evals quantifient ce qu'un modèle sait et ne sait pas faire. Elles sont à la base de la sélection de modèles, de l'itération en développement, de l'audit de sécurité et de la détection de régressions. Sans evals structurées, les changements apportés à un modèle ou à un prompt ne peuvent pas être évalués de manière fiable."
+    },
+    {
+      "id": "evl-02",
+      "difficulty": "intermediate",
+      "question": "Que mesure le benchmark MMLU ?",
+      "options": [
+        "Le nombre maximal de tokens par minute qu'un modèle peut générer sous charge soutenue",
+        "Les connaissances multitâches à travers 57 disciplines académiques, dont les sciences, le droit, la médecine et les sciences sociales, au moyen de questions à choix multiples",
+        "L'utilisation minimale de la bande passante mémoire pendant l'inférence du modèle sur un cluster GPU standardisé",
+        "La compréhension multimodale du langage et des images dans un format combiné de compréhension de lecture"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "MMLU (Massive Multitask Language Understanding, Hendrycks et al., 2020) évalue l'étendue des connaissances générales d'un modèle sur 57 disciplines à l'aide de questions à choix multiples à quatre options. Il est devenu un benchmark standard pour comparer les capacités générales des modèles de pointe.",
+      "source": "https://arxiv.org/abs/2009.03300"
+    },
+    {
+      "id": "evl-03",
+      "difficulty": "intermediate",
+      "question": "Que mesure le benchmark HumanEval ?",
+      "options": [
+        "La préférence humaine pour des essais générés par un modèle par rapport à des essais rédigés par des humains, notée par des travailleurs en foule (crowdworkers)",
+        "La qualité de l'intelligence émotionnelle conversationnelle d'un modèle dans des dialogues simulés de service client",
+        "La correction fonctionnelle de code Python : le modèle rédige le corps d'une fonction à partir d'une docstring, et des tests automatisés vérifient qu'elle s'exécute correctement",
+        "Si les réponses factuelles d'un modèle sont exactes lorsqu'elles sont évaluées par rapport à une base de connaissances Wikipédia de référence"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "HumanEval (Chen et al., 2021, OpenAI) contient 164 problèmes de programmation en Python. Le modèle complète le corps d'une fonction à partir d'une docstring et d'une signature ; une suite de tests exécute ensuite le résultat. La métrique pass@k indique à quelle fréquence au moins une des k solutions échantillonnées réussit tous les tests.",
+      "source": "https://arxiv.org/abs/2107.03374"
+    },
+    {
+      "id": "evl-04",
+      "difficulty": "intermediate",
+      "question": "Qu'est-ce que l'évaluation « LLM-as-judge » ?",
+      "options": [
+        "Un cadre juridique dans lequel le contenu généré par IA est automatiquement examiné par un modèle de langage distinct afin de respecter des normes de publication",
+        "Utiliser un LLM suffisamment capable pour noter ou comparer les sorties de modèles selon des critères subjectifs — comme l'utilité, la cohérence ou la sécurité — lorsque les métriques automatisées sont insuffisantes",
+        "Un système de modération en temps réel qui bloque les réponses d'un LLM qu'un modèle secondaire classe comme dangereuses",
+        "Faire passer le même prompt à travers plusieurs versions de modèle et sélectionner la réponse avec le score d'entropie croisée le plus élevé"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Le LLM-as-judge (Zheng et al., 2023, MT-Bench) utilise un modèle suffisamment capable pour noter ou classer par paires des réponses ouvertes. Cela peut faire monter en échelle l'évaluation à moindre coût par rapport à un examen humain répété, mais cela ne reproduit pas automatiquement un jugement de qualité humaine ; les effets de position, de verbosité, de préférence pour soi-même et de grille d'évaluation doivent être mesurés par rapport à des jugements humains pertinents.",
+      "source": "https://arxiv.org/abs/2306.05685"
+    },
+    {
+      "id": "evl-05",
+      "difficulty": "intermediate",
+      "question": "Qu'est-ce qu'une « suite de régression » (regression suite) dans le contexte du développement de LLM ?",
+      "options": [
+        "Un ensemble de modèles de régression statistique utilisés pour prédire la performance d'un modèle sur des benchmarks inédits à partir de métriques d'entraînement",
+        "Une collection organisée de prompts de test et de comportements attendus, exécutée automatiquement après chaque changement de code ou de modèle afin de détecter des régressions de performance ou de sécurité",
+        "Un cadre de benchmarking qui classe les modèles selon la mesure dans laquelle leurs sorties régressent vers la moyenne statistique d'un texte rédigé par des humains",
+        "Un outil permettant de revenir aux poids d'un point de contrôle précédent chaque fois qu'une nouvelle exécution de fine-tuning fait baisser les scores de benchmark"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Une suite de régression détecte quand un changement — une mise à jour de prompt, une exécution de fine-tuning, ou une nouvelle version de modèle — casse un comportement qui fonctionnait auparavant. Comme les tests unitaires en génie logiciel, les evals de régression sont exécutées dans des pipelines CI/CD afin de détecter les régressions avant qu'elles n'atteignent la production."
+    },
+    {
+      "id": "evl-06",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce que la métrique « pass@k » utilisée dans l'évaluation de la génération de code ?",
+      "options": [
+        "La probabilité que le modèle génère exactement k tokens avant de s'arrêter en raison d'une séquence d'arrêt",
+        "La fraction des problèmes de benchmark pour lesquels au moins une des k complétions échantillonnées indépendamment réussit tous les tests unitaires",
+        "Une métrique de curriculum qui mesure quel pourcentage des exemples d'entraînement le modèle peut reproduire mot pour mot après k étapes de gradient",
+        "Le nombre de cas de test rédigés par des humains que la sortie d'un modèle réussit, en moyenne sur k problèmes de benchmark"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Pour chaque problème, pass@k évalue si au moins un des k programmes échantillonnés réussit les tests. HumanEval échantillonne n programmes, exécute les tests pour compter c programmes corrects, et utilise un estimateur combinatoire de la probabilité qu'une sélection de taille k contienne un programme correct ; il n'y a pas de notion de test en k au carré.",
+      "source": "https://arxiv.org/abs/2107.03374"
+    },
+    {
+      "id": "evl-07",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce que la « contamination de benchmark » (ou « contamination de données ») ?",
+      "options": [
+        "Lorsque des prompts adverses intégrés dans le trafic utilisateur corrompent le comportement en contexte d'un modèle déployé pendant le service",
+        "Lorsque des exemples du benchmark d'évaluation apparaissent dans les données d'entraînement du modèle, gonflant les scores de benchmark au-delà de ce que prédirait une véritable généralisation",
+        "Lorsqu'une suite de benchmark contient des réponses mal étiquetées qui pénalisent injustement des sorties de modèle correctes",
+        "Lorsque les questions du jeu de test sont traduites ou reformulées par des annotateurs, introduisant des incohérences dans les étiquettes d'évaluation"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Si le corpus d'entraînement d'un modèle contient les questions et réponses d'un benchmark, ses scores reflètent la mémorisation plutôt que la généralisation. La contamination est une préoccupation croissante, les modèles s'entraînant sur des instantanés d'internet susceptibles d'inclure des solutions à MMLU, HumanEval ou GSM8K. Les laboratoires de pointe rapportent des analyses de contamination dans leurs rapports techniques."
+    },
+    {
+      "id": "evl-08",
+      "difficulty": "advanced",
+      "question": "Quel rôle le classement de type Elo a-t-il joué dans l'évaluation des premiers modèles sur Chatbot Arena ?",
+      "options": [
+        "Un score numérique fixe attribué par des experts du domaine après examen d'un ensemble standardisé de 100 sorties de modèle",
+        "Une méthode inspirée des échecs pour agréger de nombreux votes de préférence humaine par paires en classements relatifs de modèles",
+        "Une métrique issue de la théorie de l'information mesurant à quel point la distribution des sorties d'un modèle se rapproche de la distribution des réponses de référence",
+        "Un indice de tarification au coût par token qui normalise la capacité d'un modèle par rapport aux prix des API de différents fournisseurs"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Chatbot Arena recueille des préférences humaines anonymes par paires et les a historiquement résumées à l'aide de classements relatifs de type Elo. Ces classements agrègent les utilisateurs, prompts et votes échantillonnés ; ils ne constituent pas une mesure objective et indépendante de la tâche de la capacité, et la méthode de classement statistique d'une plateforme peut évoluer.",
+      "source": "https://arxiv.org/abs/2403.04132"
+    },
+    {
+      "id": "evl-09",
+      "difficulty": "expert",
+      "question": "Qu'est-ce que le problème de la « loi de Goodhart » dans le benchmarking des LLM ?",
+      "options": [
+        "Les LLM entraînés plus longtemps tendent à converger vers un plateau de performance qui ne peut plus être amélioré, quel que soit le calcul supplémentaire",
+        "Une fois qu'un benchmark devient la cible d'optimisation — par le fine-tuning, le filtrage ou le prompting — il cesse d'être une mesure fiable de la capacité sous-jacente qu'il était censé représenter",
+        "Les grands modèles de langage obtiennent toujours de meilleurs résultats sur les benchmarks, rendant impossible une comparaison équitable de modèles de tailles différentes",
+        "Les classements de benchmark ne sont pas fiables car les évaluateurs ne s'accordent pas sur ce qui constitue une réponse correcte pour des tâches ouvertes"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "La loi de Goodhart avertit qu'optimiser directement pour un indicateur de substitution (proxy) peut le rendre moins informatif. L'entraînement, le filtrage ou la sélection de prompts visant un benchmark peuvent gonfler son score sans gain proportionnel de la capacité plus large que le benchmark était censé représenter ; cette distorsion est un risque, pas une conséquence inévitable dans tous les cas."
+    },
+    {
+      "id": "evl-10",
+      "difficulty": "expert",
+      "question": "Dans les systèmes LLM en production, qu'est-ce qui distingue une eval « en ligne » (online) d'une eval « hors ligne » (offline) ?",
+      "options": [
+        "Les evals hors ligne s'exécutent sans accès réseau, tandis que les evals en ligne nécessitent un modèle hébergé sur internet",
+        "Les evals hors ligne notent des tâches uniquement textuelles, tandis que les evals en ligne sont réservées aux tâches de navigation et d'utilisation d'outils",
+        "Les evals hors ligne utilisent des données organisées ou rejouées pour conditionner les changements ; les evals en ligne mesurent des interactions réelles échantillonnées et des résultats de production",
+        "Les evals hors ligne utilisent des métriques automatisées, tandis que les evals en ligne utilisent des réviseurs humains sans surveillance automatisée"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Les evals hors ligne (avant déploiement) détectent des modes de défaillance connus par rapport à des jeux de référence (golden sets) fixes. Les evals en ligne (après déploiement) détectent les dérives de distribution, les comportements utilisateur inattendus et les régressions silencieuses qu'aucun jeu de données statique n'aurait pu prédire. Une stratégie d'évaluation mature utilise les deux : le hors ligne pour conditionner les mises en production, et l'en ligne pour surveiller la production en continu."
+    }
+  ]
+}

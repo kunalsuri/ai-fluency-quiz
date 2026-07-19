@@ -331,6 +331,150 @@
       "example": "A content filter blocking a response before it reaches the user."
     },
     {
+      "term": "Multimodal Model",
+      "category": "Multimodal AI",
+      "definition": "An AI model that can process and/or generate more than one type of data, such as text, images, audio, or video.",
+      "example": "GPT-4o can accept text, images, and audio, and produce text or audio."
+    },
+    {
+      "term": "Vision-Language Model (VLM)",
+      "category": "Multimodal AI",
+      "definition": "A model that connects visual and linguistic representations to perform tasks like image captioning or visual question answering.",
+      "example": "Describing what's happening in a photo in a full sentence."
+    },
+    {
+      "term": "Diffusion Model",
+      "category": "Multimodal AI",
+      "definition": "A generative model that produces images (or other data) by iteratively removing noise from a random starting point, guided by a conditioning signal like a text prompt.",
+      "example": "Stable Diffusion turning a text prompt into a photorealistic image."
+    },
+    {
+      "term": "CLIP (Contrastive Language–Image Pre-training)",
+      "category": "Multimodal AI",
+      "definition": "A model trained to align text and image embeddings in a shared vector space, enabling zero-shot image classification and guiding image generation.",
+      "example": "Matching the caption \"a dog on a beach\" to the right photo among thousands."
+    },
+    {
+      "term": "Vision Transformer (ViT)",
+      "category": "Multimodal AI",
+      "definition": "A transformer architecture that treats an image as a sequence of patches and applies self-attention, instead of using convolutions.",
+      "example": "Splitting a photo into a grid of small patches before feeding it to the model."
+    },
+    {
+      "term": "Automatic Speech Recognition (ASR)",
+      "category": "Multimodal AI",
+      "definition": "A model skill that converts spoken audio into a text transcript.",
+      "example": "Whisper transcribing a recorded meeting into text."
+    },
+    {
+      "term": "Algorithmic Bias",
+      "category": "AI Ethics & Governance",
+      "definition": "Systematic errors in a model's outputs that unfairly advantage or disadvantage particular groups, often reflecting biases in training data.",
+      "example": "A hiring model trained on historical data disadvantaging women applicants."
+    },
+    {
+      "term": "Disparate Impact",
+      "category": "AI Ethics & Governance",
+      "definition": "A facially neutral policy or practice that disproportionately harms a protected group, even without intent to discriminate.",
+      "example": "A loan-scoring rule that unintentionally denies a protected group at a higher rate."
+    },
+    {
+      "term": "Explainability (Interpretability)",
+      "category": "AI Ethics & Governance",
+      "definition": "The ability to understand and communicate why a model produced a particular output or decision.",
+      "example": "Highlighting which words in a resume most influenced a hiring model's score."
+    },
+    {
+      "term": "Fairness Metric",
+      "category": "AI Ethics & Governance",
+      "definition": "A formal criterion, such as demographic parity or equalized odds, used to check whether a model treats different groups equitably.",
+      "example": "Checking that a loan model approves applicants from different groups at similar rates."
+    },
+    {
+      "term": "EU AI Act",
+      "category": "AI Ethics & Governance",
+      "definition": "The European Union's binding law that classifies AI systems by risk level and sets requirements scaled to that risk.",
+      "example": "Banning real-time biometric surveillance in public spaces for law enforcement, with narrow exceptions."
+    },
+    {
+      "term": "Differential Privacy",
+      "category": "AI Ethics & Governance",
+      "definition": "A mathematical guarantee that adding or removing any single record barely changes a model's output distribution, protecting individual privacy.",
+      "example": "Adding calibrated noise during training so no one person's data can be reverse-engineered."
+    },
+    {
+      "term": "Fine-Tuning",
+      "category": "Fine-tuning & Adaptation",
+      "definition": "Continuing to train a pre-trained model on a smaller, task- or domain-specific dataset to specialize its behavior.",
+      "example": "Taking a general model and further training it on customer-support transcripts."
+    },
+    {
+      "term": "PEFT (Parameter-Efficient Fine-Tuning)",
+      "category": "Fine-tuning & Adaptation",
+      "definition": "A family of fine-tuning methods that train a small set of extra parameters while keeping most base-model weights frozen.",
+      "example": "Fine-tuning a 70B model by training only a few million adapter parameters."
+    },
+    {
+      "term": "LoRA (Low-Rank Adaptation)",
+      "category": "Fine-tuning & Adaptation",
+      "definition": "A PEFT technique that injects small trainable low-rank matrices into a model's weight layers instead of updating the full weights.",
+      "example": "Adapting a model's style with a LoRA file a few hundred megabytes in size."
+    },
+    {
+      "term": "Instruction Tuning",
+      "category": "Fine-tuning & Adaptation",
+      "definition": "Fine-tuning a base model on (instruction, response) pairs so it reliably follows natural-language directions.",
+      "example": "Turning a raw text-completion model into a helpful assistant."
+    },
+    {
+      "term": "DPO (Direct Preference Optimization)",
+      "category": "Fine-tuning & Adaptation",
+      "definition": "A method that fine-tunes a model directly on chosen-versus-rejected response pairs, without training a separate reward model or running reinforcement learning.",
+      "example": "Training a model to prefer one of two candidate replies using a single classification-style loss."
+    },
+    {
+      "term": "Catastrophic Forgetting",
+      "category": "Fine-tuning & Adaptation",
+      "definition": "The tendency of a neural network to overwrite previously learned general knowledge when it's fully fine-tuned on a new, narrow dataset.",
+      "example": "A model losing general conversational ability after heavy fine-tuning on legal documents."
+    },
+    {
+      "term": "MMLU",
+      "category": "Evals & Benchmarking",
+      "definition": "A benchmark that measures a model's breadth of knowledge across 57 academic subjects using multiple-choice questions.",
+      "example": "Comparing two models' general knowledge scores across law, medicine, and STEM."
+    },
+    {
+      "term": "HumanEval",
+      "category": "Evals & Benchmarking",
+      "definition": "A benchmark of 164 Python programming problems that tests whether a model's generated code passes automated unit tests.",
+      "example": "Checking if a model's generated function correctly reverses a string."
+    },
+    {
+      "term": "LLM-as-Judge",
+      "category": "Evals & Benchmarking",
+      "definition": "Using a capable LLM to score or compare other models' outputs on subjective criteria like helpfulness or coherence, in place of human review.",
+      "example": "Asking a strong model to pick the better of two draft replies."
+    },
+    {
+      "term": "Regression Suite",
+      "category": "Evals & Benchmarking",
+      "definition": "A curated set of test prompts and expected behaviors run automatically after every change to catch broken behavior before it reaches production.",
+      "example": "Re-running 200 saved prompts whenever a system prompt is edited."
+    },
+    {
+      "term": "pass@k",
+      "category": "Evals & Benchmarking",
+      "definition": "A code-generation metric measuring how often at least one of k sampled solutions passes all tests for a given problem.",
+      "example": "pass@10 checks whether any of 10 sampled attempts solves the problem."
+    },
+    {
+      "term": "Benchmark Contamination",
+      "category": "Evals & Benchmarking",
+      "definition": "When a benchmark's questions and answers leak into a model's training data, inflating its score without real generalization.",
+      "example": "A model scoring suspiciously high because MMLU questions appeared in its training data."
+    },
+    {
       "term": "ROI (Return on Investment)",
       "category": "AI Business Value & ROI",
       "definition": "The measurable benefit (cost savings, revenue, time saved) an AI initiative delivers relative to what it cost to build and run.",

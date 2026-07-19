@@ -1,0 +1,145 @@
+{
+  "id": "ai-ethics-governance",
+  "topic": "Éthique et gouvernance de l'IA",
+  "description": "Biais, métriques d'équité, loi européenne sur l'IA, tatouage numérique et déploiement responsable.",
+  "questions": [
+    {
+      "id": "eth-01",
+      "difficulty": "beginner",
+      "question": "Que signifie le « biais algorithmique » dans les systèmes d'IA ?",
+      "options": [
+        "Un paramètre délibéré qui fait préférer au modèle des réponses plus courtes et plus rapides plutôt que des réponses plus longues et détaillées",
+        "Des erreurs systématiques dans les sorties d'un modèle qui avantagent ou désavantagent injustement certains groupes, reflétant souvent des biais présents dans les données d'entraînement",
+        "La tendance naturelle des réseaux de neurones à mémoriser les exemples d'entraînement plutôt qu'à généraliser",
+        "Un indicateur de configuration qui oriente l'échantillonnage aléatoire du modèle vers des sorties à plus faible entropie"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Le biais algorithmique apparaît lorsque les prédictions d'un modèle reflètent des inégalités historiques ou des déséquilibres dans les données — par exemple, un modèle de recrutement entraîné sur des données historiques peut discriminer les femmes ou les minorités — même sans intention de conception délibérée."
+    },
+    {
+      "id": "eth-02",
+      "difficulty": "beginner",
+      "question": "Qu'est-ce que la « loi européenne sur l'IA » (EU AI Act, 2024) ?",
+      "options": [
+        "Un code de conduite sectoriel volontaire pour les entreprises d'IA dont le siège se trouve dans un État membre de l'Union européenne",
+        "Le cadre réglementaire contraignant de l'UE qui classe les systèmes d'IA par niveau de risque et impose des exigences pour les applications à haut risque",
+        "Un programme de financement de la recherche qui alloue un budget de l'UE aux universités développant des modèles d'IA open source",
+        "Une loi sur la protection des données qui remplace le RGPD pour les données personnelles générées par l'IA"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "La loi européenne sur l'IA (entrée en vigueur en août 2024) est la première loi complète sur l'IA au monde. Elle impose des obligations proportionnées au risque : les modèles d'IA à usage général, les applications à haut risque (dispositifs médicaux, présélection de CV, infrastructures critiques) et les pratiques interdites (notation sociale, surveillance biométrique en temps réel) sont chacune soumises à des règles différentes.",
+      "source": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689"
+    },
+    {
+      "id": "eth-03",
+      "difficulty": "intermediate",
+      "question": "Lequel des cas suivants illustre un « impact disproportionné » (disparate impact) dans un modèle d'apprentissage automatique ?",
+      "options": [
+        "Un modèle produit des réponses de longueurs différentes selon que l'utilisateur pose une question courte ou longue",
+        "Une politique de prêt en apparence neutre applique le même seuil de score à tout le monde, mais refuse de manière disproportionnée les candidats issus d'un groupe protégé",
+        "Un modèle affiné sur des données spécifiques à un domaine obtient de moins bons résultats sur des questions de culture générale",
+        "Un classificateur de texte est plus confiant lorsque la langue d'entrée correspond à sa langue d'entraînement principale"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "L'impact disproportionné concerne une politique ou une pratique en apparence neutre qui nuit de manière disproportionnée à un groupe protégé. Des taux d'erreur inégaux peuvent constituer un élément de preuve dans un examen d'équité, mais ils ne constituent pas à eux seuls la définition de l'impact disproportionné.",
+      "source": "https://airc.nist.gov/airmf-resources/playbook/govern/"
+    },
+    {
+      "id": "eth-04",
+      "difficulty": "intermediate",
+      "question": "Que signifie l'« explicabilité » (ou l'« interprétabilité ») pour un modèle d'IA ?",
+      "options": [
+        "Documenter l'infrastructure matérielle et les coûts cloud nécessaires pour héberger et exécuter le modèle à grande échelle",
+        "La capacité à comprendre et à expliquer pourquoi un modèle a produit une sortie ou une décision particulière",
+        "Traduire les sorties du modèle dans plusieurs langues afin que différentes parties prenantes puissent lire les résultats",
+        "Convertir les poids d'un modèle en code source lisible par un humain qui reflète exactement sa logique de décision"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "L'explicabilité s'appuie sur des éléments comme l'attribution de caractéristiques, les exemples contrefactuels, les composants interprétables et la documentation du modèle pour aider à comprendre un résultat. Aucune technique ne garantit à elle seule un compte-rendu causal fidèle ; en particulier, un raisonnement chain-of-thought généré peut sembler plausible tout en représentant de façon erronée ce qui a réellement motivé une prédiction.",
+      "source": "https://arxiv.org/abs/2305.04388"
+    },
+    {
+      "id": "eth-05",
+      "difficulty": "intermediate",
+      "question": "Qu'est-ce que la « parité démographique » (demographic parity) en tant que métrique d'équité ?",
+      "options": [
+        "Une exigence selon laquelle les jeux de données d'entraînement doivent contenir un nombre exactement égal d'exemples pour chaque groupe démographique",
+        "Un critère d'équité selon lequel le taux de résultats positifs du modèle doit être égal entre les groupes démographiques",
+        "Une métrique qui vérifie si la latence du modèle est cohérente entre les utilisateurs de différentes régions géographiques",
+        "Une exigence légale imposant aux fournisseurs d'IA de divulguer la composition démographique de leurs équipes d'ingénierie"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "La parité démographique (aussi appelée parité statistique) exige que P(Ŷ=1 | A=0) ≈ P(Ŷ=1 | A=1), où A est un attribut protégé. C'est l'un des nombreux critères d'équité concurrents ; en satisfaire un empêche souvent mathématiquement d'en satisfaire d'autres (les résultats d'impossibilité)."
+    },
+    {
+      "id": "eth-06",
+      "difficulty": "intermediate",
+      "question": "Quel est l'objectif du tatouage numérique (watermarking) du contenu généré par IA ?",
+      "options": [
+        "Chiffrer le contenu généré afin que seul le fournisseur du modèle puisse l'afficher ou le décoder",
+        "Ajouter un signal détectable, visible ou imperceptible, qui peut aider à établir l'origine ou l'historique de génération du contenu",
+        "Entraîner un modèle sur du contenu dégradé par du bruit afin de le rendre plus robuste aux attaques adverses",
+        "Un processus légal de dépôt de marque qui accorde aux entreprises d'IA des droits exclusifs sur le contenu généré"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Un tatouage numérique ajoute un signal qui peut aider à identifier la provenance ; les implémentations peuvent être visibles ou cachées et peuvent être intégrées pendant ou après la génération. L'article 50 de la loi européenne sur l'IA exige que les sorties synthétiques concernées soient marquées dans un format lisible par machine et détectables comme étant générées ou manipulées artificiellement, sous réserve des limites de faisabilité et des exceptions énoncées ; il ne prescrit pas le tatouage numérique comme unique méthode d'implémentation.",
+      "source": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj?locale=en"
+    },
+    {
+      "id": "eth-07",
+      "difficulty": "advanced",
+      "question": "Que dit le résultat de Kleinberg, Mullainathan et Raghavan (2016) à propos de scores de risque équitables entre groupes ?",
+      "options": [
+        "Tous les critères courants d'équité de groupe deviennent équivalents dès lors que chaque groupe a la même taille d'échantillon",
+        "Sauf dans des cas particuliers contraints, un score de risque ne peut pas être simultanément calibré au sein des groupes et satisfaire l'équilibre pour les classes positive et négative",
+        "L'incompatibilité est uniquement causée par l'incapacité des réseaux de neurones à optimiser plus d'une fonction de perte",
+        "La calibration est impossible pour tout modèle probabiliste, même lorsque les groupes ont des distributions de résultats identiques"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Kleinberg, Mullainathan et Raghavan ont formalisé la calibration au sein des groupes ainsi que l'équilibre pour les classes positive et négative, et ont prouvé que ces trois propriétés ne peuvent généralement pas être satisfaites simultanément, sauf dans des cas très contraints. Le résultat porte sur ces critères de score de risque spécifiques ; il ne doit pas être reformulé à la légère comme un théorème valable pour tout trio possible de définitions de l'équité.",
+      "source": "https://arxiv.org/abs/1609.05807"
+    },
+    {
+      "id": "eth-08",
+      "difficulty": "advanced",
+      "question": "En vertu de la loi européenne sur l'IA, quelle catégorie d'application est « interdite » plutôt que simplement « à haut risque » ?",
+      "options": [
+        "Utiliser l'IA pour recommander des produits sur une plateforme de e-commerce",
+        "Déployer un système d'identification biométrique à distance en temps réel dans des espaces publics à des fins répressives (avec des exceptions restreintes)",
+        "Générer des images synthétiques pour des campagnes marketing sans divulguer qu'elles sont créées par l'IA",
+        "Utiliser une présélection de CV assistée par l'IA pour des postes vacants dans de grandes entreprises"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "La loi européenne sur l'IA interdit purement et simplement certaines pratiques jugées incompatibles avec les droits fondamentaux, notamment l'identification biométrique à distance en temps réel dans les espaces publics à des fins répressives, sauf dans des scénarios de criminalité grave strictement définis. Les applications à haut risque (comme la présélection de CV) sont réglementées mais non interdites.",
+      "source": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689"
+    },
+    {
+      "id": "eth-09",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce que la « confidentialité différentielle » (differential privacy) dans le contexte de l'entraînement d'une IA ?",
+      "options": [
+        "Un cadre de licence qui accorde des droits d'accès différenciés aux poids du modèle selon le niveau d'abonnement de l'utilisateur",
+        "Une garantie mathématique selon laquelle l'ajout ou le retrait d'un seul enregistrement d'entraînement modifie les sorties du modèle d'au plus une quantité contrôlée et quantifiable — protégeant ainsi la confidentialité des données individuelles",
+        "Un protocole de chiffrement qui brouille les poids du modèle afin qu'ils ne puissent être déchiffrés que par des clients autorisés",
+        "Une stratégie de partitionnement des données qui réserve un jeu de test privé que le modèle n'a jamais vu durant son développement"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "La confidentialité différentielle (Dwork et al., 2006) ajoute du bruit calibré pendant l'entraînement afin que la probabilité de toute sortie soit presque identique, que les données d'un individu spécifique aient été incluses ou non. Le budget de confidentialité ε contrôle ce compromis : un ε plus petit signifie une confidentialité plus forte mais généralement une précision plus faible.",
+      "source": "https://link.springer.com/chapter/10.1007/11681878_14"
+    },
+    {
+      "id": "eth-10",
+      "difficulty": "expert",
+      "question": "Que signifie le terme « taxe d'alignement » (alignment tax) dans la recherche sur l'alignement de l'IA ?",
+      "options": [
+        "Un prélèvement gouvernemental facturé par appel API pour les modèles n'ayant pas terminé un audit de sécurité par un tiers",
+        "Une perte de performance potentielle sur des tâches valorisées, causée par une méthode d'alignement, ce qui peut décourager l'adoption de cette méthode",
+        "Le coût d'ingénierie supplémentaire engagé lorsque les équipes doivent réécrire leurs prompts après qu'une mise à jour de sécurité a modifié le comportement du modèle",
+        "Une redevance versée aux créateurs originaux du jeu de données lorsqu'un modèle est déployé commercialement après un fine-tuning de sécurité"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Une taxe d'alignement est un coût potentiel de capacité ou d'utilité introduit par une technique d'alignement. Elle n'est ni inévitable ni un chiffre universel unique : les travaux sur InstructGPT ont signalé certaines régressions sur des tâches, en ont atténué beaucoup en mélangeant des données de pré-entraînement dans le fine-tuning par RL, et ont également constaté des gains sur d'autres mesures. La préoccupation en matière de déploiement est qu'une taxe élevée peut créer des incitations à ne pas adopter une méthode plus sûre.",
+      "source": "https://openai.com/index/instruction-following/"
+    }
+  ]
+}

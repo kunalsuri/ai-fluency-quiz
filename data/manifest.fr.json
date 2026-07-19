@@ -120,6 +120,34 @@
       "role": "technical"
     },
     {
+      "id": "multimodal-ai",
+      "file": "banks/multimodal-ai.json",
+      "topic": "IA multimodale",
+      "description": "Vision, parole, génération d'images, embeddings intermodaux et architectures multimodales.",
+      "role": "technical"
+    },
+    {
+      "id": "ai-ethics-governance",
+      "file": "banks/ai-ethics-governance.json",
+      "topic": "Éthique et gouvernance de l'IA",
+      "description": "Biais, métriques d'équité, loi européenne sur l'IA, tatouage numérique et déploiement responsable.",
+      "role": "technical"
+    },
+    {
+      "id": "fine-tuning-adaptation",
+      "file": "banks/fine-tuning-adaptation.json",
+      "topic": "Fine-tuning et adaptation",
+      "description": "LoRA, PEFT, mécanismes du RLHF, DPO, instruction tuning et adaptation à un domaine.",
+      "role": "technical"
+    },
+    {
+      "id": "evals-benchmarking",
+      "file": "banks/evals-benchmarking.json",
+      "topic": "Évaluations et benchmarking",
+      "description": "MMLU, HumanEval, LLM-as-judge, suites de régression et pratiques d'évaluation en production.",
+      "role": "technical"
+    },
+    {
       "id": "ai-business-value",
       "file": "banks/ai-business-value.json",
       "topic": "Valeur métier de l'IA et ROI",
