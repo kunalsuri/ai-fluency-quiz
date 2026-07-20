@@ -1,0 +1,140 @@
+{
+  "id": "multimodal-ai",
+  "topic": "IA multimodale",
+  "description": "Vision, parole, génération d'images, embeddings intermodaux et architectures multimodales.",
+  "questions": [
+    {
+      "id": "mm-01",
+      "difficulty": "beginner",
+      "question": "Qu'est-ce qui distingue un modèle d'IA « multimodal » d'un modèle de langage uniquement textuel ?",
+      "options": [
+        "Il s'exécute sur plusieurs CPU en parallèle plutôt que sur un seul GPU",
+        "Il peut traiter et/ou générer plus d'un type de données, comme du texte, des images, de l'audio ou de la vidéo",
+        "Il est entraîné sur des données textuelles dans plusieurs langues humaines simultanément",
+        "Il utilise plusieurs points de contrôle de modèle distincts qui votent pour produire une réponse finale"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Les modèles multimodaux gèrent plusieurs modalités de données — par exemple, GPT-4o peut accepter du texte, des images et de l'audio, et produire du texte ou de l'audio — plutôt que d'être limités à un seul type de données."
+    },
+    {
+      "id": "mm-02",
+      "difficulty": "beginner",
+      "question": "Qu'est-ce qu'un « modèle vision-langage » (VLM) ?",
+      "options": [
+        "Un modèle uniquement textuel affiné sur des descriptions de contenu visuel rédigées par des annotateurs humains",
+        "Un modèle qui relie des informations visuelles et linguistiques pour accomplir des tâches telles que le sous-titrage ou la réponse à des questions visuelles",
+        "Un modèle déployé à l'intérieur de lunettes de réalité augmentée pour afficher des superpositions visuelles en temps réel",
+        "Un modèle qui convertit un texte en langage naturel en représentations techniques de scènes 3D (scene graphs) pour l'infographie"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Les modèles vision-langage apprennent les relations entre les représentations visuelles et linguistiques afin de traiter des tâches comme le sous-titrage d'images, la réponse à des questions visuelles et le raisonnement multimodal. Certains utilisent des encodeurs et des composants linguistiques distincts ; d'autres sont entraînés de manière plus conjointe, si bien qu'une disposition particulière des composants ne fait pas partie de la définition."
+    },
+    {
+      "id": "mm-03",
+      "difficulty": "intermediate",
+      "question": "Dans les modèles texte-image comme Stable Diffusion, quel rôle joue le processus de « diffusion par débruitage » (denoising diffusion) ?",
+      "options": [
+        "Il supprime les filigranes et les artefacts de compression des images sources téléversées par l'utilisateur",
+        "Il élimine progressivement le bruit d'un tenseur latent aléatoire, guidé par un signal de conditionnement textuel, afin de produire une image cohérente",
+        "Il applique des filtres de flou successifs pour suréchantillonner des images basse résolution vers une qualité d'impression",
+        "Il entraîne le modèle en corrompant aléatoirement des images d'entraînement et en lui apprenant à les restaurer sans aucun signal textuel"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Les modèles de diffusion apprennent à inverser un processus de bruitage. Lors de l'inférence, ils partent de bruit pur dans un espace latent et débruitent itérativement, guidés à chaque étape par un embedding du prompt textuel, jusqu'à ce qu'une image nette apparaisse."
+    },
+    {
+      "id": "mm-04",
+      "difficulty": "intermediate",
+      "question": "Qu'est-ce que CLIP (Contrastive Language–Image Pre-training) ?",
+      "options": [
+        "Une boîte à outils de montage vidéo qui découpe et segmente automatiquement de longs enregistrements en temps forts",
+        "Un modèle d'embedding conjoint entraîné à aligner les représentations textuelles et visuelles dans un espace vectoriel partagé grâce à l'apprentissage contrastif",
+        "Un filtre de sécurité qui découpe et supprime le contenu visuel explicite des pipelines de génération d'images",
+        "Un algorithme de compression d'image sans perte optimisé pour les cartes de caractéristiques des réseaux de neurones"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "CLIP (Radford et al., 2021) est entraîné sur des paires (image, légende) avec un objectif contrastif : les paires image-texte correspondantes sont rapprochées dans l'espace d'embedding, tandis que les paires non correspondantes sont éloignées. Les embeddings obtenus alimentent la classification d'images en zero-shot et guident les modèles de diffusion.",
+      "source": "https://arxiv.org/abs/2103.00020"
+    },
+    {
+      "id": "mm-05",
+      "difficulty": "intermediate",
+      "question": "Qu'est-ce que la « reconnaissance optique de caractères » (OCR) dans le contexte de l'IA multimodale ?",
+      "options": [
+        "Une compétence du modèle qui détecte et corrige les fautes d'orthographe au niveau des caractères dans de longs documents",
+        "L'extraction de texte lisible à partir d'images ou de documents scannés afin que les modèles en aval puissent le traiter",
+        "Une méthode d'encodage des caractères textuels en signaux de fibre optique pour une transmission à haut débit",
+        "La conversion de prompts textuels en images de calligraphie stylisée à l'aide de modèles de diffusion génératifs"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "L'OCR identifie et transcrit le texte visible dans des images — reçus, captures d'écran, PDF, tableaux blancs — rendant le contenu au niveau des pixels lisible par une machine. Les VLM modernes effectuent souvent l'OCR nativement, sans étape de pipeline séparée."
+    },
+    {
+      "id": "mm-06",
+      "difficulty": "intermediate",
+      "question": "En reconnaissance vocale automatique (ASR), que produit le modèle en sortie ?",
+      "options": [
+        "Un score de sentiment et une analyse du ton émotionnel des schémas vocaux du locuteur",
+        "Une forme d'onde qui reproduit l'audio dans une autre voix ou un autre accent",
+        "Une transcription textuelle de l'entrée audio parlée",
+        "Un fichier MIDI encodant la hauteur et le rythme des phonèmes de l'enregistrement"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "Les modèles d'ASR (speech-to-text), comme Whisper d'OpenAI, prennent en entrée des formes d'onde audio brutes et produisent des transcriptions textuelles. Ils sont à la base des assistants vocaux, des outils de transcription de réunions et des agents pilotés par la voix."
+    },
+    {
+      "id": "mm-07",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce qu'un « Vision Transformer » (ViT) ?",
+      "options": [
+        "Un réseau de neurones convolutif augmenté de portes d'attention sur la couche de classification finale",
+        "Un modèle transformer qui découpe une image en patches de taille fixe, les projette sous forme de séquence de tokens, et applique de l'auto-attention",
+        "Un grand modèle de langage affiné exclusivement sur des descriptions textuelles de styles et de scènes d'art visuel",
+        "Une puce accélératrice matérielle optimisée pour exécuter des noyaux d'attention de traitement d'image à plus faible latence"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Le ViT (Dosovitskiy et al., 2020) traite une image comme une séquence de patches non chevauchants, projette linéairement chaque patch en un embedding, et transmet la séquence à un encodeur Transformer. Le ViT et les architectures apparentées sont largement utilisés comme backbones visuels, mais tous les VLM n'utilisent pas le même backbone.",
+      "source": "https://arxiv.org/abs/2010.11929"
+    },
+    {
+      "id": "mm-08",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce que la « récupération intermodale » (cross-modal retrieval) ?",
+      "options": [
+        "Rechercher dans un corpus de documents textuels en utilisant un autre document textuel comme requête",
+        "Utiliser une entrée dans une modalité (par exemple une requête textuelle) pour récupérer les éléments les plus pertinents dans une autre modalité (par exemple des images ou de l'audio)",
+        "Traduire un modèle entraîné sur du texte anglais pour qu'il fonctionne sur d'autres langues sans réentraînement",
+        "Transférer les poids d'un modèle de vision vers un modèle de langage par fusion de couches"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "La récupération intermodale exploite des espaces d'embedding partagés comme celui de CLIP : une requête textuelle peut retrouver des images correspondantes, ou une image peut retrouver des légendes correspondantes, car les deux modalités sont projetées dans le même espace vectoriel où la similarité a un sens."
+    },
+    {
+      "id": "mm-09",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce que le problème de l'« alignement image-texte » dans l'entraînement des modèles multimodaux ?",
+      "options": [
+        "S'assurer que les formats de fichiers image sont compatibles avec le schéma d'encodage en octets du tokeniseur de texte",
+        "Le défi qui consiste à apprendre une représentation partagée où des images et des textes sémantiquement liés sont proches dans l'espace d'embedding, malgré leurs structures brutes fondamentalement différentes",
+        "S'assurer que les légendes d'image apparaissent aux bonnes coordonnées de pixels dans la mise en page du document rendu",
+        "Empêcher le modèle de générer des descriptions textuelles qui ne correspondent pas au guide de style visuel"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Les images sont des grilles 2D de valeurs de pixels ; le texte est une séquence de tokens discrets. Les relier nécessite des architectures — attention croisée, têtes de projection contrastives, ou adaptateurs Q-Former — capables de mettre en relation ces deux représentations structurellement différentes dans un espace sémantique commun."
+    },
+    {
+      "id": "mm-10",
+      "difficulty": "expert",
+      "question": "Quel changement de conception rendu public a distingué GPT-4o de l'ancien pipeline du mode vocal de ChatGPT ?",
+      "options": [
+        "GPT-4o convertissait chaque entrée audio et image en texte avant de la transmettre au modèle GPT-4 inchangé",
+        "GPT-4o utilisait un reconnaisseur vocal, un modèle de texte et un modèle de synthèse vocale séparés, simplement avec une latence réseau plus faible",
+        "GPT-4o a été entraîné de bout en bout sur le texte, la vision et l'audio au sein d'un seul modèle, alors que l'expérience vocale précédente enchaînait trois modèles distincts",
+        "L'architecture publiée de GPT-4o garantissait des poids d'attention partagés entre toutes les modalités à chaque couche du transformer"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "OpenAI a documenté GPT-4o comme un modèle unique entraîné de bout en bout sur le texte, la vision et l'audio, le même réseau de neurones traitant toutes les entrées et sorties. Le mode vocal antérieur utilisait un pipeline à trois modèles : reconnaissance vocale, modèle de langage et synthèse vocale. L'annonce d'OpenAI n'a pas publié suffisamment de détails internes pour revendiquer un mécanisme de fusion précis à chaque couche.",
+      "source": "https://openai.com/index/hello-gpt-4o/"
+    }
+  ]
+}

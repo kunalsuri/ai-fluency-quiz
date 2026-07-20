@@ -1,0 +1,142 @@
+{
+  "id": "fine-tuning-adaptation",
+  "topic": "Fine-tuning et adaptation",
+  "description": "LoRA, PEFT, mécanismes du RLHF, DPO, instruction tuning et adaptation à un domaine.",
+  "questions": [
+    {
+      "id": "ft-01",
+      "difficulty": "beginner",
+      "question": "Qu'est-ce que le « fine-tuning » (affinage) d'un modèle de langage ?",
+      "options": [
+        "Ajuster les paramètres de température d'échantillonnage et de top-p du modèle pour améliorer la qualité des réponses",
+        "Poursuivre l'entraînement d'un modèle pré-entraîné sur un jeu de données plus restreint et spécifique à une tâche afin de spécialiser son comportement",
+        "Compresser les poids du modèle pour accélérer l'inférence sur du matériel moins puissant",
+        "Rédiger un system prompt détaillé qui indique au modèle comment répondre dans un domaine spécifique"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Le fine-tuning consiste à prendre un modèle pré-entraîné et à poursuivre son entraînement sur un jeu de données plus restreint — paires instruction-réponse, documents spécifiques à un domaine, ou données de préférence — afin d'orienter son comportement vers une tâche ou un style souhaité, tout en conservant les connaissances larges acquises pendant le pré-entraînement."
+    },
+    {
+      "id": "ft-02",
+      "difficulty": "intermediate",
+      "question": "Que signifie « PEFT », et en quoi est-ce utile ?",
+      "options": [
+        "Post-Evaluation Fine-Tuning — ajouter un entraînement supplémentaire après le benchmarking pour corriger les questions mal notées",
+        "Parameter-Efficient Fine-Tuning (fine-tuning économe en paramètres) — entraîner un petit ensemble de paramètres tout en gardant la plupart des poids du modèle de base figés, afin de réduire la mémoire et le calcul nécessaires",
+        "Probabilistic Ensemble Fine-Tuning — combiner plusieurs points de contrôle de modèle pour réduire la variance sur les tâches en aval",
+        "Pre-Encoded Feature Transfer — réutiliser les cartes de caractéristiques des premières couches entre différentes familles de modèles sans réentraînement"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Les méthodes PEFT telles que LoRA, le prefix tuning et les adaptateurs entraînent un ensemble de paramètres relativement restreint tout en laissant la plupart des poids pré-entraînés figés. Cela réduit la mémoire et le calcul nécessaires et peut aider à préserver le comportement de base, mais cela ne garantit pas que l'oubli catastrophique ou les interférences entre tâches ne puissent pas se produire."
+    },
+    {
+      "id": "ft-03",
+      "difficulty": "intermediate",
+      "question": "Qu'est-ce que LoRA (Low-Rank Adaptation) ?",
+      "options": [
+        "Une bibliothèque permettant d'exécuter localement des modèles à poids ouverts quantifiés sur des GPU grand public",
+        "Une technique PEFT qui injecte de petites matrices entraînables de rang faible dans les couches de poids du modèle, de sorte que seuls ces paramètres supplémentaires soient mis à jour pendant le fine-tuning",
+        "Une méthode permettant de fusionner deux points de contrôle de modèle entièrement affinés en moyennant leurs tenseurs de poids",
+        "Un algorithme d'échantillonnage qui restreint la génération à un sous-ensemble de vocabulaire de rang faible afin de réduire les hallucinations"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "LoRA (Hu et al., 2021) fige la matrice de poids originale W et apprend deux petites matrices A et B telles que la mise à jour de fine-tuning soit ΔW = BA (un produit de rang faible). Cette mise à jour peut être fusionnée dans W pour l'inférence, sans chemin d'adaptateur séparé. QLoRA combine LoRA avec un modèle de base quantifié en 4 bits et figé, afin de réduire encore davantage la mémoire d'entraînement.",
+      "source": "https://arxiv.org/abs/2106.09685"
+    },
+    {
+      "id": "ft-04",
+      "difficulty": "intermediate",
+      "question": "Qu'est-ce que l'« instruction tuning » ?",
+      "options": [
+        "Rédiger un long system prompt avec des instructions étape par étape au début de chaque requête API",
+        "Affiner un modèle de langage de base sur des paires (instruction, réponse) afin qu'il apprenne à suivre des directives en langage naturel",
+        "Une technique d'augmentation de données qui reformule les exemples d'entraînement sous forme d'instructions afin de réduire la répétition",
+        "Ne mettre à jour que les couches de suivi d'instructions d'un modèle en laissant toutes les autres couches figées"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "L'instruction tuning (par exemple FLAN, InstructGPT) affine un modèle de base sur des exemples variés de paires (instruction, sortie souhaitée). Il transforme un modèle de complétion de texte en un assistant qui suit de manière fiable les directives de l'utilisateur pour de nombreux types de tâches."
+    },
+    {
+      "id": "ft-05",
+      "difficulty": "advanced",
+      "question": "Quel est le rôle du « modèle de récompense » (reward model) dans le RLHF ?",
+      "options": [
+        "C'est une table de correspondance qui associe des mots-clés prédéfinis dans la sortie du modèle à des scores de récompense numériques fixes",
+        "C'est un réseau de neurones distinct, entraîné sur des classements de préférences humaines, qui prédit à quel point un humain préférerait une sortie de modèle à une autre",
+        "C'est le principal modèle de langage en cours de fine-tuning ; le terme « modèle de récompense » est un autre nom pour le modèle de politique (policy model)",
+        "C'est un classificateur qui filtre le contenu dangereux des lots d'entraînement avant qu'ils ne soient utilisés pour l'étape de mise à jour de la politique"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Dans le RLHF, des annotateurs humains classent des paires de sorties du modèle. Un modèle de récompense (généralement un LLM doté d'une tête scalaire) est entraîné sur ces classements pour prédire des scores de préférence. La politique (le LLM principal) est ensuite optimisée avec PPO afin de maximiser les scores du modèle de récompense, sous réserve d'une pénalité KL par rapport à la politique de référence."
+    },
+    {
+      "id": "ft-06",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce que le DPO (Direct Preference Optimization), et en quoi diffère-t-il du RLHF basé sur PPO ?",
+      "options": [
+        "Le DPO est un objectif de pré-entraînement qui optimise directement les données de préférence humaine sans aucune phase de fine-tuning supervisé",
+        "Le DPO optimise directement des paires de réponses choisie/rejetée avec un objectif de type classification, évitant ainsi un modèle de récompense entraîné séparément et une boucle de RL",
+        "Le DPO n'affine que les couches du décodeur tandis que le PPO affine toutes les couches, ce qui rend le DPO plus rapide mais moins efficace",
+        "Le DPO et le PPO sont deux noms interchangeables pour le même algorithme — l'un utilisé par les chercheurs académiques et l'autre par les praticiens de l'industrie"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Le DPO (Rafailov et al., 2023) reparamétrise le problème d'optimisation des préférences afin qu'une politique puisse être entraînée directement sur des paires de réponses choisie et rejetée par rapport à un modèle de référence. Il supprime les étapes explicites d'ajustement d'un modèle de récompense et d'apprentissage par renforcement utilisées dans les pipelines RLHF courants basés sur PPO.",
+      "source": "https://arxiv.org/abs/2305.18290"
+    },
+    {
+      "id": "ft-07",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce que l'« oubli catastrophique » (catastrophic forgetting) dans le contexte du fine-tuning ?",
+      "options": [
+        "Le fait que le modèle abandonne les connaissances relatives à la tâche de fine-tuning lorsqu'il rencontre des prompts hors distribution au moment du test",
+        "La tendance des réseaux de neurones à écraser les connaissances générales précédemment apprises lorsqu'ils sont entraînés sur un nouveau jeu de données restreint",
+        "Un mode de défaillance où le modèle oublie le début de longs prompts parce qu'ils sortent de la fenêtre d'attention",
+        "Une panne matérielle provoquant l'effacement de la mémoire GPU lorsqu'une tâche de fine-tuning est interrompue en cours d'époque"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Lorsqu'un modèle est entièrement affiné sur une nouvelle tâche, les mises à jour de gradient peuvent écraser les poids qui encodaient des capacités antérieures — un phénomène appelé oubli catastrophique. Les méthodes PEFT (LoRA, adaptateurs) l'atténuent en gardant figée la majorité des poids pré-entraînés."
+    },
+    {
+      "id": "ft-08",
+      "difficulty": "advanced",
+      "question": "Qu'est-ce que QLoRA, et quel problème résout-il ?",
+      "options": [
+        "Un format de quantification qui permet de servir les poids d'un modèle avec un contrôle d'accès au niveau des requêtes pour des déploiements multi-locataires",
+        "Une technique qui combine une quantification 4 bits NF4 du modèle de base figé avec des adaptateurs LoRA, réduisant considérablement la mémoire GPU nécessaire pour affiner de grands modèles",
+        "Un protocole d'assurance qualité qui fait passer des modèles affinés avec LoRA à travers des suites de benchmark standardisées avant le déploiement",
+        "Une variante de LoRA qui contraint le rang à des puissances de deux afin que les matrices de poids puissent être stockées en entiers quart de précision"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "QLoRA (Dettmers et al., 2023) rétropropage à travers un modèle de base figé, quantifié en 4 bits, vers des adaptateurs LoRA, et ajoute des techniques d'économie de mémoire telles que NF4, la double quantification et les optimiseurs paginés. L'article a démontré le fine-tuning d'un modèle de 65 milliards de paramètres sur un seul GPU de 48 Go ; cette affirmation matérielle ne doit pas être généralisée à toute configuration de 7 à 70 milliards de paramètres ni à tout GPU grand public.",
+      "source": "https://arxiv.org/abs/2305.14314"
+    },
+    {
+      "id": "ft-09",
+      "difficulty": "expert",
+      "question": "Qu'est-ce que le RLAIF (Reinforcement Learning from AI Feedback), et quelle est la motivation principale de son utilisation à la place du RLHF ?",
+      "options": [
+        "Le RLAIF remplace la politique du modèle de langage par un modèle distillé plus petit afin de réduire le coût de l'inférence à grande échelle",
+        "Le RLAIF utilise un modèle d'IA distinct pour générer les étiquettes de préférence servant à entraîner le modèle de récompense, réduisant la dépendance à une annotation humaine coûteuse tout en conservant le signal d'alignement",
+        "Le RLAIF est une version hors ligne du RLHF qui précalcule tous les scores de récompense avant le début de l'entraînement, rendant le pipeline déterministe",
+        "Le RLAIF n'affine que les couches d'attention à l'aide de données de préférence synthétiques, tandis que le RLHF affine toutes les couches à l'aide de données humaines"
+      ],
+      "correctAnswerIndex": 1,
+      "explanation": "Le RLAIF (Lee et al., 2023 ; utilisé dans l'IA constitutionnelle d'Anthropic) remplace les annotateurs de préférence humains par un LLM juge suffisamment capable. Ce LLM note des paires de réponses selon un ensemble de principes, supprimant le goulot d'étranglement d'une annotation humaine coûteuse tout en atteignant une qualité d'apprentissage des préférences comparable au RLHF à grande échelle.",
+      "source": "https://arxiv.org/abs/2309.00267"
+    },
+    {
+      "id": "ft-10",
+      "difficulty": "expert",
+      "question": "Qu'est-ce que la « fusion de modèles » (model merging, par exemple SLERP ou TIES-merging), et pourquoi est-elle intéressante par rapport à l'ensembling ?",
+      "options": [
+        "Fusionner les jeux de données d'entraînement de deux modèles et réentraîner à partir de zéro pour produire un modèle combiné",
+        "Moyenner les logits de deux modèles s'exécutant séparément au moment de l'inférence afin que les prédictions reflètent les distributions des deux modèles",
+        "Combiner des poids de modèles compatibles — par exemple par interpolation ou par fusion tenant compte des conflits — afin de produire un seul modèle capable de mélanger les comportements des modèles parents sans les exécuter tous à l'inférence",
+        "Diviser un grand modèle en deux moitiés qui gèrent chacune une partie différente d'une tâche et communiquent via une couche de routage apprise"
+      ],
+      "correctAnswerIndex": 2,
+      "explanation": "La fusion de modèles combine des points de contrôle compatibles dans l'espace des poids ; SLERP interpole les poids, tandis que les méthodes de type TIES tentent de réduire les interférences entre les mises à jour propres à chaque tâche. Le résultat est un seul modèle plutôt qu'un ensemble au moment de l'inférence, mais le transfert réussi des capacités n'est pas garanti : les fusions nécessitent une évaluation et peuvent perdre ou interférer avec les comportements des modèles parents.",
+      "source": "https://arxiv.org/abs/2306.01708"
+    }
+  ]
+}

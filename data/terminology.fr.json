@@ -331,6 +331,150 @@
       "example": "Un filtre de contenu bloquant une réponse avant qu'elle n'atteigne l'utilisateur."
     },
     {
+      "term": "Multimodal Model",
+      "category": "IA multimodale",
+      "definition": "Un modèle d'IA capable de traiter et/ou de générer plus d'un type de données, comme du texte, des images, de l'audio ou de la vidéo.",
+      "example": "GPT-4o peut accepter du texte, des images et de l'audio, et produire du texte ou de l'audio."
+    },
+    {
+      "term": "Vision-Language Model (VLM)",
+      "category": "IA multimodale",
+      "definition": "Un modèle qui relie des représentations visuelles et linguistiques pour accomplir des tâches comme le sous-titrage d'images ou la réponse à des questions visuelles.",
+      "example": "Décrire en une phrase complète ce qui se passe sur une photo."
+    },
+    {
+      "term": "Diffusion Model",
+      "category": "IA multimodale",
+      "definition": "Un modèle génératif qui produit des images (ou d'autres données) en éliminant itérativement du bruit à partir d'un point de départ aléatoire, guidé par un signal de conditionnement comme un prompt textuel.",
+      "example": "Stable Diffusion transformant un prompt textuel en une image photoréaliste."
+    },
+    {
+      "term": "CLIP (Contrastive Language–Image Pre-training)",
+      "category": "IA multimodale",
+      "definition": "Un modèle entraîné à aligner les embeddings de texte et d'image dans un espace vectoriel partagé, permettant la classification d'images en zero-shot et le guidage de la génération d'images.",
+      "example": "Faire correspondre la légende « un chien sur une plage » à la bonne photo parmi des milliers."
+    },
+    {
+      "term": "Vision Transformer (ViT)",
+      "category": "IA multimodale",
+      "definition": "Une architecture transformer qui traite une image comme une séquence de patches et applique de l'auto-attention, au lieu d'utiliser des convolutions.",
+      "example": "Découper une photo en une grille de petits patches avant de la transmettre au modèle."
+    },
+    {
+      "term": "Automatic Speech Recognition (ASR)",
+      "category": "IA multimodale",
+      "definition": "Une compétence de modèle qui convertit un audio parlé en transcription textuelle.",
+      "example": "Whisper transcrivant en texte l'enregistrement d'une réunion."
+    },
+    {
+      "term": "Algorithmic Bias",
+      "category": "Éthique et gouvernance de l'IA",
+      "definition": "Des erreurs systématiques dans les sorties d'un modèle qui avantagent ou désavantagent injustement certains groupes, reflétant souvent des biais présents dans les données d'entraînement.",
+      "example": "Un modèle de recrutement entraîné sur des données historiques désavantageant les candidates."
+    },
+    {
+      "term": "Disparate Impact",
+      "category": "Éthique et gouvernance de l'IA",
+      "definition": "Une politique ou une pratique en apparence neutre qui nuit de manière disproportionnée à un groupe protégé, même sans intention de discriminer.",
+      "example": "Une règle de notation de prêt qui refuse involontairement un groupe protégé à un taux plus élevé."
+    },
+    {
+      "term": "Explainability (Interpretability)",
+      "category": "Éthique et gouvernance de l'IA",
+      "definition": "La capacité à comprendre et à expliquer pourquoi un modèle a produit une sortie ou une décision particulière.",
+      "example": "Mettre en évidence quels mots d'un CV ont le plus influencé le score d'un modèle de recrutement."
+    },
+    {
+      "term": "Fairness Metric",
+      "category": "Éthique et gouvernance de l'IA",
+      "definition": "Un critère formel, comme la parité démographique ou l'égalité des chances, utilisé pour vérifier si un modèle traite différents groupes équitablement.",
+      "example": "Vérifier qu'un modèle de prêt approuve des candidats de différents groupes à des taux similaires."
+    },
+    {
+      "term": "EU AI Act",
+      "category": "Éthique et gouvernance de l'IA",
+      "definition": "La loi contraignante de l'Union européenne qui classe les systèmes d'IA par niveau de risque et fixe des exigences proportionnées à ce risque.",
+      "example": "Interdire la surveillance biométrique en temps réel dans les espaces publics à des fins répressives, avec des exceptions restreintes."
+    },
+    {
+      "term": "Differential Privacy",
+      "category": "Éthique et gouvernance de l'IA",
+      "definition": "Une garantie mathématique selon laquelle l'ajout ou le retrait d'un seul enregistrement modifie à peine la distribution des sorties d'un modèle, protégeant ainsi la confidentialité individuelle.",
+      "example": "Ajouter du bruit calibré pendant l'entraînement afin que les données d'une seule personne ne puissent pas être rétro-ingénierées."
+    },
+    {
+      "term": "Fine-Tuning",
+      "category": "Fine-tuning et adaptation",
+      "definition": "Poursuivre l'entraînement d'un modèle pré-entraîné sur un jeu de données plus restreint, spécifique à une tâche ou à un domaine, afin de spécialiser son comportement.",
+      "example": "Prendre un modèle généraliste et poursuivre son entraînement sur des transcriptions de support client."
+    },
+    {
+      "term": "PEFT (Parameter-Efficient Fine-Tuning)",
+      "category": "Fine-tuning et adaptation",
+      "definition": "Une famille de méthodes de fine-tuning qui entraînent un petit ensemble de paramètres supplémentaires tout en gardant figée la majorité des poids du modèle de base.",
+      "example": "Affiner un modèle de 70 milliards de paramètres en n'entraînant que quelques millions de paramètres d'adaptateur."
+    },
+    {
+      "term": "LoRA (Low-Rank Adaptation)",
+      "category": "Fine-tuning et adaptation",
+      "definition": "Une technique PEFT qui injecte de petites matrices entraînables de rang faible dans les couches de poids d'un modèle, au lieu de mettre à jour les poids complets.",
+      "example": "Adapter le style d'un modèle avec un fichier LoRA de quelques centaines de mégaoctets."
+    },
+    {
+      "term": "Instruction Tuning",
+      "category": "Fine-tuning et adaptation",
+      "definition": "Affiner un modèle de base sur des paires (instruction, réponse) afin qu'il suive de manière fiable des directives en langage naturel.",
+      "example": "Transformer un modèle brut de complétion de texte en un assistant utile."
+    },
+    {
+      "term": "DPO (Direct Preference Optimization)",
+      "category": "Fine-tuning et adaptation",
+      "definition": "Une méthode qui affine directement un modèle sur des paires de réponses choisie/rejetée, sans entraîner de modèle de récompense séparé ni exécuter d'apprentissage par renforcement.",
+      "example": "Entraîner un modèle à préférer l'une de deux réponses candidates à l'aide d'une seule perte de type classification."
+    },
+    {
+      "term": "Catastrophic Forgetting",
+      "category": "Fine-tuning et adaptation",
+      "definition": "La tendance d'un réseau de neurones à écraser des connaissances générales précédemment apprises lorsqu'il est entièrement affiné sur un nouveau jeu de données restreint.",
+      "example": "Un modèle perdant sa capacité conversationnelle générale après un fine-tuning intensif sur des documents juridiques."
+    },
+    {
+      "term": "MMLU",
+      "category": "Évaluations et benchmarking",
+      "definition": "Un benchmark qui mesure l'étendue des connaissances d'un modèle sur 57 disciplines académiques à l'aide de questions à choix multiples.",
+      "example": "Comparer les scores de connaissances générales de deux modèles en droit, médecine et sciences."
+    },
+    {
+      "term": "HumanEval",
+      "category": "Évaluations et benchmarking",
+      "definition": "Un benchmark de 164 problèmes de programmation en Python qui teste si le code généré par un modèle réussit des tests unitaires automatisés.",
+      "example": "Vérifier si la fonction générée par un modèle inverse correctement une chaîne de caractères."
+    },
+    {
+      "term": "LLM-as-Judge",
+      "category": "Évaluations et benchmarking",
+      "definition": "Utiliser un LLM suffisamment capable pour noter ou comparer les sorties d'autres modèles selon des critères subjectifs comme l'utilité ou la cohérence, à la place d'un examen humain.",
+      "example": "Demander à un modèle performant de choisir la meilleure de deux réponses provisoires."
+    },
+    {
+      "term": "Regression Suite",
+      "category": "Évaluations et benchmarking",
+      "definition": "Un ensemble organisé de prompts de test et de comportements attendus, exécuté automatiquement après chaque changement afin de détecter un comportement cassé avant qu'il n'atteigne la production.",
+      "example": "Réexécuter 200 prompts enregistrés chaque fois qu'un system prompt est modifié."
+    },
+    {
+      "term": "pass@k",
+      "category": "Évaluations et benchmarking",
+      "definition": "Une métrique de génération de code mesurant à quelle fréquence au moins une des k solutions échantillonnées réussit tous les tests pour un problème donné.",
+      "example": "pass@10 vérifie si l'une des 10 tentatives échantillonnées résout le problème."
+    },
+    {
+      "term": "Benchmark Contamination",
+      "category": "Évaluations et benchmarking",
+      "definition": "Lorsque les questions et réponses d'un benchmark se retrouvent dans les données d'entraînement d'un modèle, gonflant son score sans véritable généralisation.",
+      "example": "Un modèle obtenant un score étonnamment élevé parce que des questions de MMLU figuraient dans ses données d'entraînement."
+    },
+    {
       "term": "ROI (Return on Investment)",
       "category": "Valeur métier de l'IA et ROI",
       "definition": "Le bénéfice mesurable (économies de coûts, chiffre d'affaires, temps gagné) qu'une initiative d'IA génère par rapport à ce qu'elle a coûté à construire et à exploiter.",
