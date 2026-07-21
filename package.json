@@ -22,7 +22,7 @@
     "@fontsource-variable/jetbrains-mono": "^5.0.0",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
-    "astro": "^7.0.7"
+    "astro": "^7.1.0"
   },
   "devDependencies": {
     "happy-dom": "^20.10.6",
